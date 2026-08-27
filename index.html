@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Click Wise Owl — Sitios y apps web con IA para tu negocio</title>
+<meta name="description" content="Click Wise Owl crea sitios web, apps web y herramientas de marketing con inteligencia artificial para pymes en Latinoamérica. Fundado por Alba Nory de González.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap">
+<style>
+  :root{--ink:#2d2545;--ink-soft:#645d7a;--bg:#faf9fb;--card:#ffffff;--accent:#7d2e8e;--accent-soft:#f3e9f6;--teal:#3ab5ae;--gold:#f0a13c;--cream:#f6ecd8;--line:#e9e5ee;--radius:16px}
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:Inter,system-ui,sans-serif;color:var(--ink);background:var(--bg);line-height:1.6}
+  h1,h2,h3{font-family:Fraunces,serif;line-height:1.15}
+  a{color:var(--accent);text-decoration:none}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+  section{padding:88px 0}
+  .eyebrow{display:inline-block;font-size:.78rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);padding:6px 14px;border-radius:999px;margin-bottom:18px}
+  [data-en]{display:none}
+  html.en [data-es]{display:none}
+  html.en [data-en]{display:revert}
+  nav{position:sticky;top:0;background:rgba(253,252,249,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);z-index:10}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .brand{display:flex;align-items:center;gap:10px;font-family:Fraunces,serif;font-weight:700;font-size:1.1rem;color:var(--ink)}
+  .brand img{height:46px;width:auto}
+  .nav-links{display:flex;gap:26px;align-items:center;font-size:.92rem;font-weight:500}
+  .nav-links a{color:var(--ink-soft)}
+  .nav-links a:hover{color:var(--accent)}
+  .lang-btn{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:6px 14px;font:inherit;font-size:.85rem;font-weight:600;cursor:pointer;color:var(--ink-soft)}
+  .lang-btn:hover{border-color:var(--accent);color:var(--accent)}
+  .hero{padding:110px 0 96px;text-align:center}
+  .hero h1{font-size:clamp(2.3rem,5.5vw,3.6rem);max-width:780px;margin:0 auto 22px}
+  .hero h1 em{font-style:normal;color:var(--accent)}
+  .hero p{max-width:600px;margin:0 auto 36px;color:var(--ink-soft);font-size:1.13rem}
+  .btn{display:inline-block;background:var(--accent);color:#fff;padding:14px 32px;border-radius:999px;font-weight:600;transition:transform .15s,box-shadow .15s}
+  .btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(125,46,142,.25)}
+  .btn.ghost{background:transparent;color:var(--accent);border:1.5px solid var(--accent);margin-left:12px}
+  .grid{display:grid;gap:24px}
+  .grid.c3{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:32px 28px}
+  .card .icon{width:44px;height:44px;border-radius:12px;background:var(--accent-soft);display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin-bottom:18px}
+  .card h3{font-size:1.15rem;margin-bottom:10px}
+  .card p{color:var(--ink-soft);font-size:.96rem}
+  section h2{font-size:clamp(1.7rem,3.5vw,2.3rem);margin-bottom:14px}
+  .section-head{max-width:640px;margin-bottom:44px}
+  .section-head p{color:var(--ink-soft)}
+  .step{display:flex;gap:18px;align-items:flex-start}
+  .step-num{flex-shrink:0;width:36px;height:36px;border-radius:50%;background:var(--teal);color:#fff;font-weight:600;display:flex;align-items:center;justify-content:center;font-size:.95rem}
+  .price-flex{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
+  .price-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:36px 30px;text-align:center}
+  .price-card.feature{border-color:var(--accent);box-shadow:0 12px 32px rgba(125,46,142,.1)}
+  .price-card .tag{font-size:.8rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--gold)}
+  .price-card h3{font-size:1.35rem;margin:10px 0 8px}
+  .price-card p{color:var(--ink-soft);font-size:.95rem}
+  .price-card ul{list-style:none;margin:20px 0 0;text-align:left}
+  .price-card li{padding:8px 0;border-top:1px solid var(--line);font-size:.93rem;color:var(--ink-soft)}
+  .price-card li::before{content:"✓";color:var(--accent);font-weight:700;margin-right:10px}
+  .price-card .amount{display:block;font-size:2.5rem;font-weight:700;color:var(--ink);letter-spacing:-.025em;line-height:1.05;margin:14px 0 2px}
+  .price-card .per{display:block;font-size:.78rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:16px}
+  .price-note{text-align:center;margin-top:32px;color:var(--ink-soft);font-size:.97rem}
+  .price-note a{color:var(--accent);font-weight:600}
+  .about{display:grid;grid-template-columns:1fr 1.4fr;gap:48px;align-items:center}
+  .about-owl{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px;display:flex;justify-content:center}
+  .about-owl img{width:100%;max-width:280px;height:auto}
+  .about p{color:var(--ink-soft);margin-bottom:14px}
+  .creds{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+  .creds span{font-size:.82rem;font-weight:500;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:6px 14px;color:var(--ink-soft)}
+  .contact{background:var(--ink);border-radius:var(--radius);color:#fff;text-align:center;padding:72px 32px}
+  .contact h2{color:#fff}
+  .contact p{color:#c8ccd6;max-width:520px;margin:0 auto 30px}
+  .contact .btn{background:var(--gold)}
+  .contact .btn:hover{box-shadow:0 8px 24px rgba(217,164,65,.35)}
+  footer{padding:36px 0;text-align:center;color:var(--ink-soft);font-size:.88rem}
+  .socials{margin-bottom:10px}
+  .socials a{margin:0 10px;font-weight:500}
+  @media (max-width:760px){.about{grid-template-columns:1fr}}
+  @media (max-width:640px){.nav-links a.hide-m{display:none}section{padding:64px 0}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap nav-inner">
+    <div class="brand">
+      <img src="https://6a7d42bcadcaf6f0622a927e--clickwiseowl.netlify.app/clickwiseowl-logo-horizontal.png" alt="Click Wise Owl — AI Marketing Tools">
+    </div>
+    <div class="nav-links">
+      <a class="hide-m" href="#servicios"><span data-es>Servicios</span><span data-en>Services</span></a>
+      <a class="hide-m" href="#precios"><span data-es>Precios</span><span data-en>Pricing</span></a>
+      <a class="hide-m" href="#portafolio"><span data-es>Portafolio</span><span data-en>Portfolio</span></a>
+      <a class="hide-m" href="#sobre-mi"><span data-es>Sobre mí</span><span data-en>About</span></a>
+      <a class="hide-m" href="#contacto"><span data-es>Contacto</span><span data-en>Contact</span></a>
+      <button class="lang-btn" onclick="toggleLang()"><span data-es>EN</span><span data-en>ES</span></button>
+    </div>
+  </div>
+</nav>
+
+<header class="hero wrap">
+  <span class="eyebrow"><span data-es>Sitios web · Apps con IA · Analítica · Latinoamérica</span><span data-en>Websites · AI apps · Analytics · Latin America</span></span>
+  <h1><span data-es>Tecnología <em>inteligente</em> para hacer crecer tu negocio</span><span data-en><em>Smart</em> technology to grow your business</span></h1>
+  <p><span data-es>Creo sitios web y apps con inteligencia artificial para pymes: sitios que convierten visitas en clientes, asistentes que atienden 24/7, herramientas que automatizan tareas repetitivas y tableros que convierten datos en decisiones.</span><span data-en>I build AI-powered websites and web apps for small and medium businesses: sites that turn visitors into customers, assistants that serve clients 24/7, tools that automate repetitive tasks, and dashboards that turn data into decisions.</span></p>
+  <a class="btn" href="#contacto"><span data-es>Hablemos de tu proyecto</span><span data-en>Let's talk about your project</span></a>
+  <a class="btn ghost" href="#servicios"><span data-es>Ver servicios</span><span data-en>See services</span></a>
+</header>
+
+<section id="servicios">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow"><span data-es>Servicios</span><span data-en>Services</span></span>
+      <h2><span data-es>¿Qué puedo construir para ti?</span><span data-en>What can I build for you?</span></h2>
+      <p><span data-es>Soluciones prácticas, sin complicaciones técnicas para ti.</span><span data-en>Practical solutions, with zero technical hassle for you.</span></p>
+    </div>
+    <div class="grid c3" style="grid-template-columns:repeat(auto-fit,minmax(230px,1fr))">
+      <div class="card" style="border-color:var(--accent)">
+        <div class="icon">🌐</div>
+        <h3><span data-es>Sitios web con IA</span><span data-en>AI Websites</span></h3>
+        <p><span data-es>Tu sitio web profesional creado con IA: moderno, rápido y listo en días. Optimizado para móvil y diseñado para convertir visitas en clientes.</span><span data-en>Your professional website built with AI: modern, fast, and live in days. Mobile-first and designed to turn visitors into customers.</span></p>
+      </div>
+      <div class="card">
+        <div class="icon">🤖</div>
+        <h3><span data-es>Asistentes con IA</span><span data-en>AI Assistants</span></h3>
+        <p><span data-es>Chatbots y asistentes que responden a tus clientes 24/7, toman pedidos y agendan citas por ti.</span><span data-en>Chatbots and assistants that answer your customers 24/7, take orders, and book appointments for you.</span></p>
+      </div>
+      <div class="card">
+        <div class="icon">⚙️</div>
+        <h3><span data-es>Apps de automatización</span><span data-en>Automation Apps</span></h3>
+        <p><span data-es>Herramientas web que automatizan cotizaciones, inventarios, reportes y tareas repetitivas de tu negocio.</span><span data-en>Web tools that automate quotes, inventory, reports, and your business's repetitive tasks.</span></p>
+      </div>
+      <div class="card">
+        <div class="icon">📊</div>
+        <h3><span data-es>Datos y analítica</span><span data-en>Data &amp; Analytics</span></h3>
+        <p><span data-es>Tableros claros con Google Analytics y tus datos de ventas, para que tomes decisiones con confianza.</span><span data-en>Clear dashboards with Google Analytics and your sales data, so you can decide with confidence.</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="proceso" style="padding-top:0">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow"><span data-es>Proceso 100% digital</span><span data-en>100% digital process</span></span>
+      <h2><span data-es>Así trabajamos juntos</span><span data-en>How we work together</span></h2>
+      <p><span data-es>Todo se resuelve en línea, de principio a fin. ¿Para qué perder tiempo en el tráfico cuando tu solución está a una videollamada de distancia?</span><span data-en>Everything happens online, start to finish. Why waste time in traffic when your solution is just one video call away?</span></p>
+    </div>
+    <div class="grid c3">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div>
+          <h3><span data-es>Conversamos</span><span data-en>We talk</span></h3>
+          <p><span data-es>Una videollamada gratuita para entender tu negocio y detectar dónde la IA te ahorra más tiempo y dinero.</span><span data-en>A free video call to understand your business and find where AI saves you the most time and money.</span></p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div>
+          <h3><span data-es>Construyo tu app</span><span data-en>I build your app</span></h3>
+          <p><span data-es>Diseño y desarrollo tu aplicación a la medida, con entregas rápidas y tu retroalimentación en cada paso.</span><span data-en>I design and build your custom application, with fast deliveries and your feedback at every step.</span></p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div>
+          <h3><span data-es>Te acompaño</span><span data-en>I support you</span></h3>
+          <p><span data-es>Con una mensualidad accesible mantengo tu app funcionando, actualizada y mejorando cada mes.</span><span data-en>With an affordable monthly fee I keep your app running, updated, and improving every month.</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="precios" style="padding-top:0">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow"><span data-es>Precios</span><span data-en>Pricing</span></span>
+      <h2><span data-es>Precios claros, sin sorpresas</span><span data-en>Clear prices, no surprises</span></h2>
+      <p><span data-es>La mayoría de los proyectos ya tienen precio. Elegí el que se parece a lo tuyo y escribime.</span><span data-en>Most projects are already priced. Pick the one that looks like yours and message me.</span></p>
+    </div>
+    <div class="price-flex">
+      <div class="price-card">
+        <span class="tag"><span data-es>Sitio web</span><span data-en>Website</span></span>
+        <h3><span data-es>Sitio profesional</span><span data-en>Professional site</span></h3>
+        <span class="amount">Q5,500</span>
+        <span class="per"><span data-es>Pago único</span><span data-en>One-time</span></span>
+        <p><span data-es>Tu negocio con página propia, lista para que te encuentren en Google.</span><span data-en>Your business with a page of its own, ready to be found on Google.</span></p>
+        <ul>
+          <li><span data-es>Hasta 5 secciones</span><span data-en>Up to 5 sections</span></li>
+          <li><span data-es>Diseño propio, no plantilla</span><span data-en>Custom design, not a template</span></li>
+          <li><span data-es>Optimizado para celular</span><span data-en>Mobile-optimised</span></li>
+          <li><span data-es>Botón de WhatsApp</span><span data-en>WhatsApp button</span></li>
+          <li><span data-es>Hosting y soporte: Q250/mes</span><span data-en>Hosting and support: Q250/mo</span></li>
+        </ul>
+      </div>
+      <div class="price-card feature">
+        <span class="tag"><span data-es>Más solicitado</span><span data-en>Most popular</span></span>
+        <h3><span data-es>Sitio + agenda</span><span data-en>Site + bookings</span></h3>
+        <span class="amount">Q9,500</span>
+        <span class="per"><span data-es>Pago único</span><span data-en>One-time</span></span>
+        <p><span data-es>Pensado para clínicas y salones: tus pacientes agendan solos, a cualquier hora.</span><span data-en>Built for clinics and salons: your patients book themselves, at any hour.</span></p>
+        <ul>
+          <li><span data-es>Todo lo del sitio profesional</span><span data-en>Everything in the professional site</span></li>
+          <li><span data-es>Agenda de citas en línea</span><span data-en>Online appointment booking</span></li>
+          <li><span data-es>Recordatorios por WhatsApp</span><span data-en>WhatsApp reminders</span></li>
+          <li><span data-es>Menos citas perdidas</span><span data-en>Fewer no-shows</span></li>
+          <li><span data-es>Hosting y soporte: Q250/mes</span><span data-en>Hosting and support: Q250/mo</span></li>
+        </ul>
+      </div>
+      <div class="price-card">
+        <span class="tag"><span data-es>Automatización</span><span data-en>Automation</span></span>
+        <h3><span data-es>Bot de WhatsApp</span><span data-en>WhatsApp bot</span></h3>
+        <span class="amount">Q3,500</span>
+        <span class="per"><span data-es>Pago único</span><span data-en>One-time</span></span>
+        <p><span data-es>Responde horarios, servicios y ubicación las 24 horas, sin que tengas que contestar.</span><span data-en>Answers hours, services and location 24/7, without you replying.</span></p>
+        <ul>
+          <li><span data-es>Respuestas automáticas</span><span data-en>Automated replies</span></li>
+          <li><span data-es>Horarios, precios y ubicación</span><span data-en>Hours, prices and location</span></li>
+          <li><span data-es>Deriva a una persona cuando hace falta</span><span data-en>Hands off to a human when needed</span></li>
+          <li><span data-es>Operación: Q250/mes</span><span data-en>Running cost: Q250/mo</span></li>
+        </ul>
+      </div>
+    </div>
+    <p class="price-note"><span data-es>¿Algo más grande? Apps y agentes a la medida desde Q25,000. </span><span data-en>Something bigger? Custom apps and agents from Q25,000. </span><a href="https://wa.me/50253771248"><span data-es>Hablemos por WhatsApp</span><span data-en>Talk on WhatsApp</span></a></p>
+  </div>
+</section>
+
+<section id="portafolio" style="padding-top:0">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow"><span data-es>Portafolio</span><span data-en>Portfolio</span></span>
+      <h2><span data-es>Hecho con Click Wise Owl</span><span data-en>Built by Click Wise Owl</span></h2>
+      <p><span data-es>Productos reales, funcionando hoy.</span><span data-en>Real products, live today.</span></p>
+    </div>
+    <div class="grid c3">
+      <div class="card" style="border-color:var(--accent)">
+        <div class="icon">🐱</div>
+        <h3>Moncho</h3>
+        <p style="margin-bottom:14px"><span data-es>App web con IA que genera unit studies completos y listos para imprimir para familias homeschoolers, adaptados a la edad e intereses de cada niño. En español e inglés, con modelo freemium.</span><span data-en>AI web app that generates complete, print-ready unit studies for homeschooling families, tailored to each child's age and interests. In Spanish and English, with a freemium model.</span></p>
+        <p style="font-size:.85rem;color:var(--ink-soft);margin-bottom:14px">IA generativa · EdTech · Suscripción</p>
+        <a href="https://www.monchounschooling.com" style="font-weight:600" target="_blank" rel="noopener"><span data-es>Visitar monchounschooling.com →</span><span data-en>Visit monchounschooling.com →</span></a>
+      </div>
+      <div class="card">
+        <div class="icon">💬</div>
+        <h3><span data-es>Bot de WhatsApp</span><span data-en>WhatsApp Bot</span><span style="font-size:.7rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--gold)"><span data-es>· Próximamente</span><span data-en>· Coming soon</span></span></h3>
+        <p><span data-es>Nuestro propio asistente con IA en WhatsApp: responde preguntas, cotiza y agenda videollamadas automáticamente. Pronto podrás probarlo en vivo — el mejor ejemplo es el que usamos nosotros.</span><span data-en>Our own AI assistant on WhatsApp: it answers questions, quotes, and books video calls automatically. Soon you'll be able to try it live — the best demo is the one we use ourselves.</span></p>
+      </div>
+      <div class="card">
+        <div class="icon">💡</div>
+        <h3><span data-es>¿Qué agente necesita tu negocio?</span><span data-en>What agent does your business need?</span></h3>
+        <p><span data-es>Algunas ideas: bot que toma pedidos y agenda citas, cotizador automático, asistente que responde a tus clientes con tu catálogo, generador de contenido para redes, recordatorios de pago, tableros de ventas en tiempo real…</span><span data-en>Some ideas: a bot that takes orders and books appointments, automatic quote generator, an assistant that answers customers from your catalog, social content generator, payment reminders, live sales dashboards…</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="sobre-mi" style="padding-top:0">
+  <div class="wrap about">
+    <div class="about-owl">
+      <img src="https://6a7d42bcadcaf6f0622a927e--clickwiseowl.netlify.app/clickwiseowl-logo.png" alt="Logotipo de Click Wise Owl">
+    </div>
+    <div>
+      <span class="eyebrow"><span data-es>Sobre mí</span><span data-en>About me</span></span>
+      <h2><span data-es>Hola, soy Alba Nory</span><span data-en>Hi, I'm Alba Nory</span></h2>
+      <p><span data-es>Soy administradora de empresas con especialización en marketing (Universidad Francisco Marroquín), máster en e-Business y certificación de IBM en IA agéntica. Antes de fundar Click Wise Owl trabajé como freelancer en marketing digital, especializada en Google Analytics, SEO, SEM y comercio electrónico.</span><span data-en>I'm a business administrator with a marketing minor (Universidad Francisco Marroquín), a master's in e-Business, and an IBM certification in agentic AI. Before founding Click Wise Owl I worked as a freelance digital marketer, specializing in Google Analytics, SEO, SEM, and e-commerce.</span></p>
+      <p><span data-es>Esa combinación me permite algo poco común: entender primero tu negocio y tus números, y construir después la tecnología que de verdad te ayuda a crecer — sin tecnicismos y sin que tengas que volverte experta en nada.</span><span data-en>That mix lets me do something uncommon: first understand your business and your numbers, and then build the technology that actually helps you grow — no jargon, and no need to become a tech expert yourself.</span></p>
+      <div class="creds">
+        <span>Universidad Francisco Marroquín</span>
+        <span><span data-es>Máster en e-Business</span><span data-en>Master's in e-Business</span></span>
+        <span><span data-es>IBM · IA Agéntica</span><span data-en>IBM · Agentic AI</span></span>
+        <span>Google Analytics · SEO · SEM</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contacto" style="padding-top:0">
+  <div class="wrap">
+    <div class="contact">
+      <h2><span data-es>¿Listo para hacer crecer tu negocio?</span><span data-en>Ready to grow your business?</span></h2>
+      <p><span data-es>Cuéntame tu idea por WhatsApp y agendamos una videollamada gratuita. Sin compromiso y sin tecnicismos.</span><span data-en>Tell me your idea on WhatsApp and we'll set up a free video call. No strings attached, no tech jargon.</span></p>
+      <a class="btn" href="https://wa.me/50253771248?text=Hola%20Nory%2C%20vi%20clickwiseowl.com%20y%20me%20gustar%C3%ADa%20m%C3%A1s%20informaci%C3%B3n." target="_blank" rel="noopener"><span data-es>Escríbeme por WhatsApp</span><span data-en>Message me on WhatsApp</span></a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="socials">
+    <a href="https://www.linkedin.com/in/albanory/" target="_blank" rel="noopener">LinkedIn</a>
+    <a href="https://www.instagram.com/clickwiseowl/" target="_blank" rel="noopener">Instagram</a>
+  </div>
+  <p>© 2026 Click Wise Owl · Guatemala</p>
+</footer>
+
+<script>
+  function toggleLang(){
+    var en = document.documentElement.classList.toggle('en');
+    document.documentElement.setAttribute('lang', en ? 'en' : 'es');
+    try { localStorage.setItem('cwo_lang', en ? 'en' : 'es'); } catch(e) {}
+  }
+  try {
+    if (localStorage.getItem('cwo_lang') === 'en') {
+      document.documentElement.classList.add('en');
+      document.documentElement.setAttribute('lang','en');
+    }
+  } catch(e) {}
+</script>
+
+</body>
+</html>
