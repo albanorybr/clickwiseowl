@@ -72,6 +72,10 @@
   .contact p{color:#c8ccd6;max-width:520px;margin:0 auto 30px}
   .contact .btn{background:var(--gold)}
   .contact .btn:hover{box-shadow:0 8px 24px rgba(217,164,65,.35)}
+  button.btn{border:0;font:inherit;font-weight:600;cursor:pointer}
+  .contact .btn.cal{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.55);margin-left:12px}
+  .contact .btn.cal:hover{background:rgba(255,255,255,.08);border-color:#fff;box-shadow:none}
+  @media(max-width:560px){.contact .btn.cal{margin-left:0;margin-top:12px}}
   footer{padding:36px 0;text-align:center;color:var(--ink-soft);font-size:.88rem}
   .socials{margin-bottom:10px}
   .socials a{margin:0 10px;font-weight:500}
@@ -175,7 +179,7 @@
     <div class="section-head">
       <span class="eyebrow"><span data-es>Precios</span><span data-en>Pricing</span></span>
       <h2><span data-es>Precios claros, sin sorpresas</span><span data-en>Clear prices, no surprises</span></h2>
-      <p><span data-es>La mayoría de los proyectos ya tienen precio. Elegí el que se parece a lo tuyo y escribime.</span><span data-en>Most projects are already priced. Pick the one that looks like yours and message me.</span></p>
+      <p><span data-es>La mayoría de los proyectos ya tienen precio. Elige el que se parece a lo tuyo y escríbeme.</span><span data-en>Most projects are already priced. Pick the one that looks like yours and message me.</span></p>
     </div>
     <div class="price-flex">
       <div class="price-card">
@@ -279,6 +283,7 @@
       <h2><span data-es>¿Listo para hacer crecer tu negocio?</span><span data-en>Ready to grow your business?</span></h2>
       <p><span data-es>Cuéntame tu idea por WhatsApp y agendamos una videollamada gratuita. Sin compromiso y sin tecnicismos.</span><span data-en>Tell me your idea on WhatsApp and we'll set up a free video call. No strings attached, no tech jargon.</span></p>
       <a class="btn" href="https://wa.me/50253771248?text=Hola%20Nory%2C%20vi%20clickwiseowl.com%20y%20me%20gustar%C3%ADa%20m%C3%A1s%20informaci%C3%B3n." target="_blank" rel="noopener"><span data-es>Escríbeme por WhatsApp</span><span data-en>Message me on WhatsApp</span></a>
+      <button class="btn cal" data-cal-namespace="cafe" data-cal-link="clickwiseowl/15min" data-cal-config='{"layout":"month_view"}'><span data-es>Agenda una videollamada</span><span data-en>Book a video call</span></button>
     </div>
   </div>
 </section>
@@ -303,6 +308,12 @@
       document.documentElement.setAttribute('lang','en');
     }
   } catch(e) {}
+</script>
+
+<script>
+(function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if (typeof namespace === "string") { cal.ns[namespace] = cal.ns[namespace] || api; p(cal.ns[namespace], ar); p(cal, ["initNamespace", namespace]); } else p(cal, ar); return; } p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
+Cal("init", "cafe", {origin:"https://app.cal.com"});
+Cal.ns.cafe("ui", {"cssVarsPerTheme":{"light":{"cal-brand":"#7d2e8e"},"dark":{"cal-brand":"#7d2e8e"}},"hideEventTypeDetails":false,"layout":"month_view"});
 </script>
 
 </body>
