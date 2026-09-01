@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-WBDLWHS6');</script>
+<!-- End Google Tag Manager -->
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Click Wise Owl — Sitios y apps web con IA para tu negocio</title>
@@ -84,6 +92,11 @@
 </style>
 </head>
 <body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WBDLWHS6"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
 
 <nav>
   <div class="wrap nav-inner">
@@ -335,5 +348,53 @@ Cal("init", "cafe", {origin:"https://app.cal.com"});
 Cal.ns.cafe("ui", {"cssVarsPerTheme":{"light":{"cal-brand":"#7d2e8e"},"dark":{"cal-brand":"#7d2e8e"}},"hideEventTypeDetails":false,"layout":"month_view"});
 </script>
 
+
+<!-- Eventos al dataLayer: lo que vale la pena medir en este sitio -->
+<script>
+(function () {
+  window.dataLayer = window.dataLayer || [];
+  function push(o) { window.dataLayer.push(o); }
+
+  var DEMOS = { "/demo/": "bot_citas", "/demo/salon/": "sitio_salon", "/demo/cotizador/": "cotizador" };
+
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest("a, button");
+    if (!a) { return; }
+
+    // WhatsApp
+    var href = a.getAttribute("href") || "";
+    if (href.indexOf("wa.me") > -1) {
+      push({ event: "whatsapp_click", ubicacion: a.closest("section, footer, nav") ? (a.closest("section, footer, nav").id || "otro") : "otro" });
+      return;
+    }
+
+    // Cal.com
+    if (a.hasAttribute("data-cal-link")) {
+      push({ event: "agendar_click", origen: a.getAttribute("data-cal-link") });
+      return;
+    }
+
+    // demos
+    if (DEMOS[href]) {
+      push({ event: "demo_click", demo: DEMOS[href] });
+      return;
+    }
+
+    // idioma
+    if (a.classList.contains("lang-btn")) {
+      push({ event: "cambio_idioma", idioma: document.body.classList.contains("en") ? "es" : "en" });
+    }
+  }, true);
+
+  // el visitante llego a ver los precios
+  var precios = document.getElementById("precios");
+  if (precios && "IntersectionObserver" in window) {
+    var seen = false;
+    new IntersectionObserver(function (en, obs) {
+      if (!seen && en[0].isIntersecting) { seen = true; push({ event: "vio_precios" }); obs.disconnect(); }
+    }, { threshold: 0.35 }).observe(precios);
+  }
+})();
+</script>
 </body>
 </html>
