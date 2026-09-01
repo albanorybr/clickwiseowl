@@ -1,0 +1,553 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Así se ve un sitio web para un salón de belleza en Guatemala: carta de servicios con precios reales, galería de trabajos y reserva en línea por estilista. Cambiá entre el paquete de sitio profesional y el de sitio con agenda para ver qué añade la agenda conectada.">
+<meta name="theme-color" content="#0B0B0B">
+<link rel="canonical" href="https://clickwiseowl.com/demo/salon/">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Click Wise Owl">
+<meta property="og:locale" content="es_GT">
+<meta property="og:url" content="https://clickwiseowl.com/demo/salon/">
+<meta property="og:title" content="Así se ve el sitio de tu salón">
+<meta property="og:description" content="Así se ve un sitio web para un salón de belleza en Guatemala: carta de servicios con precios reales, galería de trabajos y reserva en línea por estilista. Cambiá entre el paquete de sitio profesional y el de sitio con agenda para ver qué añade la agenda conectada.">
+<meta property="og:image" content="https://clickwiseowl.com/demo/salon/card.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Fachada del salón Luna — demostración de Click Wise Owl">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Así se ve el sitio de tu salón">
+<meta name="twitter:description" content="Así se ve un sitio web para un salón de belleza en Guatemala: carta de servicios con precios reales, galería de trabajos y reserva en línea por estilista. Cambiá entre el paquete de sitio profesional y el de sitio con agenda para ver qué añade la agenda conectada.">
+<meta name="twitter:image" content="https://clickwiseowl.com/demo/salon/card.jpg">
+
+<title>Demo: sitio web para salón de belleza | Click Wise Owl</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Jost:wght@300;400;500&display=swap">
+
+<style>
+  /* Editorial salon world, built to survive phone photography:
+     neutral palette so it never fights the colours in a client's photos,
+     fixed crops so mismatched images read as a set, generous white margins
+     so nothing is full-bleed and low resolution never shows at the edges. */
+  :root {
+    --paper:  #FFFFFF;
+    --bone:   #F4F1EC;
+    --ink:    #0B0B0B;
+    --ink-2:  #4A4642;
+    --greige: #8C837B;
+    --line:   #E4E0D9;
+    --sand:   #B49A80;
+
+    --bar:     #101A17;
+    --bar-ink: #E9EEEB;
+    --jade:    #1B6E52;
+
+    --display: "Bodoni Moda", Didot, "Bodoni MT", Georgia, serif;
+    --ui: "Jost", "Helvetica Neue", Arial, sans-serif;
+
+    /* one filter applied to every photo so a mismatched set looks intentional */
+    --unify: saturate(.90) contrast(1.03) brightness(1.01);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0; background: var(--paper); color: var(--ink);
+    font-family: var(--ui); font-size: 16px; font-weight: 300; line-height: 1.65;
+    -webkit-font-smoothing: antialiased; padding-bottom: 62px;
+  }
+
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 30px; }
+  .narrow { max-width: 720px; margin: 0 auto; padding: 0 30px; }
+
+  h1, h2, .fig, .word, .lead { font-family: var(--display); font-weight: 400; }
+
+  .micro {
+    font-family: var(--ui); font-size: .63rem; font-weight: 400;
+    letter-spacing: .34em; text-transform: uppercase; color: var(--greige);
+  }
+  .micro.dark { color: var(--ink); }
+
+  a { color: inherit; }
+  .ph { filter: var(--unify); }
+
+  /* ===== Click Wise Owl demo bar ===== */
+
+  .cwo { background: var(--bar); color: var(--bar-ink); position: sticky; top: 0; z-index: 80; font-family: var(--ui); font-weight: 400; filter: none; }
+  .cwo-in { max-width: 1180px; margin: 0 auto; padding: 10px 30px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+  .cwo .tagline { font-size: .76rem; color: #A8B7B1; }
+  .cwo .tagline b { color: var(--bar-ink); font-weight: 500; }
+  .plans { display: flex; margin-left: auto; border: 1px solid #2C3A35; }
+  .plans button {
+    font-family: var(--ui); font-size: .67rem; letter-spacing: .1em; text-transform: uppercase;
+    padding: 7px 13px; background: transparent; color: #A8B7B1; border: 0; cursor: pointer; white-space: nowrap;
+  }
+  .plans button + button { border-left: 1px solid #2C3A35; }
+  .plans button[aria-pressed="true"] { background: var(--jade); color: #FFFFFF; }
+  .plans button:focus-visible { outline: 2px solid var(--jade); outline-offset: -2px; }
+  .cwo a.back { color: #A8B7B1; font-size: .72rem; text-decoration: none; white-space: nowrap; }
+
+  /* ===== masthead ===== */
+
+  .mast { position: sticky; top: 40px; z-index: 70; background: var(--paper); border-bottom: 1px solid var(--line); }
+  @media (max-width: 760px) { .mast { position: static; } }
+  .mast-in { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 19px 30px; max-width: 1180px; margin: 0 auto; gap: 16px; }
+  .mast nav { display: flex; gap: 30px; }
+  .mast nav a { text-decoration: none; }
+  @media (max-width: 900px) { .mast nav a.hide-s { display: none; } }
+
+  .word { font-size: clamp(1.45rem, 3.2vw, 2rem); letter-spacing: .32em; text-transform: uppercase; text-align: center; line-height: 1; white-space: nowrap; }
+  .mast .right { justify-self: end; }
+
+  .link {
+    font-family: var(--ui); font-size: .63rem; letter-spacing: .28em; text-transform: uppercase;
+    text-decoration: none; color: var(--ink); border-bottom: 1px solid var(--ink); padding-bottom: 3px;
+  }
+  .link:hover { color: var(--greige); border-color: var(--greige); }
+
+  /* ===== photo frames — fixed crops, never full bleed ===== */
+
+  .ph {
+    background: var(--bone); display: grid; place-items: center; text-align: center;
+    padding: 18px; position: relative; overflow: hidden;
+  }
+  img.shot {
+    display: block; width: 100%; height: 100%; object-fit: cover;
+    background: var(--bone); filter: var(--unify);
+  }
+  .frame { position: relative; overflow: hidden; background: var(--bone); }
+  .frame::after {
+    content: ""; position: absolute; inset: 0;
+    box-shadow: inset 0 0 0 1px rgba(11,11,11,.07); pointer-events: none;
+  }
+  .ph::after { content: ""; position: absolute; inset: 12px; border: 1px solid rgba(11,11,11,.08); pointer-events: none; }
+  .ph span {
+    font-family: var(--ui); font-size: .58rem; letter-spacing: .26em; text-transform: uppercase;
+    color: #A79C90; line-height: 2.2; font-weight: 400;
+  }
+  .ph span b { display: block; font-weight: 500; color: #8B7F72; letter-spacing: .2em; }
+  .r45 { aspect-ratio: 4 / 5; }   /* the ratio a phone already shoots for Instagram */
+  .r11 { aspect-ratio: 1 / 1; }
+  .r43 { aspect-ratio: 4 / 3; }
+
+  /* ===== hero: type carries it, photos support ===== */
+
+  .hero { padding: 74px 0 20px; text-align: center; }
+  .hero h1 {
+    font-size: clamp(2.5rem, 6.4vw, 5rem); line-height: .98; letter-spacing: -0.012em;
+    margin: 20px auto 0; max-width: 14ch; text-wrap: balance;
+  }
+  .hero h1 em { font-style: italic; }
+  .hero .sub { max-width: 46ch; margin: 24px auto 0; color: var(--ink-2); font-size: 1rem; }
+
+  .contact-sheet { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; margin-top: 56px; }
+  @media (max-width: 780px) { .contact-sheet { grid-template-columns: 1fr; gap: 20px; max-width: 420px; margin-left: auto; margin-right: auto; } }
+  .contact-sheet .cell .cap { padding-top: 14px; }
+
+  /* ===== statement ===== */
+
+  .statement { padding: 92px 0 88px; text-align: center; }
+  .statement .lead { font-size: clamp(1.3rem, 2.7vw, 1.9rem); line-height: 1.34; margin: 20px auto 0; max-width: 24ch; }
+
+  /* ===== tarifas ===== */
+
+  .tarifas { background: var(--bone); padding: 92px 0 96px; }
+  .sec-lead { text-align: center; margin-bottom: 52px; }
+  .sec-lead h2 { font-size: clamp(1.9rem, 4.2vw, 2.9rem); line-height: 1.07; margin: 16px 0 0; }
+
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 0 64px; max-width: 960px; margin: 0 auto; }
+  @media (max-width: 860px) { .cols { grid-template-columns: 1fr; gap: 0; } }
+  .grp { margin-bottom: 38px; }
+  .grp > .micro { display: block; padding-bottom: 12px; border-bottom: 1px solid #DED9D1; margin-bottom: 6px; }
+  .item { display: flex; align-items: baseline; gap: 14px; padding: 11px 0; }
+  .item .t { font-size: .95rem; font-weight: 300; }
+  .item .t small { display: block; font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--greige); margin-top: 3px; }
+  .item .fill { flex: 1; min-width: 12px; }
+  .fig { font-size: 1.02rem; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .tarifas .foot { text-align: center; margin-top: 8px; }
+
+  /* ===== reserva ===== */
+
+  #reserva { display: none; }
+  body[data-plan="agenda"] #reserva { display: block; }
+  .reserva { padding: 92px 0 96px; }
+  .booker { max-width: 800px; margin: 0 auto; }
+  .step { margin-bottom: 32px; }
+  .step > .micro { display: block; margin-bottom: 13px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 0; border-left: 1px solid var(--line); border-top: 1px solid var(--line); }
+  .chip {
+    font-family: var(--ui); font-size: .72rem; letter-spacing: .14em; text-transform: uppercase;
+    padding: 15px 20px; cursor: pointer; background: var(--paper); color: var(--ink-2);
+    border: 0; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line);
+    line-height: 1.4; text-align: left; flex: 1 1 auto; min-width: 148px;
+  }
+  .chip small { display: block; font-size: .58rem; letter-spacing: .22em; color: var(--greige); margin-top: 4px; }
+  .chip:hover { color: var(--ink); background: var(--bone); }
+  .chip[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+  .chip[aria-pressed="true"] small { color: #9E958C; }
+  .chip:focus-visible { outline: 2px solid var(--sand); outline-offset: -3px; }
+  .chip[disabled] { color: #C3BDB5; cursor: not-allowed; }
+  .chip[disabled] small { color: #C3BDB5; }
+
+  .solid {
+    font-family: var(--ui); font-size: .66rem; letter-spacing: .28em; text-transform: uppercase;
+    background: var(--ink); color: var(--paper); border: 0; padding: 17px 38px; cursor: pointer;
+    text-decoration: none; display: inline-block;
+  }
+  .solid:hover { background: var(--sand); }
+  .solid:focus-visible { outline: 2px solid var(--sand); outline-offset: 3px; }
+
+  .booked { border-top: 1px solid var(--ink); margin-top: 28px; padding-top: 22px; }
+  .booked .det { font-family: var(--display); font-size: 1.2rem; display: block; margin: 8px 0 10px; }
+  .booked p { font-size: .89rem; color: var(--ink-2); margin: 0; max-width: 54ch; }
+  .why { margin: 38px auto 0; max-width: 800px; font-size: .85rem; color: var(--ink-2); border-top: 1px solid var(--line); padding-top: 18px; }
+
+  /* ===== equipo ===== */
+
+  .equipo { padding: 92px 0 96px; }
+  .four { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+  @media (max-width: 900px) { .four { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 480px) { .four { grid-template-columns: 1fr; max-width: 320px; margin: 0 auto; } }
+  .four .cap { padding-top: 14px; }
+  .four .cap .n { font-family: var(--display); font-size: 1.05rem; display: block; margin-bottom: 5px; }
+
+  /* ===== galería: contact sheet, margins, square crops ===== */
+
+  .galeria { background: var(--bone); padding: 92px 0 96px; }
+  .gal { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; max-width: 940px; margin: 0 auto; }
+  @media (max-width: 780px) { .gal { grid-template-columns: repeat(2, 1fr); gap: 16px; } }
+  .gal .ph { background: #EAE5DD; }
+  .gal-note { text-align: center; margin-top: 34px; }
+
+  /* ===== visita ===== */
+
+  .visita { padding: 92px 0 96px; }
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+  @media (max-width: 860px) { .split { grid-template-columns: 1fr; gap: 34px; } }
+  .split h2 { font-family: var(--display); font-weight: 400; font-size: clamp(1.8rem, 3.8vw, 2.6rem); margin: 16px 0 22px; line-height: 1.1; }
+  .hours { width: 100%; border-collapse: collapse; margin-top: 4px; }
+  .hours td { padding: 13px 0; border-bottom: 1px solid var(--line); font-size: .9rem; color: var(--ink-2); }
+  .hours td:last-child { text-align: right; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .hours tr:last-child td { border-bottom: 0; }
+  .addr { margin-top: 24px; font-size: .92rem; color: var(--ink-2); }
+  .addr strong { font-weight: 500; color: var(--ink); }
+  .visita .ph { aspect-ratio: 4 / 3.3; }
+
+  /* ===== fixed bar ===== */
+
+  .fixed-bar {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 75; filter: none;
+    background: var(--ink); color: var(--paper);
+    display: flex; align-items: center; justify-content: center; gap: 24px; padding: 16px 22px;
+  }
+  .fixed-bar .lbl { font-size: .62rem; letter-spacing: .3em; text-transform: uppercase; color: #A9A29A; }
+  @media (max-width: 640px) { .fixed-bar .lbl { display: none; } }
+  .fixed-bar a {
+    font-size: .65rem; letter-spacing: .28em; text-transform: uppercase; text-decoration: none;
+    color: var(--paper); border-bottom: 1px solid var(--paper); padding-bottom: 3px;
+  }
+
+  /* ===== footer ===== */
+
+  .foot { border-top: 1px solid var(--line); padding: 58px 0 52px; text-align: center; }
+  .foot .word { font-size: 1.45rem; margin-bottom: 18px; }
+  .foot p { font-size: .84rem; color: var(--ink-2); margin: 0 0 6px; }
+  .made { margin-top: 32px; padding-top: 22px; border-top: 1px solid var(--line); font-size: .75rem; color: var(--greige); }
+
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="cwo">
+  <div class="cwo-in">
+    <span class="tagline"><b>Demostración de Click Wise Owl</b> · salón ficticio, precios reales del mercado</span>
+    <div class="plans" role="group" aria-label="Elegir paquete">
+      <button type="button" data-plan="sitio" aria-pressed="true">Sitio · Q5,500</button>
+      <button type="button" data-plan="agenda" aria-pressed="false">Sitio + agenda · Q9,500</button>
+    </div>
+    <a class="back" href="/">← clickwiseowl.com</a>
+  </div>
+</div>
+
+<div class="mast">
+  <div class="mast-in">
+    <nav>
+      <a class="micro dark hide-s" href="#tarifas">Tarifas</a>
+      <a class="micro dark hide-s" href="#equipo">Equipo</a>
+      <a class="micro dark hide-s" href="#galeria">Galería</a>
+    </nav>
+    <span class="word">Luna</span>
+    <span class="right"><a class="link" href="#contacto">Reservar</a></span>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="micro">Estudio de belleza · Zona 10 · Guatemala</span>
+    <h1>El corte que <em>sí</em> era.</h1>
+    <p class="sub">Un estudio pequeño, solo con cita, sin filas y sin apuro. Escuchamos qué querés antes de tocarte el pelo — y te decimos honestamente si se puede.</p>
+
+    <div class="contact-sheet">
+      <div class="cell">
+        <div class="frame r45"><img class="shot" src="img/hero-local.jpg" alt="Interior del salón Luna, dos estaciones con espejos y sillas beige" fetchpriority="high" width="1080" height="1350"></div>
+        <div class="cap"><span class="micro">El estudio</span></div>
+      </div>
+      <div class="cell">
+        <div class="frame r45"><img class="shot" src="img/hero-color.jpg" alt="Cabello castaño con balayage y ondas sueltas, trabajo de color del salón" loading="lazy" width="1080" height="1350"></div>
+        <div class="cap"><span class="micro">Color</span></div>
+      </div>
+      <div class="cell">
+        <div class="frame r45"><img class="shot" src="img/hero-unas.jpg" alt="Manos con manicura en tono nude sobre superficie de mármol" loading="lazy" width="1080" height="1350"></div>
+        <div class="cap"><span class="micro">Uñas</span></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="statement">
+  <div class="narrow">
+    <span class="micro">Solo con cita</span>
+    <p class="lead">La misma persona te atiende siempre. No empezás de cero cada vez.</p>
+  </div>
+</section>
+
+<section class="tarifas" id="tarifas">
+  <div class="wrap">
+    <div class="sec-lead">
+      <span class="micro">Tarifas</span>
+      <h2>Precios de lista</h2>
+    </div>
+
+    <div class="cols">
+      <div>
+        <div class="grp">
+          <span class="micro dark">Color</span>
+          <div class="item"><span class="t">Tinte completo<small>Un solo tono</small></span><span class="fill"></span><span class="fig">desde Q375</span></div>
+          <div class="item"><span class="t">Mechas<small>2 a 4 horas</small></span><span class="fill"></span><span class="fig">desde Q495</span></div>
+          <div class="item"><span class="t">Babylights<small>Sin línea de raíz</small></span><span class="fill"></span><span class="fig">desde Q750</span></div>
+          <div class="item"><span class="t">Balayage<small>Con matizado</small></span><span class="fill"></span><span class="fig">desde Q1,200</span></div>
+          <div class="item"><span class="t">Matizado</span><span class="fill"></span><span class="fig">Q250</span></div>
+        </div>
+        <div class="grp">
+          <span class="micro dark">Corte y peinado</span>
+          <div class="item"><span class="t">Corte y secado<small>Mujer</small></span><span class="fill"></span><span class="fig">Q250</span></div>
+          <div class="item"><span class="t">Corte caballero</span><span class="fill"></span><span class="fig">Q120</span></div>
+          <div class="item"><span class="t">Corte niños</span><span class="fill"></span><span class="fig">Q90</span></div>
+          <div class="item"><span class="t">Blower</span><span class="fill"></span><span class="fig">Q85</span></div>
+          <div class="item"><span class="t">Peinado de evento<small>Boda · Graduación</small></span><span class="fill"></span><span class="fig">desde Q350</span></div>
+        </div>
+      </div>
+      <div>
+        <div class="grp">
+          <span class="micro dark">Tratamientos</span>
+          <div class="item"><span class="t">Botox capilar<small>Brillo, sin alisar</small></span><span class="fill"></span><span class="fig">desde Q250</span></div>
+          <div class="item"><span class="t">Keratina<small>Dura 3 a 5 meses</small></span><span class="fill"></span><span class="fig">desde Q900</span></div>
+          <div class="item"><span class="t">Hidratación profunda</span><span class="fill"></span><span class="fig">Q300</span></div>
+        </div>
+        <div class="grp">
+          <span class="micro dark">Uñas</span>
+          <div class="item"><span class="t">Manicure clásico</span><span class="fill"></span><span class="fig">Q100</span></div>
+          <div class="item"><span class="t">Manicure ruso</span><span class="fill"></span><span class="fig">Q150</span></div>
+          <div class="item"><span class="t">Uñas en gel<small>Un color</small></span><span class="fill"></span><span class="fig">Q200</span></div>
+          <div class="item"><span class="t">Pedicure spa</span><span class="fill"></span><span class="fig">Q180</span></div>
+        </div>
+        <div class="grp">
+          <span class="micro dark">Rostro</span>
+          <div class="item"><span class="t">Laminado de cejas</span><span class="fill"></span><span class="fig">Q150</span></div>
+          <div class="item"><span class="t">Facial profundo</span><span class="fill"></span><span class="fig">Q450</span></div>
+          <div class="item"><span class="t">Maquillaje de evento</span><span class="fill"></span><span class="fig">desde Q450</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="foot"><span class="micro">Efectivo · Tarjeta · Transferencia — cancelaciones con 4 horas</span></div>
+  </div>
+</section>
+
+<section class="reserva" id="reserva">
+  <div class="wrap">
+    <div class="sec-lead">
+      <span class="micro">Reservá en línea</span>
+      <h2>Elegí tu estilista y tu hora</h2>
+    </div>
+
+    <div class="booker">
+      <div class="step">
+        <span class="micro dark">01 — Servicio</span>
+        <div class="chips" id="svc">
+          <button type="button" class="chip" aria-pressed="true" data-v="Corte y secado">Corte y secado<small>1 h</small></button>
+          <button type="button" class="chip" aria-pressed="false" data-v="Mechas">Mechas<small>3 h</small></button>
+          <button type="button" class="chip" aria-pressed="false" data-v="Balayage">Balayage<small>4 h</small></button>
+          <button type="button" class="chip" aria-pressed="false" data-v="Manicure ruso">Manicure ruso<small>1 h</small></button>
+          <button type="button" class="chip" aria-pressed="false" data-v="Keratina">Keratina<small>3 h</small></button>
+        </div>
+      </div>
+
+      <div class="step">
+        <span class="micro dark">02 — Estilista</span>
+        <div class="chips" id="who">
+          <button type="button" class="chip" aria-pressed="true" data-v="Andrea">Andrea<small>Color</small></button>
+          <button type="button" class="chip" aria-pressed="false" data-v="Sofía">Sofía<small>Corte</small></button>
+          <button type="button" class="chip" aria-pressed="false" data-v="Melissa">Melissa<small>Uñas</small></button>
+          <button type="button" class="chip" aria-pressed="false" data-v="quien esté libre">Quien esté libre<small>Más opciones</small></button>
+        </div>
+      </div>
+
+      <div class="step">
+        <span class="micro dark">03 — Día</span>
+        <div class="chips" id="day">
+          <button type="button" class="chip" disabled>Lun 1<small>Cerrado</small></button>
+          <button type="button" class="chip" aria-pressed="true" data-v="martes 2">Mar 2<small>3 espacios</small></button>
+          <button type="button" class="chip" aria-pressed="false" data-v="miércoles 3">Mié 3<small>5 espacios</small></button>
+          <button type="button" class="chip" aria-pressed="false" data-v="viernes 5">Vie 5<small>2 espacios</small></button>
+          <button type="button" class="chip" disabled>Sáb 6<small>Lleno</small></button>
+        </div>
+      </div>
+
+      <div class="step">
+        <span class="micro dark">04 — Hora</span>
+        <div class="chips" id="time">
+          <button type="button" class="chip" aria-pressed="true" data-v="9:00 a.m.">9:00 a.m.</button>
+          <button type="button" class="chip" aria-pressed="false" data-v="11:30 a.m.">11:30 a.m.</button>
+          <button type="button" class="chip" aria-pressed="false" data-v="3:00 p.m.">3:00 p.m.</button>
+          <button type="button" class="chip" aria-pressed="false" data-v="5:30 p.m.">5:30 p.m.</button>
+        </div>
+      </div>
+
+      <button type="button" class="solid" id="go">Confirmar cita</button>
+
+      <div class="booked" id="ok" hidden>
+        <span class="micro dark">Cita confirmada</span>
+        <span class="det" id="okline"></span>
+        <p>Te mandamos la confirmación por WhatsApp y un recordatorio un día antes. Si necesitás moverla, lo hacés desde ese mismo mensaje.</p>
+      </div>
+    </div>
+
+    <p class="why">Ésta es la diferencia entre el paquete de Q5,500 y el de Q9,500: la agenda conectada de verdad al calendario del salón, por estilista, con recordatorios automáticos. <a href="/demo/">Vea también el bot de WhatsApp →</a></p>
+  </div>
+</section>
+
+<section class="equipo" id="equipo">
+  <div class="wrap">
+    <div class="sec-lead">
+      <span class="micro">Equipo</span>
+      <h2>Quién te atiende</h2>
+    </div>
+    <div class="four">
+      <div><div class="frame r45"><img class="shot" src="img/equipo-1.jpg" alt="Andrea Solís, estilista de color y mechas" loading="lazy" width="1080" height="1350"></div><div class="cap"><span class="n">Andrea Solís</span><span class="micro">Color y mechas</span></div></div>
+      <div><div class="frame r45"><img class="shot" src="img/equipo-2.jpg" alt="Sofía Ramírez, estilista de corte y peinado" loading="lazy" width="1080" height="1350"></div><div class="cap"><span class="n">Sofía Ramírez</span><span class="micro">Corte y peinado</span></div></div>
+      <div><div class="frame r45"><img class="shot" src="img/equipo-3.jpg" alt="Melissa Fuentes, especialista en uñas" loading="lazy" width="1080" height="1350"></div><div class="cap"><span class="n">Melissa Fuentes</span><span class="micro">Uñas</span></div></div>
+      <div><div class="frame r45"><img class="shot" src="img/equipo-4.jpg" alt="Karen Ovalle, especialista en tratamientos" loading="lazy" width="1080" height="1350"></div><div class="cap"><span class="n">Karen Ovalle</span><span class="micro">Tratamientos</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="galeria" id="galeria">
+  <div class="wrap">
+    <div class="sec-lead">
+      <span class="micro">Galería</span>
+      <h2>Trabajos del mes</h2>
+    </div>
+    <div class="gal">
+      <div class="frame r11"><img class="shot" src="img/galeria-1.jpg" alt="Cabello castaño liso y brillante, vista de perfil" loading="lazy" width="1080" height="1080"></div>
+      <div class="frame r11"><img class="shot" src="img/galeria-2.jpg" alt="Corte bob a la altura de la mandíbula, vista de perfil" loading="lazy" width="1080" height="1080"></div>
+      <div class="frame r11"><img class="shot" src="img/galeria-3.jpg" alt="Recogido bajo con ondas suaves para evento" loading="lazy" width="1080" height="1080"></div>
+      <div class="frame r11"><img class="shot" src="img/galeria-4.jpg" alt="Manicura francesa clásica en uñas cortas" loading="lazy" width="1080" height="1080"></div>
+      <div class="frame r11"><img class="shot" src="img/galeria-5.jpg" alt="Cabello largo liso y brillante después de tratamiento" loading="lazy" width="1080" height="1080"></div>
+      <div class="frame r11"><img class="shot" src="img/galeria-6.jpg" alt="Ondas cobrizas con balayage cálido" loading="lazy" width="1080" height="1080"></div>
+    </div>
+    <div class="gal-note"><span class="micro">Seis trabajos al mes · publicados con permiso de cada clienta</span></div>
+  </div>
+</section>
+
+<section class="visita" id="contacto">
+  <div class="wrap split">
+    <div>
+      <span class="micro">Visitanos</span>
+      <h2>Zona 10, media cuadra de la Reforma</h2>
+      <table class="hours">
+        <tr><td>Martes a viernes</td><td>9:00 – 19:00</td></tr>
+        <tr><td>Sábado</td><td>8:00 – 17:00</td></tr>
+        <tr><td>Domingo y lunes</td><td>Cerrado</td></tr>
+        <tr><td>Reservas</td><td>WhatsApp o en línea</td></tr>
+      </table>
+      <p class="addr"><strong>14 calle 3-21, zona 10</strong><br>Ciudad de Guatemala · Parqueo para clientas</p>
+      <p style="margin-top:26px"><a class="solid" href="#reserva" id="cta-main">Escribinos por WhatsApp</a></p>
+    </div>
+    <div class="frame r43"><img class="shot" src="img/local-fachada.jpg" alt="Fachada del salón Luna en zona 10, Ciudad de Guatemala" loading="lazy" width="1600" height="1200"></div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap">
+    <span class="word">Luna</span>
+    <p>14 calle 3-21, zona 10 · Ciudad de Guatemala</p>
+    <p><span class="micro">WhatsApp · Instagram · Solo con cita</span></p>
+    <p class="made">Salón ficticio creado como demostración por <a href="/">Click Wise Owl</a> — sitios web y asistentes con IA para negocios en Guatemala. Los precios mostrados son rangos reales del mercado guatemalteco.</p>
+  </div>
+</footer>
+
+<div class="fixed-bar">
+  <span class="lbl">Luna · Salón de belleza · Zona 10</span>
+  <a href="#contacto">Reservar cita</a>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var body = document.body;
+  var ctaMain = document.getElementById("cta-main");
+
+  function setPlan(plan) {
+    body.setAttribute("data-plan", plan);
+    Array.prototype.forEach.call(document.querySelectorAll(".plans button"), function (b) {
+      b.setAttribute("aria-pressed", b.getAttribute("data-plan") === plan ? "true" : "false");
+    });
+    if (plan === "agenda") {
+      ctaMain.textContent = "Apartar mi espacio en línea";
+      ctaMain.setAttribute("href", "#reserva");
+    } else {
+      ctaMain.textContent = "Escribinos por WhatsApp";
+      ctaMain.setAttribute("href", "#contacto");
+    }
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll(".plans button"), function (b) {
+    b.addEventListener("click", function () { setPlan(b.getAttribute("data-plan")); });
+  });
+  setPlan("sitio");
+
+  function group(id) {
+    var box = document.getElementById(id);
+    Array.prototype.forEach.call(box.querySelectorAll(".chip"), function (c) {
+      if (c.disabled) { return; }
+      c.addEventListener("click", function () {
+        Array.prototype.forEach.call(box.querySelectorAll(".chip"), function (o) {
+          if (!o.disabled) { o.setAttribute("aria-pressed", o === c ? "true" : "false"); }
+        });
+        document.getElementById("ok").hidden = true;
+      });
+    });
+    return function () {
+      var sel = box.querySelector('.chip[aria-pressed="true"]');
+      return sel ? sel.getAttribute("data-v") : "";
+    };
+  }
+
+  var getSvc = group("svc"), getWho = group("who"), getDay = group("day"), getTime = group("time");
+
+  document.getElementById("go").addEventListener("click", function () {
+    var ok = document.getElementById("ok");
+    document.getElementById("okline").textContent =
+      getSvc() + " con " + getWho() + " · " + getDay() + " a las " + getTime();
+    ok.hidden = false;
+    ok.scrollIntoView({ block: "nearest", behavior: "smooth" });
+  });
+})();
+</script>
+</body>
+</html>
