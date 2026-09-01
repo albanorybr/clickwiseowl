@@ -1,0 +1,637 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Un panel que convierte los datos del sistema de reservas en decisiones: ingresos por mes y por servicio, ocupacion por dia y hora, clientas nuevas contra recurrentes — y la lectura de que hacer con cada numero. Demostracion de Click Wise Owl.">
+<meta name="theme-color" content="#101A17">
+<link rel="canonical" href="https://clickwiseowl.com/demo/panel/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Click Wise Owl">
+<meta property="og:locale" content="es_GT">
+<meta property="og:url" content="https://clickwiseowl.com/demo/panel/">
+<meta property="og:title" content="Los numeros no sirven si nadie los lee">
+<meta property="og:description" content="Un panel que convierte los datos del sistema de reservas en decisiones: ingresos por mes y por servicio, ocupacion por dia y hora, clientas nuevas contra recurrentes — y la lectura de que hacer con cada numero. Demostracion de Click Wise Owl.">
+<meta property="og:image" content="https://clickwiseowl.com/demo/panel/card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Los numeros no sirven si nadie los lee">
+<meta name="twitter:description" content="Un panel que convierte los datos del sistema de reservas en decisiones: ingresos por mes y por servicio, ocupacion por dia y hora, clientas nuevas contra recurrentes — y la lectura de que hacer con cada numero. Demostracion de Click Wise Owl.">
+<meta name="twitter:image" content="https://clickwiseowl.com/demo/panel/card.png">
+
+<title>Demo: panel de datos para un negocio | Click Wise Owl</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap">
+
+<style>
+  :root {
+    /* chrome + ink — reference dataviz surfaces, so the validated palette holds */
+    --surface:   #fcfcfb;
+    --plane:     #f9f9f7;
+    --ink:       #0b0b0b;
+    --ink-2:     #52514e;
+    --muted:     #898781;
+    --grid:      #e1e0d9;
+    --axis:      #c3c2b7;
+    --line:      #e6e5df;
+
+    /* categorical slots 1–2, validated as a pair in both modes */
+    --s1: #2a78d6;
+    --s2: #eb6834;
+
+    /* sequential blue ramp, for the occupancy heatmap */
+    --q1: #cde2fb; --q2: #9ec5f4; --q3: #6da7ec; --q4: #3987e5; --q5: #256abf; --q6: #104281;
+
+    /* status — reserved, never a series */
+    --good:     #0ca30c;
+    --warning:  #fab219;
+    --critical: #d03b3b;
+
+    --bar:     #101A17;
+    --bar-ink: #E9EEEB;
+    --jade:    #1B6E52;
+
+    --ui: "Inter", system-ui, sans-serif;
+    --display: "Inter Tight", system-ui, sans-serif;
+    --shadow: 0 1px 2px rgba(11,11,11,.04), 0 8px 24px -16px rgba(11,11,11,.18);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --surface: #1a1a19;
+      --plane:   #0d0d0d;
+      --ink:     #ffffff;
+      --ink-2:   #c3c2b7;
+      --muted:   #898781;
+      --grid:    #2c2c2a;
+      --axis:    #383835;
+      --line:    #2c2c2a;
+      --s1: #3987e5;
+      --s2: #d95926;
+      --q1: #0d366b; --q2: #104281; --q3: #184f95; --q4: #256abf; --q5: #3987e5; --q6: #6da7ec;
+      --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.7);
+    }
+  }
+  :root[data-theme="dark"] {
+    --surface: #1a1a19;
+    --plane:   #0d0d0d;
+    --ink:     #ffffff;
+    --ink-2:   #c3c2b7;
+    --muted:   #898781;
+    --grid:    #2c2c2a;
+    --axis:    #383835;
+    --line:    #2c2c2a;
+    --s1: #3987e5;
+    --s2: #d95926;
+    --q1: #0d366b; --q2: #104281; --q3: #184f95; --q4: #256abf; --q5: #3987e5; --q6: #6da7ec;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.7);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0; background: var(--plane); color: var(--ink);
+    font-family: var(--ui); font-size: 15px; line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 26px; }
+
+  h1, h2, h3, .fig { font-family: var(--display); letter-spacing: -0.02em; }
+  h1 { font-size: clamp(1.7rem, 3.6vw, 2.3rem); font-weight: 700; margin: 0 0 6px; }
+  h2 { font-size: 1.02rem; font-weight: 600; margin: 0; letter-spacing: -0.01em; }
+  p { margin: 0 0 .9em; }
+  p:last-child { margin-bottom: 0; }
+
+  .micro {
+    font-size: .68rem; font-weight: 600; letter-spacing: .13em;
+    text-transform: uppercase; color: var(--muted);
+  }
+
+  /* ===== demo bar ===== */
+  .cwo { background: var(--bar); color: var(--bar-ink); position: sticky; top: 0; z-index: 60; }
+  .cwo-in { max-width: 1180px; margin: 0 auto; padding: 10px 26px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+  .cwo .t { font-size: .78rem; color: #A8B7B1; }
+  .cwo .t b { color: var(--bar-ink); font-weight: 600; }
+  .cwo a { margin-left: auto; color: #A8B7B1; font-size: .74rem; text-decoration: none; white-space: nowrap; }
+  .cwo a:hover { color: var(--bar-ink); }
+  @media (max-width: 640px) { .cwo a { margin-left: 0; } }
+
+  /* ===== header ===== */
+  header.top { padding: 40px 0 26px; display: flex; flex-wrap: wrap; align-items: flex-end; gap: 18px; }
+  header.top .sub { color: var(--ink-2); font-size: .95rem; margin: 0; max-width: 56ch; }
+  .period {
+    margin-left: auto; display: flex; border: 1px solid var(--line);
+    border-radius: 7px; overflow: hidden; background: var(--surface);
+  }
+  .period button {
+    font-family: var(--ui); font-size: .78rem; font-weight: 500; padding: 8px 14px;
+    background: transparent; color: var(--muted); border: 0; cursor: pointer; white-space: nowrap;
+  }
+  .period button + button { border-left: 1px solid var(--line); }
+  .period button[aria-pressed="true"] { background: var(--ink); color: var(--surface); }
+  .period button:focus-visible { outline: 2px solid var(--s1); outline-offset: -2px; }
+  @media (max-width: 700px) { .period { margin-left: 0; } }
+
+  /* ===== stat tiles ===== */
+  .tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  @media (max-width: 900px) { .tiles { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 520px) { .tiles { grid-template-columns: 1fr; } }
+
+  .tile {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 10px;
+    padding: 18px 20px 20px; box-shadow: var(--shadow);
+    display: flex; flex-direction: column; gap: 7px;
+  }
+  .tile .lab { font-size: .72rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+  .tile .fig { font-size: 1.95rem; font-weight: 700; line-height: 1.05; font-variant-numeric: tabular-nums; }
+  .tile .delta { font-size: .82rem; display: flex; align-items: center; gap: 6px; font-weight: 500; }
+  .tile .delta .ic { font-size: .9rem; line-height: 1; }
+  .up   { color: var(--good); }
+  .down { color: var(--critical); }
+  .flat { color: var(--muted); }
+  .tile .note { font-size: .8rem; color: var(--muted); line-height: 1.45; }
+
+  /* ===== chart cards ===== */
+  section { margin-top: 30px; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 900px) { .grid2 { grid-template-columns: 1fr; } }
+
+  .card {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 10px;
+    padding: 20px 22px 18px; box-shadow: var(--shadow);
+  }
+  .card-head { margin-bottom: 4px; }
+  .card-head .sub { font-size: .84rem; color: var(--muted); margin: 3px 0 0; }
+  .chart { position: relative; margin-top: 14px; }
+  svg { display: block; width: 100%; height: auto; overflow: visible; }
+
+  .gridline { stroke: var(--grid); stroke-width: 1; }
+  .axisline { stroke: var(--axis); stroke-width: 1; }
+  .tick { font-size: 11px; fill: var(--muted); font-family: var(--ui); }
+  .tick.num { font-variant-numeric: tabular-nums; }
+  .dlabel { font-size: 11.5px; fill: var(--ink-2); font-family: var(--ui); font-weight: 600; font-variant-numeric: tabular-nums; }
+
+  /* legend */
+  .legend { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 12px; }
+  .legend span { display: flex; align-items: center; gap: 7px; font-size: .8rem; color: var(--ink-2); }
+  .swatch { width: 10px; height: 10px; border-radius: 2px; flex: none; }
+
+  /* tooltip */
+  .tip {
+    position: absolute; pointer-events: none; opacity: 0; transform: translate(-50%, -100%);
+    background: var(--ink); color: var(--surface); font-size: .78rem; line-height: 1.4;
+    padding: 7px 10px; border-radius: 6px; white-space: nowrap; z-index: 20;
+    font-variant-numeric: tabular-nums;
+  }
+  .tip b { font-weight: 600; }
+  .tip.on { opacity: 1; }
+
+  /* heatmap */
+  .hm { display: grid; gap: 3px; margin-top: 14px; }
+  .hm-cell { aspect-ratio: 1.7 / 1; border-radius: 4px; display: grid; place-items: center; cursor: default; position: relative; }
+  .hm-cell span { font-size: .72rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .hm-lab { font-size: .72rem; color: var(--muted); display: grid; place-items: center; }
+  .hm-lab.row { justify-items: end; padding-right: 8px; }
+  .hm-scale { display: flex; align-items: center; gap: 8px; margin-top: 14px; font-size: .74rem; color: var(--muted); }
+  .hm-scale i { width: 22px; height: 10px; border-radius: 2px; display: block; }
+
+  /* ===== reading ===== */
+  .reading { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 26px 28px 28px; box-shadow: var(--shadow); }
+  .reading > .micro { display: block; margin-bottom: 8px; }
+  .reading h2 { font-size: 1.35rem; margin-bottom: 18px; }
+  .finds { display: flex; flex-direction: column; gap: 18px; }
+  .find { display: grid; grid-template-columns: 26px 1fr; gap: 14px; align-items: start; }
+  .find .n {
+    width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center;
+    font-size: .74rem; font-weight: 700; font-family: var(--display);
+    background: var(--ink); color: var(--surface);
+  }
+  .find h3 { font-size: .98rem; font-weight: 600; margin: 3px 0 5px; }
+  .find p { font-size: .92rem; color: var(--ink-2); margin: 0; max-width: 68ch; }
+  .find .act { margin-top: 7px; font-size: .92rem; padding-left: 13px; border-left: 2px solid var(--s2); color: var(--ink); }
+  .find .act b { font-weight: 600; }
+
+  /* ===== table view ===== */
+  .tablebtn {
+    font-family: var(--ui); font-size: .76rem; font-weight: 500; color: var(--ink-2);
+    background: transparent; border: 1px solid var(--line); border-radius: 6px;
+    padding: 7px 13px; cursor: pointer; margin-top: 16px;
+  }
+  .tablebtn:hover { color: var(--ink); border-color: var(--muted); }
+  .tablebtn:focus-visible { outline: 2px solid var(--s1); outline-offset: 2px; }
+  .tables { margin-top: 14px; }
+  .tables[hidden] { display: none; }
+  .tw { overflow-x: auto; margin-bottom: 22px; }
+  table { border-collapse: collapse; font-size: .84rem; min-width: 340px; }
+  caption { text-align: left; font-size: .78rem; font-weight: 600; color: var(--ink-2); padding-bottom: 7px; }
+  th, td { text-align: right; padding: 7px 14px 7px 0; border-bottom: 1px solid var(--line); font-variant-numeric: tabular-nums; }
+  th:first-child, td:first-child { text-align: left; }
+  th { color: var(--muted); font-weight: 600; font-size: .74rem; text-transform: uppercase; letter-spacing: .07em; }
+
+  footer { margin-top: 34px; padding: 24px 0 40px; border-top: 1px solid var(--line); font-size: .8rem; color: var(--muted); }
+  footer a { color: var(--ink-2); }
+
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="cwo">
+  <div class="cwo-in">
+    <span class="t"><b>Demostración de Click Wise Owl</b> · datos de ejemplo de un salón ficticio</span>
+    <a href="/">← clickwiseowl.com</a>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <header class="top">
+    <div>
+      <p class="micro">Panel mensual</p>
+      <h1>Luna · Salón de belleza</h1>
+      <p class="sub">Lo que muestran tres meses de citas tomadas en línea. Los números salen solos del sistema de reservas — nadie los escribe a mano.</p>
+    </div>
+    <div class="period" role="group" aria-label="Periodo">
+      <button type="button" aria-pressed="false">3 meses</button>
+      <button type="button" aria-pressed="true">6 meses</button>
+      <button type="button" aria-pressed="false">12 meses</button>
+    </div>
+  </header>
+
+  <div class="tiles">
+    <div class="tile">
+      <span class="lab">Ingresos de septiembre</span>
+      <span class="fig">Q48,350</span>
+      <span class="delta up"><span class="ic">▲</span> 9.6% vs agosto</span>
+    </div>
+    <div class="tile">
+      <span class="lab">Citas atendidas</span>
+      <span class="fig">214</span>
+      <span class="delta up"><span class="ic">▲</span> 14 más que agosto</span>
+    </div>
+    <div class="tile">
+      <span class="lab">Ticket promedio</span>
+      <span class="fig">Q226</span>
+      <span class="delta flat"><span class="ic">■</span> casi igual que agosto</span>
+    </div>
+    <div class="tile">
+      <span class="lab">No llegaron</span>
+      <span class="fig">9%</span>
+      <span class="delta up"><span class="ic">▲</span> era 23% antes</span>
+      <span class="note">Desde que el bot manda el recordatorio un día antes.</span>
+    </div>
+  </div>
+
+  <section class="grid2">
+    <div class="card">
+      <div class="card-head">
+        <h2>Ingresos por mes</h2>
+        <p class="sub">Quetzales facturados, abril a septiembre</p>
+      </div>
+      <div class="chart"><svg id="c-rev" viewBox="0 0 520 250" role="img" aria-label="Ingresos mensuales de abril a septiembre, de Q34,200 a Q48,350"></svg><div class="tip" id="t-rev"></div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <h2>De dónde salen los ingresos</h2>
+        <p class="sub">Septiembre, por tipo de servicio</p>
+      </div>
+      <div class="chart"><svg id="c-svc" viewBox="0 0 520 250" role="img" aria-label="Ingresos por servicio en septiembre; mechas y balayage encabezan con Q16,800"></svg><div class="tip" id="t-svc"></div></div>
+    </div>
+  </section>
+
+  <section class="grid2">
+    <div class="card">
+      <div class="card-head">
+        <h2>Cuándo se llena y cuándo no</h2>
+        <p class="sub">Ocupación de la agenda por día y hora, promedio de septiembre</p>
+      </div>
+      <div class="hm" id="c-hm"></div>
+      <div class="hm-scale">
+        <span>Vacío</span>
+        <i style="background:var(--q1)"></i><i style="background:var(--q2)"></i><i style="background:var(--q3)"></i><i style="background:var(--q4)"></i><i style="background:var(--q5)"></i><i style="background:var(--q6)"></i>
+        <span>Lleno</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <h2>Clientas nuevas y que regresan</h2>
+        <p class="sub">Citas por mes, separadas</p>
+      </div>
+      <div class="chart"><svg id="c-cli" viewBox="0 0 520 250" role="img" aria-label="Citas mensuales separadas entre clientas nuevas y recurrentes; las recurrentes crecen y las nuevas bajan"></svg><div class="tip" id="t-cli"></div></div>
+      <div class="legend">
+        <span><i class="swatch" style="background:var(--s1)"></i> Regresan</span>
+        <span><i class="swatch" style="background:var(--s2)"></i> Nuevas</span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="reading">
+      <span class="micro">La lectura</span>
+      <h2>Qué dicen estos números, y qué haría con ellos</h2>
+      <div class="finds">
+
+        <div class="find">
+          <span class="n">1</span>
+          <div>
+            <h3>El martes está muerto y el sábado se desborda</h3>
+            <p>Los martes por la mañana la agenda va al 30–35%. Los sábados a las 11 llega al 100% y hay gente que se queda sin espacio. Es la misma semana, la misma gente, mal repartida.</p>
+            <p class="act"><b>Qué haría:</b> abrir dos espacios más el sábado temprano, y mandar por WhatsApp un 15% para martes antes de mediodía solo a quienes ya vinieron. Sin bajar precios de lista.</p>
+          </div>
+        </div>
+
+        <div class="find">
+          <span class="n">2</span>
+          <div>
+            <h3>El color paga el salón; el corte lo llena</h3>
+            <p>Mechas y balayage son el 35% de los ingresos con el 18% de las citas. Un balayage deja lo mismo que cinco cortes y ocupa el mismo sillón cuatro horas — pero deja tres veces más por hora.</p>
+            <p class="act"><b>Qué haría:</b> proteger la agenda de Andrea para color y pasarle los blowers a alguien más. No es que el corte sobre: es que el color no puede quedar fuera por falta de espacio.</p>
+          </div>
+        </div>
+
+        <div class="find">
+          <span class="n">3</span>
+          <div>
+            <h3>Retenés bien; no estás atrayendo</h3>
+            <p>Las clientas que regresan subieron 88% en seis meses. Las nuevas bajaron 24%. El sistema de citas y los recordatorios están haciendo su trabajo — la gente que ya te conoce vuelve y no se pierde.</p>
+            <p class="act"><b>Qué haría:</b> el problema ya no es retener, es que entre gente nueva. Ahí es donde toca mover Instagram y la ficha de Google, no la agenda.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <button type="button" class="tablebtn" id="tbtn" aria-expanded="false" aria-controls="tables">Ver los datos en tabla</button>
+      <div class="tables" id="tables" hidden></div>
+    </div>
+  </section>
+
+  <footer>
+    Salón ficticio con datos de ejemplo, creado como demostración por <a href="/">Click Wise Owl</a>.
+    Un panel real se arma con los datos del sistema de reservas y de Google Analytics del negocio.
+  </footer>
+
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var cv = function (n) { return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); };
+  var Q = function (n) { return "Q" + n.toLocaleString("es-GT"); };
+
+  var REV = [
+    { m: "Abr", v: 34200 }, { m: "May", v: 38900 }, { m: "Jun", v: 36400 },
+    { m: "Jul", v: 41800 }, { m: "Ago", v: 44100 }, { m: "Sep", v: 48350 }
+  ];
+  var SVC = [
+    { s: "Mechas y balayage", v: 16800, c: 39 },
+    { s: "Tinte y matizado",  v: 9450,  c: 34 },
+    { s: "Corte y peinado",   v: 8900,  c: 61 },
+    { s: "Keratina y trat.",  v: 6300,  c: 18 },
+    { s: "Uñas",              v: 4600,  c: 38 },
+    { s: "Rostro",            v: 2300,  c: 24 }
+  ];
+  var HM = {
+    dias: ["Mar", "Mié", "Jue", "Vie", "Sáb"],
+    horas: ["9:00", "11:00", "13:00", "15:00", "17:00"],
+    v: [
+      [35, 40, 30, 45, 50],
+      [55, 60, 50, 65, 70],
+      [60, 65, 55, 75, 80],
+      [75, 85, 70, 90, 95],
+      [95, 100, 90, 85, null]
+    ]
+  };
+  var CLI = [
+    { m: "Abr", r: 89,  n: 62 }, { m: "May", r: 104, n: 58 }, { m: "Jun", r: 108, n: 49 },
+    { m: "Jul", r: 121, n: 55 }, { m: "Ago", r: 137, n: 51 }, { m: "Sep", r: 167, n: 47 }
+  ];
+
+  var NS = "http://www.w3.org/2000/svg";
+  function el(n, a) {
+    var e = document.createElementNS(NS, n);
+    for (var k in a) { if (a[k] !== null && a[k] !== undefined) { e.setAttribute(k, a[k]); } }
+    return e;
+  }
+
+  function tipOn(tip, host, x, y, html) {
+    tip.innerHTML = html;
+    var r = host.getBoundingClientRect();
+    tip.style.left = (x / 520 * r.width) + "px";
+    tip.style.top = (y / 250 * r.height - 8) + "px";
+    tip.classList.add("on");
+  }
+  function tipOff(tip) { tip.classList.remove("on"); }
+
+  // ---------- 1. ingresos por mes: área + línea, una sola serie ----------
+  function drawRev() {
+    var svg = document.getElementById("c-rev"), tip = document.getElementById("t-rev");
+    svg.innerHTML = "";
+    var L = 52, R = 14, T = 16, B = 34, W = 520, H = 250;
+    var iw = W - L - R, ih = H - T - B;
+    var max = 55000, min = 25000;
+    var X = function (i) { return L + i * (iw / (REV.length - 1)); };
+    var Y = function (v) { return T + ih - (v - min) / (max - min) * ih; };
+
+    [25000, 35000, 45000, 55000].forEach(function (g) {
+      svg.appendChild(el("line", { x1: L, y1: Y(g), x2: L + iw, y2: Y(g), class: "gridline" }));
+      var t = el("text", { x: L - 10, y: Y(g) + 4, class: "tick num", "text-anchor": "end" });
+      t.textContent = "Q" + (g / 1000) + "k";
+      svg.appendChild(t);
+    });
+
+    var area = "M" + X(0) + "," + Y(REV[0].v);
+    REV.forEach(function (d, i) { if (i) { area += "L" + X(i) + "," + Y(d.v); } });
+    area += "L" + X(REV.length - 1) + "," + (T + ih) + "L" + X(0) + "," + (T + ih) + "Z";
+    svg.appendChild(el("path", { d: area, fill: cv("--s1"), opacity: ".10" }));
+
+    var line = "";
+    REV.forEach(function (d, i) { line += (i ? "L" : "M") + X(i) + "," + Y(d.v); });
+    svg.appendChild(el("path", { d: line, fill: "none", stroke: cv("--s1"), "stroke-width": 2, "stroke-linejoin": "round", "stroke-linecap": "round" }));
+
+    svg.appendChild(el("line", { x1: L, y1: T + ih, x2: L + iw, y2: T + ih, class: "axisline" }));
+
+    REV.forEach(function (d, i) {
+      var last = i === REV.length - 1;
+      svg.appendChild(el("circle", { cx: X(i), cy: Y(d.v), r: last ? 5 : 4, fill: cv("--s1"), stroke: cv("--surface"), "stroke-width": 2 }));
+      var t = el("text", { x: X(i), y: H - 12, class: "tick", "text-anchor": "middle" });
+      t.textContent = d.m;
+      svg.appendChild(t);
+      if (last) {
+        var lb = el("text", { x: X(i), y: Y(d.v) - 14, class: "dlabel", "text-anchor": "end" });
+        lb.textContent = Q(d.v);
+        svg.appendChild(lb);
+      }
+      var hit = el("rect", { x: X(i) - 22, y: T, width: 44, height: ih, fill: "transparent" });
+      hit.addEventListener("mouseenter", function () {
+        tipOn(tip, svg, X(i), Y(d.v), "<b>" + d.m + "</b> · " + Q(d.v));
+      });
+      hit.addEventListener("mouseleave", function () { tipOff(tip); });
+      svg.appendChild(hit);
+    });
+  }
+
+  // ---------- 2. ingresos por servicio: barras horizontales ----------
+  function drawSvc() {
+    var svg = document.getElementById("c-svc"), tip = document.getElementById("t-svc");
+    svg.innerHTML = "";
+    var L = 132, R = 58, T = 8, W = 520, H = 250;
+    var iw = W - L - R;
+    var bh = 22, gap = 12;
+    var max = 18000;
+    var total = SVC.reduce(function (a, d) { return a + d.v; }, 0);
+
+    SVC.forEach(function (d, i) {
+      var y = T + i * (bh + gap);
+      var w = d.v / max * iw;
+      svg.appendChild(el("rect", { x: L, y: y, width: w, height: bh, rx: 4, fill: cv("--s1"), opacity: i === 0 ? 1 : .58 }));
+      var lb = el("text", { x: L - 10, y: y + bh / 2 + 4, class: "tick", "text-anchor": "end" });
+      lb.textContent = d.s;
+      svg.appendChild(lb);
+      var vl = el("text", { x: L + w + 8, y: y + bh / 2 + 4, class: "dlabel" });
+      vl.textContent = Q(d.v);
+      svg.appendChild(vl);
+
+      var hit = el("rect", { x: L, y: y - gap / 2, width: iw, height: bh + gap, fill: "transparent" });
+      hit.addEventListener("mouseenter", function () {
+        tipOn(tip, svg, L + w, y, "<b>" + d.s + "</b><br>" + Q(d.v) + " · " + d.c + " citas · " + Math.round(d.v / total * 100) + "% del mes");
+      });
+      hit.addEventListener("mouseleave", function () { tipOff(tip); });
+      svg.appendChild(hit);
+    });
+  }
+
+  // ---------- 3. mapa de calor: ocupación ----------
+  function drawHm() {
+    var box = document.getElementById("c-hm");
+    box.innerHTML = "";
+    box.style.gridTemplateColumns = "46px repeat(" + HM.horas.length + ", 1fr)";
+    box.appendChild(document.createElement("div"));
+    HM.horas.forEach(function (h) {
+      var d = document.createElement("div"); d.className = "hm-lab"; d.textContent = h; box.appendChild(d);
+    });
+    var steps = ["--q1", "--q2", "--q3", "--q4", "--q5", "--q6"];
+    HM.dias.forEach(function (dia, r) {
+      var lab = document.createElement("div"); lab.className = "hm-lab row"; lab.textContent = dia; box.appendChild(lab);
+      HM.v[r].forEach(function (v, c) {
+        var cell = document.createElement("div"); cell.className = "hm-cell";
+        if (v === null) {
+          cell.style.background = "transparent";
+          cell.style.border = "1px dashed var(--line)";
+          cell.title = dia + " " + HM.horas[c] + " · cerrado";
+        } else {
+          var idx = Math.min(steps.length - 1, Math.floor(v / 100 * steps.length));
+          cell.style.background = cv(steps[idx]);
+          var s = document.createElement("span");
+          s.textContent = v + "%";
+          s.style.color = idx >= 3 ? "#ffffff" : "#0b0b0b";
+          cell.appendChild(s);
+          cell.title = dia + " " + HM.horas[c] + " · " + v + "% de la agenda ocupada";
+        }
+        box.appendChild(cell);
+      });
+    });
+  }
+
+  // ---------- 4. nuevas vs recurrentes: barras apiladas ----------
+  function drawCli() {
+    var svg = document.getElementById("c-cli"), tip = document.getElementById("t-cli");
+    svg.innerHTML = "";
+    var L = 40, R = 14, T = 18, B = 34, W = 520, H = 250;
+    var iw = W - L - R, ih = H - T - B;
+    var max = 240;
+    var bw = 40;
+    var X = function (i) { return L + (i + .5) * (iw / CLI.length) - bw / 2; };
+    var Y = function (v) { return T + ih - v / max * ih; };
+
+    [0, 80, 160, 240].forEach(function (g) {
+      svg.appendChild(el("line", { x1: L, y1: Y(g), x2: L + iw, y2: Y(g), class: "gridline" }));
+      var t = el("text", { x: L - 10, y: Y(g) + 4, class: "tick num", "text-anchor": "end" });
+      t.textContent = g;
+      svg.appendChild(t);
+    });
+
+    CLI.forEach(function (d, i) {
+      var x = X(i), tot = d.r + d.n;
+      var hr = d.r / max * ih, hn = d.n / max * ih;
+      // recurrentes abajo, nuevas arriba, con 2px de aire entre segmentos
+      svg.appendChild(el("rect", { x: x, y: Y(d.r), width: bw, height: hr, rx: 4, fill: cv("--s1") }));
+      svg.appendChild(el("rect", { x: x, y: Y(tot), width: bw, height: Math.max(0, hn - 2), rx: 4, fill: cv("--s2") }));
+
+      var t = el("text", { x: x + bw / 2, y: H - 12, class: "tick", "text-anchor": "middle" });
+      t.textContent = d.m;
+      svg.appendChild(t);
+
+      if (i === 0 || i === CLI.length - 1) {
+        var lt = el("text", { x: x + bw / 2, y: Y(tot) - 8, class: "dlabel", "text-anchor": "middle" });
+        lt.textContent = tot;
+        svg.appendChild(lt);
+      }
+
+      var hit = el("rect", { x: x - 6, y: T, width: bw + 12, height: ih, fill: "transparent" });
+      hit.addEventListener("mouseenter", function () {
+        tipOn(tip, svg, x + bw / 2, Y(tot), "<b>" + d.m + "</b> · " + tot + " citas<br>" + d.r + " regresan · " + d.n + " nuevas");
+      });
+      hit.addEventListener("mouseleave", function () { tipOff(tip); });
+      svg.appendChild(hit);
+    });
+  }
+
+  // ---------- tabla accesible ----------
+  function buildTables() {
+    var box = document.getElementById("tables");
+    function tbl(cap, head, rows) {
+      var h = '<div class="tw"><table><caption>' + cap + "</caption><thead><tr>";
+      head.forEach(function (c) { h += "<th>" + c + "</th>"; });
+      h += "</tr></thead><tbody>";
+      rows.forEach(function (r) {
+        h += "<tr>";
+        r.forEach(function (c) { h += "<td>" + c + "</td>"; });
+        h += "</tr>";
+      });
+      return h + "</tbody></table></div>";
+    }
+    var html = "";
+    html += tbl("Ingresos por mes", ["Mes", "Ingresos"], REV.map(function (d) { return [d.m, Q(d.v)]; }));
+    html += tbl("Ingresos por servicio · septiembre", ["Servicio", "Citas", "Ingresos"], SVC.map(function (d) { return [d.s, d.c, Q(d.v)]; }));
+    html += tbl("Ocupación por día y hora · %", ["Día"].concat(HM.horas),
+      HM.dias.map(function (d, r) { return [d].concat(HM.v[r].map(function (v) { return v === null ? "cerrado" : v + "%"; })); }));
+    html += tbl("Citas por mes", ["Mes", "Regresan", "Nuevas", "Total"],
+      CLI.map(function (d) { return [d.m, d.r, d.n, d.r + d.n]; }));
+    box.innerHTML = html;
+  }
+
+  var btn = document.getElementById("tbtn"), tables = document.getElementById("tables");
+  btn.addEventListener("click", function () {
+    var open = tables.hidden;
+    tables.hidden = !open;
+    btn.setAttribute("aria-expanded", String(open));
+    btn.textContent = open ? "Ocultar los datos" : "Ver los datos en tabla";
+  });
+
+  Array.prototype.forEach.call(document.querySelectorAll(".period button"), function (b) {
+    b.addEventListener("click", function () {
+      Array.prototype.forEach.call(document.querySelectorAll(".period button"), function (o) {
+        o.setAttribute("aria-pressed", String(o === b));
+      });
+    });
+  });
+
+  function drawAll() { drawRev(); drawSvc(); drawHm(); drawCli(); }
+  drawAll();
+  buildTables();
+
+  var mq = window.matchMedia("(prefers-color-scheme: dark)");
+  if (mq.addEventListener) { mq.addEventListener("change", drawAll); }
+  window.addEventListener("resize", function () {
+    clearTimeout(window.__rt);
+    window.__rt = setTimeout(drawAll, 200);
+  });
+})();
+</script>
+</body>
+</html>
