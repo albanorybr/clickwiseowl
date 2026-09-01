@@ -1,0 +1,1323 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Demo: cotizador de competencias | Click Wise Owl</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+:root {
+  --red: #C8102E; --red-dark: #8B0000; --red-light: #ff2244;
+  --black: #0A0A0A; --off-white: #F5F2EE; --gray: #888;
+  --gray-light: #E8E4E0; --card-bg: #FFFFFF;
+  --radius: 16px; --shadow: 0 4px 32px rgba(0,0,0,0.10);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'DM Sans',sans-serif; background:var(--off-white); color:var(--black); min-height:100vh; }
+
+/* HEADER */
+header { background:var(--black); padding:16px 28px; display:flex; align-items:center; gap:14px; position:sticky; top:0; z-index:100; }
+.logo-circle { width:42px;height:42px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;color:#fff;font-size:17px;font-weight:900;flex-shrink:0; }
+.header-title { color:#fff;font-family:'Playfair Display',serif;font-size:19px;font-weight:700; }
+.header-sub { color:var(--gray);font-size:11px;margin-top:2px; }
+.header-spacer { flex:1; }
+.btn-reset { background:transparent;border:1px solid #444;color:#888;padding:7px 14px;border-radius:8px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s; }
+.btn-reset:hover { border-color:var(--red);color:var(--red); }
+
+/* MAIN */
+main { max-width:980px;margin:0 auto;padding:28px 18px 80px; }
+
+/* HERO */
+.hero { background:var(--black);border-radius:var(--radius);padding:36px 36px 32px;margin-bottom:24px;position:relative;overflow:hidden; }
+.hero::before { content:'';position:absolute;right:-40px;top:-40px;width:200px;height:200px;background:var(--red);border-radius:50%;opacity:.12; }
+.hero::after { content:'🩰';position:absolute;right:32px;top:50%;transform:translateY(-50%);font-size:72px;opacity:.16; }
+.hero h1 { font-family:'Playfair Display',serif;font-size:30px;color:#fff;line-height:1.2;margin-bottom:8px; }
+.hero h1 span { color:var(--red-light); }
+.hero p { color:#aaa;font-size:13px;max-width:460px;line-height:1.6; }
+.comp-badges { display:flex;gap:8px;margin-top:18px;flex-wrap:wrap; }
+.badge { background:rgba(200,16,46,.15);border:1px solid rgba(200,16,46,.35);color:#ff8899;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:500; }
+
+/* TIPO DE CAMBIO BANNER */
+.tc-banner { background:#fff;border-radius:10px;padding:10px 16px;margin-bottom:20px;display:flex;align-items:center;gap:10px;border:1px solid var(--gray-light);font-size:13px; }
+.tc-dot { width:8px;height:8px;background:#22c55e;border-radius:50%;flex-shrink:0; }
+.tc-text { flex:1;color:#444; }
+.tc-text strong { color:var(--black); }
+.tc-loading { color:var(--gray); }
+
+/* CARDS */
+.card { background:var(--card-bg);border-radius:var(--radius);padding:26px 26px 22px;margin-bottom:18px;box-shadow:var(--shadow); }
+.card-title { font-family:'Playfair Display',serif;font-size:17px;font-weight:700;margin-bottom:18px;display:flex;align-items:center;gap:10px; }
+.step-num { background:var(--red);color:#fff;width:27px;height:27px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;font-family:'DM Sans',sans-serif;flex-shrink:0; }
+
+/* FORM */
+.form-grid { display:grid;grid-template-columns:1fr 1fr;gap:14px; }
+@media(max-width:580px){ .form-grid { grid-template-columns:1fr; } }
+.form-group { display:flex;flex-direction:column;gap:5px; }
+label { font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:#555; }
+input[type=text],input[type=email],input[type=tel] { border:1.5px solid var(--gray-light);border-radius:10px;padding:10px 13px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s;background:#FAFAFA; }
+input:focus { border-color:var(--red);background:#fff; }
+
+/* COMPETENCIAS */
+.comp-selector { display:grid;grid-template-columns:1fr 1fr;gap:12px; }
+@media(max-width:480px){ .comp-selector { grid-template-columns:1fr; } }
+.comp-option { border:2px solid var(--gray-light);border-radius:12px;padding:16px 14px;cursor:pointer;transition:all .2s;position:relative; }
+.comp-option.selected { border-color:var(--red);background:rgba(200,16,46,.04); }
+.comp-option input[type=checkbox] { position:absolute;opacity:0;pointer-events:none; }
+.comp-name { font-weight:600;font-size:14px;margin-bottom:3px; }
+.comp-date { font-size:11px;color:var(--gray); }
+.comp-tipo { font-size:11px;color:var(--gray);margin-top:4px; }
+.comp-check { position:absolute;top:12px;right:12px;width:21px;height:21px;border:2px solid var(--gray-light);border-radius:6px;display:flex;align-items:center;justify-content:center;transition:all .2s;font-size:12px;font-weight:700;color:transparent; }
+.comp-option.selected .comp-check { background:var(--red);border-color:var(--red);color:#fff; }
+.comp-option.selected .comp-check::after { content:'✓'; }
+
+/* SECCIÓN INFO */
+.info-box { background:#F8F6F3;border-radius:10px;padding:13px 15px;font-size:12px;color:#666;line-height:1.7;margin-top:14px;border-left:3px solid var(--red); }
+.info-box strong { color:var(--black); }
+
+/* TALLERES */
+.taller-grid { display:grid;grid-template-columns:1fr 1fr;gap:12px; }
+@media(max-width:580px){ .taller-grid { grid-template-columns:1fr; } }
+.taller-card { border:1.5px solid var(--gray-light);border-radius:12px;padding:16px;cursor:pointer;transition:all .2s;position:relative; }
+.taller-card.selected { border-color:var(--red);background:rgba(200,16,46,.03); }
+.taller-card input { position:absolute;opacity:0;pointer-events:none; }
+.taller-name { font-weight:600;font-size:13px;margin-bottom:4px; }
+.taller-precio { font-size:13px;color:var(--red);font-weight:700; }
+.taller-sub { font-size:11px;color:var(--gray);margin-top:3px;line-height:1.5; }
+.taller-check { position:absolute;top:12px;right:12px;width:20px;height:20px;border:2px solid var(--gray-light);border-radius:5px;display:flex;align-items:center;justify-content:center;transition:all .2s;font-size:11px;font-weight:700;color:transparent; }
+.taller-card.selected .taller-check { background:var(--red);border-color:var(--red);color:#fff; }
+.taller-card.selected .taller-check::after { content:'✓'; }
+
+/* FECHA PAGO SELECTOR */
+.fecha-selector { margin-top:10px;display:none; }
+.fecha-selector.visible { display:flex;gap:12px;flex-wrap:wrap; }
+.fecha-opt { display:flex;align-items:center;gap:6px;font-size:12px;cursor:pointer;padding:6px 10px;border:1px solid var(--gray-light);border-radius:8px;transition:all .15s; }
+.fecha-opt input { accent-color:var(--red); }
+.fecha-opt.active-opt { border-color:var(--red);background:#fff5f6; }
+
+/* TABS BAILES */
+.bailes-tabs { display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap; }
+.tab-btn { padding:6px 16px;border-radius:20px;border:1.5px solid var(--gray-light);background:transparent;font-size:12px;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .2s;font-weight:500; }
+.tab-btn.active { background:var(--black);color:#fff;border-color:var(--black); }
+.baile-block { display:none; }
+.baile-block.visible { display:block; }
+.baile-section-title { font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--gray);margin-bottom:10px;padding-bottom:7px;border-bottom:1px solid var(--gray-light); }
+
+/* FILAS DE BAILE */
+.baile-row { display:flex;align-items:flex-start;padding:9px 0;border-bottom:1px solid #F0EDE9;gap:10px; }
+.baile-row:last-child { border-bottom:none; }
+.baile-check { width:19px;height:19px;border:2px solid var(--gray-light);border-radius:5px;cursor:pointer;flex-shrink:0;transition:all .15s;appearance:none;-webkit-appearance:none;position:relative;margin-top:2px; }
+.baile-check:checked { background:var(--red);border-color:var(--red); }
+.baile-check:checked::after { content:'✓';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#fff;font-size:11px;font-weight:700; }
+.baile-info { flex:1; }
+.baile-label { font-size:13px;cursor:pointer; }
+.baile-type { font-size:10px;color:#888;background:#F0EDE9;padding:2px 7px;border-radius:8px;white-space:nowrap; }
+
+/* OPCIONES DE MONTAJE */
+.montaje-opts { display:none;margin-top:7px;padding:10px 12px;background:#FFF8F8;border-radius:8px;border:1px solid #FFDDE2;gap:8px;flex-direction:column; }
+.montaje-opts.visible { display:flex; }
+.montaje-opt-row { display:flex;align-items:center;gap:7px;font-size:12px;cursor:pointer; }
+.montaje-opt-row input { accent-color:var(--red); }
+.montaje-note { font-size:11px;color:#888;margin-top:3px; }
+
+/* TALLERES COMPETENCIA */
+.taller-comp-list { display:flex;flex-direction:column;gap:8px; }
+.taller-comp-item { display:flex;align-items:center;gap:10px;padding:10px 12px;border:1.5px solid var(--gray-light);border-radius:10px;cursor:pointer;transition:all .15s;user-select:none; }
+.taller-comp-item:hover { border-color:#ccc; }
+.taller-comp-item.selected { border-color:var(--red);background:#fff5f6; }
+.taller-comp-item input[type=checkbox] { accent-color:var(--red);width:16px;height:16px;cursor:pointer;flex-shrink:0;pointer-events:none; }
+.tci-name { flex:1;font-size:13px; }
+.tci-price { font-size:13px;font-weight:600;color:var(--red); }
+.tci-free { font-size:12px;color:#22c55e;font-weight:600; }
+
+/* BOTONES */
+.btn-primary { background:var(--red);color:#fff;border:none;padding:14px 28px;border-radius:12px;font-size:14px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .2s;width:100%; }
+.btn-primary:hover { background:var(--red-dark);transform:translateY(-1px); }
+.btn-primary:disabled { background:#ddd;color:#aaa;cursor:not-allowed;transform:none; }
+.btn-secondary { background:transparent;color:var(--black);border:1.5px solid var(--gray-light);padding:11px 22px;border-radius:12px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .2s; }
+.btn-secondary:hover { border-color:var(--black); }
+.spinner { display:none;width:20px;height:20px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;margin:0 auto; }
+@keyframes spin { to { transform:rotate(360deg); } }
+
+/* RESULTADO */
+#resultado { display:none; }
+.result-header { background:var(--black);border-radius:var(--radius);padding:26px;margin-bottom:18px;color:#fff; }
+.result-alumno { font-family:'Playfair Display',serif;font-size:21px;margin-bottom:3px; }
+.result-sub { color:#888;font-size:12px; }
+.result-totales { display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:18px; }
+@media(max-width:500px){ .result-totales { grid-template-columns:1fr; } }
+.total-bloque { background:rgba(255,255,255,.07);border-radius:10px;padding:14px 16px; }
+.total-bloque .tb-label { font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#888;margin-bottom:4px; }
+.total-bloque .tb-monto { font-family:'Playfair Display',serif;font-size:28px;font-weight:900; }
+.total-bloque .tb-monto span { font-size:14px;font-weight:400;color:#aaa;margin-left:4px; }
+.total-bloque.principal .tb-monto { color:var(--red-light); }
+.tc-ref { font-size:11px;color:#666;margin-top:3px; }
+
+/* DESGLOSE */
+.desglose-grid { display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:18px; }
+@media(max-width:580px){ .desglose-grid { grid-template-columns:1fr; } }
+.desglose-card { background:var(--card-bg);border-radius:13px;padding:18px;box-shadow:var(--shadow); }
+.desglose-card h3 { font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--gray);margin-bottom:12px; }
+.desglose-line { display:flex;justify-content:space-between;align-items:flex-start;padding:6px 0;border-bottom:1px solid #F0EDE9;font-size:12px;gap:8px; }
+.desglose-line:last-child { border-bottom:none; }
+.dl-name { color:#444;flex:1;line-height:1.4; }
+.dl-monto { font-weight:600;color:var(--black);white-space:nowrap; }
+.dl-note { font-size:10px;color:#aaa;margin-top:1px; }
+.desglose-subtotal { margin-top:10px;padding-top:8px;border-top:2px solid var(--black);display:flex;justify-content:space-between;font-weight:600;font-size:13px; }
+
+/* FECHAS */
+.fechas-card { background:var(--card-bg);border-radius:13px;padding:18px;margin-bottom:18px;box-shadow:var(--shadow); }
+.fechas-card h3 { font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--gray);margin-bottom:12px; }
+.fecha-item { display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #F0EDE9;font-size:12px; }
+.fecha-item:last-child { border-bottom:none; }
+.fecha-dot { width:8px;height:8px;background:var(--red);border-radius:50%;flex-shrink:0; }
+.fecha-desc { flex:1;color:#444;line-height:1.4; }
+.fecha-date { font-weight:600;white-space:nowrap; }
+.fecha-amount { font-weight:700;min-width:80px;text-align:right; }
+.fecha-amount.usd { color:#2563eb; }
+.fecha-amount.q { color:var(--red); }
+
+/* ENTRADAS REF */
+.entradas-ref { background:linear-gradient(135deg,#f0f9ff,#fff);border:1px solid #bae6fd;border-radius:13px;padding:18px;margin-bottom:18px; }
+.entradas-ref h3 { font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:#0284c7;margin-bottom:10px; }
+.entrada-grid { display:grid;grid-template-columns:1fr 1fr;gap:10px; }
+@media(max-width:460px){ .entrada-grid { grid-template-columns:1fr; } }
+.entrada-item { background:#fff;border-radius:10px;padding:12px 14px;border:1px solid #e0f2fe; }
+.ei-comp { font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:#0284c7;margin-bottom:5px; }
+.ei-precio { font-size:15px;font-weight:700;color:var(--black); }
+.ei-nota { font-size:11px;color:#64748b;margin-top:3px;line-height:1.5; }
+
+/* ACCIONES */
+.result-actions { display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:18px; }
+@media(max-width:560px){ .result-actions { grid-template-columns:1fr; } }
+
+/* HISTORIAL COMPARATIVO */
+.comparativo-section { background:var(--card-bg);border-radius:var(--radius);padding:22px;margin-top:18px;box-shadow:var(--shadow);display:none; }
+.comparativo-section.visible { display:block; }
+.comp-table { width:100%;border-collapse:collapse;font-size:12px;margin-top:12px; }
+.comp-table th { text-align:left;padding:7px 10px;background:#F5F2EE;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:#666; }
+.comp-table td { padding:9px 10px;border-bottom:1px solid #F0EDE9; }
+.comp-table tr:last-child td { border-bottom:none; }
+.td-total { font-weight:700;color:var(--red); }
+
+/* MODAL */
+.overlay { display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:200;align-items:center;justify-content:center;padding:20px; }
+.overlay.visible { display:flex; }
+.modal { background:#fff;border-radius:18px;padding:32px 28px;max-width:440px;width:100%; }
+.modal h2 { font-family:'Playfair Display',serif;font-size:20px;margin-bottom:7px; }
+.modal p { color:#666;font-size:13px;line-height:1.6;margin-bottom:20px; }
+.modal-resumen { background:#F5F2EE;border-radius:9px;padding:13px;margin-bottom:18px;font-size:12px;line-height:1.7; }
+.modal-actions { display:flex;gap:10px; }
+.modal-confirm { flex:1;background:var(--red);color:#fff;border:none;padding:12px;border-radius:10px;font-size:13px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer; }
+.modal-cancel { padding:12px 18px;border:1.5px solid var(--gray-light);border-radius:10px;background:transparent;font-size:13px;font-family:'DM Sans',sans-serif;cursor:pointer; }
+
+/* TOAST */
+.toast { position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#1a1a1a;color:#fff;padding:13px 22px;border-radius:10px;font-size:13px;z-index:300;transition:transform .3s ease;white-space:nowrap; }
+.toast.show { transform:translateX(-50%) translateY(0); }
+
+/* DIVIDER */
+.section-divider { font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--gray);margin:20px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--gray-light); }
+</style>
+<meta name="description" content="Una app web que arma la cotizacion completa de competencias de una academia de baile: el papa elige talleres, competencias y categorias, y la app calcula todo en quetzales y dolares, arma el calendario de pagos y genera un PDF. Demostracion de Click Wise Owl.">
+<link rel="canonical" href="https://clickwiseowl.com/demo/cotizador/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Click Wise Owl">
+<meta property="og:locale" content="es_GT">
+<meta property="og:url" content="https://clickwiseowl.com/demo/cotizador/">
+<meta property="og:title" content="Un cotizador que hace el trabajo a mano">
+<meta property="og:description" content="Una app web que arma la cotizacion completa de competencias de una academia de baile: el papa elige talleres, competencias y categorias, y la app calcula todo en quetzales y dolares, arma el calendario de pagos y genera un PDF. Demostracion de Click Wise Owl.">
+<meta property="og:image" content="https://clickwiseowl.com/demo/cotizador/card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Un cotizador que hace el trabajo a mano">
+<meta name="twitter:description" content="Una app web que arma la cotizacion completa de competencias de una academia de baile: el papa elige talleres, competencias y categorias, y la app calcula todo en quetzales y dolares, arma el calendario de pagos y genera un PDF. Demostracion de Click Wise Owl.">
+<meta name="twitter:image" content="https://clickwiseowl.com/demo/cotizador/card.png">
+</head>
+<body>
+<style>
+.cwo-bar{background:#101A17;color:#E9EEEB;font-family:'DM Sans',sans-serif;position:relative;z-index:200}
+.cwo-in{max-width:1180px;margin:0 auto;padding:10px 24px;display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+.cwo-in .t{font-size:13px;color:#A8B7B1}
+.cwo-in .t b{color:#E9EEEB;font-weight:600}
+.cwo-in a{margin-left:auto;color:#A8B7B1;font-size:12px;text-decoration:none;white-space:nowrap}
+.cwo-in a:hover{color:#E9EEEB}
+@media(max-width:600px){.cwo-in a{margin-left:0}}
+</style>
+<div class="cwo-bar"><div class="cwo-in">
+<span class="t"><b>Demostracion de Click Wise Owl</b> &middot; academia ficticia, con precios y fechas de ejemplo</span>
+<a href="/">&larr; clickwiseowl.com</a>
+</div></div>
+
+
+<header>
+  <div class="logo-circle">DC</div>
+  <div>
+    <div class="header-title">Academia Ritmo</div>
+    <div class="header-sub">Cotizador de Competencias 2026</div>
+  </div>
+  <div class="header-spacer"></div>
+  <button class="btn-reset" onclick="resetAll()">🗑 Empezar de nuevo</button>
+</header>
+
+<main>
+  <!-- HERO -->
+  <div class="hero">
+    <h1>Cotiza tu participación<br><span>en competencias 2026</span></h1>
+    <p>Completa el formulario paso a paso y obtén el desglose completo de costos, fechas de pago y un PDF listo para compartir.</p>
+    <div class="comp-badges">
+      <span class="badge">🏆 Dance Challenge · 16-17 Mayo · Nacional</span>
+      <span class="badge">🌟 Stage Championship · 12-14 Junio · Internacional</span>
+    </div>
+  </div>
+
+  <!-- TIPO DE CAMBIO -->
+  <div class="tc-banner" id="tc-banner">
+    <div class="tc-dot" id="tc-dot" style="background:#f59e0b"></div>
+    <div class="tc-text" id="tc-text"><span class="tc-loading">Obteniendo tipo de cambio del día...</span></div>
+  </div>
+
+  <!-- FORMULARIO -->
+  <div id="seccion-formulario">
+
+    <!-- PASO 1: DATOS -->
+    <div class="card">
+      <div class="card-title"><div class="step-num">1</div>Datos del alumno</div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Nombre del alumno/a</label>
+          <input type="text" id="nombre-alumno" placeholder="Ej. Sofía García" oninput="validarFormulario()">
+        </div>
+        <div class="form-group">
+          <label>Nombre de mamá / papá</label>
+          <input type="text" id="nombre-mama" placeholder="Ej. Andrea García">
+        </div>
+        <div class="form-group">
+          <label>Correo electrónico</label>
+          <input type="email" id="email" placeholder="correo@ejemplo.com">
+        </div>
+        <div class="form-group">
+          <label>Teléfono / WhatsApp</label>
+          <input type="tel" id="telefono" placeholder="+502 0000-0000">
+        </div>
+      </div>
+    </div>
+
+    <!-- PASO 2: TALLERES OBLIGATORIOS -->
+    <div class="card">
+      <div class="card-title"><div class="step-num">2</div>Talleres Técnicos — ELECTI (obligatorio)</div>
+      <p style="font-size:13px;color:#555;margin-bottom:16px">Todas las alumnas que compiten deben tomar los talleres ELECTI con Valeria Teissier y Karen González (15–20 de abril 2026).</p>
+      <div class="taller-grid">
+        <label class="taller-card" id="card-electi-pre" onclick="seleccionarElecti('pre')">
+          <input type="radio" name="electi" value="pre">
+          <div class="taller-check" id="check-electi-pre"></div>
+          <div class="taller-name">Pre-registro</div>
+          <div class="taller-precio">Q1,495</div>
+          <div class="taller-sub">Pago antes del 15 de marzo<br>Depósito Q500 · Resto antes del 10 de abril</div>
+        </label>
+        <label class="taller-card" id="card-electi-reg" onclick="seleccionarElecti('reg')">
+          <input type="radio" name="electi" value="reg">
+          <div class="taller-check" id="check-electi-reg"></div>
+          <div class="taller-name">Registro normal</div>
+          <div class="taller-precio">Q1,550</div>
+          <div class="taller-sub">Pago después del 16 de marzo<br>Todo antes del 10 de abril</div>
+        </label>
+      </div>
+      <div class="info-box" style="margin-top:14px">
+        <strong>Coreografía grupal ELECTI — Q1,000</strong> (incluida automáticamente, es obligatoria)<br>
+        Reserva Q300 antes del 10 de marzo · Resto antes del 10 de abril.
+      </div>
+    </div>
+
+    <!-- PASO 3: BALLROOM (OPCIONAL) -->
+    <div class="card">
+      <div class="card-title"><div class="step-num">3</div>Taller de Ballroom — Camila Cordero (opcional)</div>
+      <p style="font-size:13px;color:#555;margin-bottom:16px">Taller con Camila Cordero, bailarina costarricense. 29–31 de mayo 2026. Selecciona si deseas participar.</p>
+      <div class="taller-grid">
+        <label class="taller-card" id="card-ballroom-no" onclick="seleccionarBallroom('no')">
+          <input type="radio" name="ballroom" value="no">
+          <div class="taller-check" id="check-ballroom-no"></div>
+          <div class="taller-name">No participar</div>
+          <div class="taller-precio" style="color:#888">—</div>
+          <div class="taller-sub">No tomar el taller de Ballroom</div>
+        </label>
+        <label class="taller-card" id="card-ballroom-pre" onclick="seleccionarBallroom('pre')">
+          <input type="radio" name="ballroom" value="pre">
+          <div class="taller-check" id="check-ballroom-pre"></div>
+          <div class="taller-name">Pre-registro Ballroom</div>
+          <div class="taller-precio">Q800</div>
+          <div class="taller-sub">Pago antes del 15 de marzo<br>Depósito Q200 · Resto antes del 15 de mayo</div>
+        </label>
+        <label class="taller-card" id="card-ballroom-reg" onclick="seleccionarBallroom('reg')">
+          <input type="radio" name="ballroom" value="reg">
+          <div class="taller-check" id="check-ballroom-reg"></div>
+          <div class="taller-name">Registro normal Ballroom</div>
+          <div class="taller-precio">Q1,000</div>
+          <div class="taller-sub">Pago después del 16 de marzo<br>Todo antes del 15 de mayo</div>
+        </label>
+      </div>
+      <!-- Coreografía Ballroom (pre-seleccionadas) -->
+      <div id="ballroom-coreo-section" style="display:none;margin-top:14px">
+        <div class="info-box">
+          <strong>¿Tu alumna fue pre-seleccionada para la coreografía grupal de Ballroom?</strong><br>
+          Costo: Q1,000 · Reserva Q200 antes del 10 de abril · Resto antes del 15 de mayo.
+          <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap">
+            <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;text-transform:none;letter-spacing:0">
+              <input type="checkbox" id="chk-ballroom-coreo" style="accent-color:var(--red)" onchange="validarFormulario()">
+              Sí, incluir coreografía grupal Ballroom (Q1,000)
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PASO 4: COMPETENCIAS -->
+    <div class="card">
+      <div class="card-title"><div class="step-num">4</div>¿En qué competencias participará?</div>
+      <div class="comp-selector">
+        <label class="comp-option" id="opt-dc" onclick="toggleComp('dc')">
+          <input type="checkbox" id="chk-dc">
+          <div class="comp-name">Dance Challenge</div>
+          <div class="comp-date">16 y 17 de Mayo 2026</div>
+          <div class="comp-tipo">🏆 Competencia Nacional · Westin Camino Real</div>
+          <div class="comp-check" id="check-dc"></div>
+        </label>
+        <label class="comp-option" id="opt-stage" onclick="toggleComp('stage')">
+          <input type="checkbox" id="chk-stage">
+          <div class="comp-name">Stage Championship</div>
+          <div class="comp-date">12 – 14 de Junio 2026</div>
+          <div class="comp-tipo">🌟 Competencia Internacional · Costos en USD</div>
+          <div class="comp-check" id="check-stage"></div>
+        </label>
+      </div>
+      <div class="info-box" style="margin-top:14px">
+        Si la alumna compite en bailes <strong>grupales, dúos o tríos</strong>, debe participar obligatoriamente en <strong>ambas competencias</strong>. El tiempo entre ellas se usa para pulir detalles según las críticas de los jueces.
+      </div>
+    </div>
+
+    <!-- PASO 5: BAILES -->
+    <div class="card" id="card-bailes" style="display:none">
+      <div class="card-title"><div class="step-num">5</div>Bailes y categorías</div>
+
+      <div class="bailes-tabs">
+        <button class="tab-btn active" onclick="showTab('solos',this)">Solo</button>
+        <button class="tab-btn" onclick="showTab('duos',this)">Dúo / Trío</button>
+        <button class="tab-btn" onclick="showTab('grupales',this)">Grupal</button>
+      </div>
+
+      <!-- SOLOS -->
+      <div class="baile-block visible" id="tab-solos">
+        <div class="baile-section-title">Solos — selecciona baile y tipo de preparación</div>
+        <div id="solos-list"></div>
+        <div class="info-box" style="margin-top:12px">
+          <strong>Montaje con maestras extranjeras:</strong> $475 + promedio 4 hrs de limpieza (Q250/hr) · El promedio puede variar según criterio de la maestra.<br>
+          <strong>Montaje con maestra local:</strong> Q2,250 por alumna (incluye 6 hrs de limpieza).
+        </div>
+      </div>
+
+      <!-- DUOS/TRIOS -->
+      <div class="baile-block" id="tab-duos">
+        <div class="baile-section-title">Dúos y Tríos</div>
+        <div id="duos-list"></div>
+        <div class="info-box" style="margin-top:12px">
+          <strong>Montaje con maestra local:</strong> Q1,050 por alumna (incluye 6 hrs de limpieza).<br>
+          Los costos de inscripción a competencia son por alumna.
+        </div>
+      </div>
+
+      <!-- GRUPALES -->
+      <div class="baile-block" id="tab-grupales">
+        <div class="baile-section-title">Bailes grupales</div>
+        <div id="grupales-list"></div>
+        <div class="info-box" style="margin-top:12px">
+          Los trajes de grupales <strong>nacionales</strong> no tienen costo adicional (son los del show de fin de año).<br>
+          La limpieza de grupales se calcula según la cantidad total de grupales.
+        </div>
+      </div>
+    </div>
+
+    <!-- PASO 6: TALLERES DE COMPETENCIA -->
+    <div class="card" id="card-talleres-comp" style="display:none">
+      <div class="card-title"><div class="step-num">6</div>Talleres en competencia</div>
+
+      <div id="talleres-dc-section" style="display:none">
+        <div class="section-divider">Dance Challenge — 2 talleres gratis + 1 con costo</div>
+        <div class="taller-comp-list" id="talleres-dc-list"></div>
+      </div>
+
+      <div id="talleres-stage-section" style="display:none;margin-top:16px">
+        <div class="section-divider">Stage Championship — Todos los talleres incluidos</div>
+        <div class="info-box">✅ Los 3 talleres de Stage están incluidos sin costo adicional al participar en la competencia.</div>
+      </div>
+    </div>
+
+    <!-- CALCULAR -->
+    <button class="btn-primary" id="btn-calcular" onclick="calcular()" disabled>
+      <span id="btn-texto">Calcular cotización completa →</span>
+      <div class="spinner" id="spinner"></div>
+    </button>
+  </div>
+
+  <!-- RESULTADO -->
+  <div id="resultado">
+
+    <div class="result-header">
+      <div class="result-alumno" id="res-nombre">—</div>
+      <div class="result-sub" id="res-comps">—</div>
+      <div class="result-totales">
+        <div class="total-bloque principal">
+          <div class="tb-label">Total en Quetzales</div>
+          <div class="tb-monto" id="res-total-q">Q0<span>estimado</span></div>
+          <div class="tc-ref" id="res-tc-ref"></div>
+        </div>
+        <div class="total-bloque" id="bloque-usd" style="display:none">
+          <div class="tb-label">Componente en Dólares</div>
+          <div class="tb-monto" id="res-total-usd">$0<span>aprox.</span></div>
+          <div class="tc-ref">Sujeto al tipo de cambio del día de pago</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DESGLOSE -->
+    <div class="desglose-grid">
+      <div class="desglose-card">
+        <h3>Talleres</h3>
+        <div id="desglose-talleres"></div>
+        <div class="desglose-subtotal"><span>Subtotal</span><span id="sub-talleres">Q0</span></div>
+      </div>
+      <div class="desglose-card">
+        <h3>Inscripciones a Competencia</h3>
+        <div id="desglose-inscripciones"></div>
+        <div class="desglose-subtotal"><span>Subtotal</span><span id="sub-inscripciones">Q0</span></div>
+      </div>
+      <div class="desglose-card">
+        <h3>Fees Academia + Ensayos</h3>
+        <div id="desglose-ensayos"></div>
+        <div class="desglose-subtotal"><span>Subtotal</span><span id="sub-ensayos">Q0</span></div>
+      </div>
+      <div class="desglose-card">
+        <h3>Trajes (referencia)</h3>
+        <div id="desglose-trajes"></div>
+        <div class="desglose-subtotal"><span>Subtotal aprox.</span><span id="sub-trajes">Q0</span></div>
+      </div>
+    </div>
+
+    <!-- FECHAS DE PAGO -->
+    <div class="fechas-card">
+      <h3>Calendario de Pagos</h3>
+      <div id="fechas-list"></div>
+    </div>
+
+    <!-- ENTRADAS REFERENCIA -->
+    <div class="entradas-ref">
+      <h3>💡 Entradas para el público (referencia — horarios 1 semana antes)</h3>
+      <div class="entrada-grid">
+        <div class="entrada-item">
+          <div class="ei-comp">Dance Challenge</div>
+          <div class="ei-precio">Q175 por espectador</div>
+          <div class="ei-nota">Precio por entrada · Detalles según horarios</div>
+        </div>
+        <div class="entrada-item">
+          <div class="ei-comp">Stage Championship</div>
+          <div class="ei-precio">$40 full pass</div>
+          <div class="ei-nota">Acceso a toda la competencia<br>$12 pase por bloque (medio día)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NOTAS -->
+    <div style="background:var(--card-bg);border-radius:13px;padding:16px 18px;box-shadow:var(--shadow);font-size:12px;color:#666;line-height:1.8;margin-bottom:18px">
+      <strong style="color:var(--black);display:block;margin-bottom:6px">📋 Información de pagos</strong>
+      <strong>Inscripciones a competencias:</strong> Efectivo o transferencia · Cta. Monetaria BI 783 000 237-9 (no generan factura de la academia).<br>
+      <strong>Talleres y ensayos:</strong> Tarjeta, transferencia o efectivo — sí generan factura.<br>
+      <strong>Stage Championship:</strong> Se puede pagar en Quetzales o Dólares según el tipo de cambio del día.<br>
+      <strong>Trajes Weissman:</strong> $88 promedio por traje + Q180 envío a Guatemala. El costo exacto de envío se confirma cuando el paquete llega a Guatemala.
+    </div>
+
+    <div class="result-actions">
+      <button class="btn-secondary" onclick="recotizar()">✏️ Recotizar</button>
+      <button class="btn-secondary" onclick="generarPDF()">📄 Descargar PDF</button>
+      <button class="btn-primary" style="margin:0" onclick="mostrarModalConfirm()">✅ Confirmar a la academia</button>
+    </div>
+  </div>
+</main>
+
+<!-- MODAL -->
+<div class="overlay" id="overlay-confirm">
+  <div class="modal">
+    <h2>Confirmar inscripción 🩰</h2>
+    <p>Al confirmar, la academia recibirá tu solicitud con todos los detalles. La asistente se pondrá en contacto para coordinar los pagos.</p>
+    <div class="modal-resumen" id="modal-resumen"></div>
+    <div class="modal-actions">
+      <button class="modal-cancel" onclick="cerrarModal()">Cancelar</button>
+      <button class="modal-confirm" onclick="confirmarInscripcion()">Sí, confirmar inscripción</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ═══════════════════════════════════════════
+// PRECIOS
+// ═══════════════════════════════════════════
+const P = {
+  electi_pre: 1495,
+  electi_reg: 1550,
+  electi_coreo: 1000,
+  ballroom_pre: 800,
+  ballroom_reg: 1000,
+  ballroom_coreo: 1000,
+  fee_academia: 200,         // por competencia
+  // Dance Challenge (Q)
+  dc_solo: 400,
+  dc_duo: 600,
+  dc_trio: 750,
+  dc_grupal_1: 300,
+  dc_grupal_extra: 100,
+  dc_taller_extra: 150,      // 2 gratis, 1 paga
+  // Stage (USD)
+  stage_solo_usd: 60,
+  stage_duo_usd: 50,
+  stage_trio_usd: 50,
+  stage_grupal_usd: 40,
+  // Montaje / Limpieza
+  montaje_extran_usd: 475,   // solo, maestras extranjeras
+  limpieza_hora: 250,        // Q por hora
+  limpieza_horas_promedio: 4,
+  montaje_local_solo: 2250,  // Q, incluye 6h
+  montaje_local_duo_trio: 1050, // Q por alumna, incluye 6h
+  limpieza_grupal_1_3: 550,
+  limpieza_grupal_4_6: 450,
+  limpieza_grupal_7plus: 400,
+  // Trajes
+  traje_usd: 88,
+  envio_traje_q: 180,
+};
+
+const SOLOS = ["Jazz","Lírico","Contemporáneo","Hip Hop","Tap","Acro"];
+const DUOS_TRIOS = ["Jazz","Lírico","Contemporáneo","Hip Hop","Tap","Acro"];
+const GRUPALES_ELECTI = ["Grupal ELECTI (coreografía del taller)"];
+const GRUPALES_NAC = [
+  "Jazz — Mini — Nombre del Baile",
+  "Jazz — Junior — Nombre del Baile",
+  "Jazz — Teen — Nombre del Baile",
+  "Jazz — Senior — Nombre del Baile",
+  "Lírico — Mini — Nombre del Baile",
+  "Lírico — Junior — Nombre del Baile",
+  "Lírico — Teen — Nombre del Baile",
+  "Lírico — Senior — Nombre del Baile",
+  "Urbano — Mini — Nombre del Baile",
+  "Urbano — Junior — Nombre del Baile",
+  "Urbano — Teen — Nombre del Baile",
+  "Urbano — Senior — Nombre del Baile",
+  "Ballroom — Junior-Teen — Nombre del Baile",
+  "Urbano — Senior — Nombre del Baile",
+  "Tap — Mini — Nombre del Baile",
+  "Tap — Junior — Nombre del Baile",
+  "Tap — Teen — Nombre del Baile",
+  "Tap — Senior — Nombre del Baile"
+];
+
+// ═══════════════════════════════════════════
+// ESTADO
+// ═══════════════════════════════════════════
+let tcHoy = null;   // tipo de cambio Q/USD
+let electiSel = null;     // 'pre' o 'reg'
+let ballroomSel = 'no';
+let historial = JSON.parse(localStorage.getItem('dc_historial_v2') || '[]');
+let ultimaCotizacion = null;
+
+// ═══════════════════════════════════════════
+// TIPO DE CAMBIO
+// ═══════════════════════════════════════════
+async function obtenerTipoCambio() {
+  try {
+    const res = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
+    const data = await res.json();
+    tcHoy = data.rates.GTQ || 7.75;
+  } catch(e) {
+    tcHoy = 7.75; // fallback
+  }
+  const dot = document.getElementById('tc-dot');
+  const txt = document.getElementById('tc-text');
+  dot.style.background = '#22c55e';
+  txt.innerHTML = `Tipo de cambio hoy: <strong>Q${tcHoy.toFixed(2)} por USD$1</strong> · Referencia Banco de Guatemala · Los pagos en Stage pueden hacerse en Q o USD`;
+}
+
+// ═══════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════
+window.addEventListener('DOMContentLoaded', () => {
+  obtenerTipoCambio();
+  construirListaSolos();
+  construirListaDuos();
+  construirListaGrupales();
+  construirTalleresComp();
+  seleccionarBallroom('no');
+  // Limpiar historial viejo si existe
+  historial = [];
+  localStorage.removeItem('dc_historial_v2');
+});
+
+// ═══════════════════════════════════════════
+// CONSTRUCCIÓN DE LISTAS
+// ═══════════════════════════════════════════
+function construirListaSolos() {
+  const c = document.getElementById('solos-list');
+  SOLOS.forEach(b => {
+    const id = 'solo_'+b.replace(/\s/g,'_');
+    c.innerHTML += `
+    <div class="baile-row">
+      <input type="checkbox" class="baile-check" id="${id}" onchange="toggleTipoduoTrio(this,'${id}_ops');validarFormulario()">
+      <div class="baile-info">
+        <label for="${id}" class="baile-label">${b} <span style="font-size:10px;color:var(--red);font-weight:600">· Se requiere comprar traje</span></label>
+        <div class="montaje-opts" id="${id}_ops">
+          <label class="montaje-opt-row"><input type="radio" name="${id}_mt" value="extran" checked> Montaje maestras extranjeras <em style="color:#888">($475 + ~4h limpieza)</em></label>
+          <label class="montaje-opt-row"><input type="radio" name="${id}_mt" value="local"> Montaje maestra local <em style="color:#888">(Q2,250 · incluye 6h limpieza)</em></label>
+          <div class="montaje-note">⚠️ El promedio de 4 horas de limpieza puede variar según criterio de la maestra.</div>
+        </div>
+      </div>
+      <span class="baile-type">Solo</span>
+    </div>`;
+  });
+}
+
+function construirListaDuos() {
+  const c = document.getElementById('duos-list');
+  DUOS_TRIOS.forEach(b => {
+    const id = 'duo_'+b.replace(/\s/g,'_');
+    c.innerHTML += `
+    <div class="baile-row">
+      <input type="checkbox" class="baile-check" id="${id}" onchange="toggleTipoduoTrio(this,'${id}_tipo');validarFormulario()">
+      <div class="baile-info">
+        <label for="${id}" class="baile-label">${b} <span style="font-size:10px;color:var(--red);font-weight:600">· Se requiere comprar traje</span></label>
+        <div class="montaje-opts" id="${id}_tipo">
+          <label class="montaje-opt-row"><input type="radio" name="${id}_cat" value="duo" checked> Dúo <em style="color:#888">(Q600 c/alumna DC · $50 c/alumna Stage)</em></label>
+          <label class="montaje-opt-row"><input type="radio" name="${id}_cat" value="trio"> Trío <em style="color:#888">(Q750 c/alumna DC · $50 c/alumna Stage)</em></label>
+        </div>
+      </div>
+      <span class="baile-type">Dúo / Trío</span>
+    </div>`;
+  });
+}
+
+function construirListaGrupales() {
+  const c = document.getElementById('grupales-list');
+  c.innerHTML += '<div class="baile-section-title" style="margin-top:0">Coreografías de Talleres</div>';
+  GRUPALES_ELECTI.forEach(b => {
+    const id = 'grp_'+b.replace(/[\s()]/g,'_');
+    c.innerHTML += `
+    <div class="baile-row">
+      <input type="checkbox" class="baile-check" id="${id}" onchange="validarFormulario()">
+      <div class="baile-info"><label for="${id}" class="baile-label">${b} <span style="font-size:10px;color:var(--red);font-weight:600">· Se requiere comprar traje</span></label></div>
+      <span class="baile-type" style="background:#fef3c7;color:#92400e">ELECTI</span>
+    </div>`;
+  });
+  // Grupal Ballroom — solo visible si se seleccionó Ballroom
+  c.innerHTML += `
+    <div class="baile-row" id="row-grp-ballroom" style="display:none">
+      <input type="checkbox" class="baile-check" id="grp_ballroom" onchange="validarFormulario()">
+      <div class="baile-info"><label for="grp_ballroom" class="baile-label">Grupal Ballroom <span style="font-size:10px;color:var(--red);font-weight:600">· Se requiere comprar traje</span></label></div>
+      <span class="baile-type" style="background:#ede9fe;color:#6d28d9">Ballroom</span>
+    </div>`;
+  c.innerHTML += '<div class="baile-section-title" style="margin-top:14px">Grupales Nacionales</div>';
+  GRUPALES_NAC.forEach(b => {
+    const id = 'grp_'+b.replace(/[\s—]/g,'_');
+    c.innerHTML += `
+    <div class="baile-row">
+      <input type="checkbox" class="baile-check" id="${id}" onchange="validarFormulario()">
+      <div class="baile-info"><label for="${id}" class="baile-label">${b}</label></div>
+      <span class="baile-type">Nacional</span>
+    </div>`;
+  });
+}
+
+function toggleTallerDC(i) {
+  const chk = document.getElementById('tdc_'+i);
+  chk.checked = !chk.checked;
+  document.getElementById('tci_'+i).classList.toggle('selected', chk.checked);
+}
+
+function construirTalleresComp() {
+  const c = document.getElementById('talleres-dc-list');
+  const talleres = ['Taller DC 1 (incluido)','Taller DC 2 (incluido)','Taller DC 3 (Q150)'];
+  const precios = [0,0,150];
+  talleres.forEach((t,i) => {
+    const id = 'tdc_'+i;
+    c.innerHTML += `
+    <div class="taller-comp-item" id="tci_${i}" onclick="toggleTallerDC(${i})">
+      <input type="checkbox" id="${id}">
+      <span class="tci-name">${t}</span>
+      ${precios[i]===0 ? '<span class="tci-free">GRATIS</span>' : `<span class="tci-price">Q${precios[i]}</span>`}
+    </div>`;
+  });
+}
+
+// ═══════════════════════════════════════════
+// UI HANDLERS
+// ═══════════════════════════════════════════
+function seleccionarElecti(val) {
+  electiSel = val;
+  ['pre','reg'].forEach(v => {
+    document.getElementById('card-electi-'+v).classList.toggle('selected', v===val);
+  });
+  validarFormulario();
+}
+
+function seleccionarBallroom(val) {
+  ballroomSel = val;
+  ['no','pre','reg'].forEach(v => {
+    const card = document.getElementById('card-ballroom-'+v);
+    if (!card) return;
+    card.classList.toggle('selected', v===val);
+  });
+  const seccion = document.getElementById('ballroom-coreo-section');
+  if (seccion) seccion.style.display = val!=='no' ? 'block' : 'none';
+  // Mostrar/ocultar grupal Ballroom en la sección de bailes
+  const rowBallroom = document.getElementById('row-grp-ballroom');
+  if (rowBallroom) {
+    rowBallroom.style.display = val!=='no' ? 'flex' : 'none';
+    // Si se deselecciona Ballroom, desmarcar el grupal
+    if (val==='no') {
+      const chk = document.getElementById('grp_ballroom');
+      if (chk) chk.checked = false;
+    }
+  }
+  validarFormulario();
+}
+
+function toggleComp(comp) {
+  const chk = document.getElementById('chk-'+comp);
+  chk.checked = !chk.checked;
+  document.getElementById('opt-'+comp).classList.toggle('selected', chk.checked);
+
+  const hasDC = document.getElementById('chk-dc').checked;
+  const hasSt = document.getElementById('chk-stage').checked;
+  document.getElementById('card-bailes').style.display = (hasDC||hasSt) ? 'block' : 'none';
+  document.getElementById('card-talleres-comp').style.display = (hasDC||hasSt) ? 'block' : 'none';
+  document.getElementById('talleres-dc-section').style.display = hasDC ? 'block' : 'none';
+  document.getElementById('talleres-stage-section').style.display = hasSt ? 'block' : 'none';
+  validarFormulario();
+}
+
+function toggleTipoduoTrio(chk, tipoId) {
+  const el = document.getElementById(tipoId);
+  if (!el) return;
+  el.classList.toggle('visible', chk.checked);
+}
+
+function toggleTallerDC(i) {
+  const chk = document.getElementById('tdc_'+i);
+  const item = document.getElementById('tci_'+i);
+  if (!chk || !item) return;
+  chk.checked = !chk.checked;
+  item.classList.toggle('selected', chk.checked);
+}
+
+function showTab(tab, btn) {
+  document.querySelectorAll('.baile-block').forEach(b=>b.classList.remove('visible'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+tab).classList.add('visible');
+  btn.classList.add('active');
+}
+
+function validarFormulario() {
+  const nombre = document.getElementById('nombre-alumno').value.trim();
+  const hasDC = document.getElementById('chk-dc').checked;
+  const hasSt = document.getElementById('chk-stage').checked;
+  const ok = nombre && electiSel && (hasDC || hasSt);
+  document.getElementById('btn-calcular').disabled = !ok;
+}
+
+// ═══════════════════════════════════════════
+// RECOPILAR SELECCIÓN
+// ═══════════════════════════════════════════
+function recopilar() {
+  const hasDC = document.getElementById('chk-dc').checked;
+  const hasSt = document.getElementById('chk-stage').checked;
+  const solos=[], duos=[], trios=[], grpElecti=[], grpNac=[];
+
+  SOLOS.forEach(b => {
+    const id='solo_'+b.replace(/\s/g,'_');
+    if(document.getElementById(id)?.checked) {
+      const mt = document.querySelector(`input[name="${id}_mt"]:checked`)?.value || 'extran';
+      solos.push({nombre:b, montaje:mt});
+    }
+  });
+  DUOS_TRIOS.forEach(b => {
+    const id='duo_'+b.replace(/\s/g,'_');
+    if(document.getElementById(id)?.checked) {
+      const cat = document.querySelector(`input[name="${id}_cat"]:checked`)?.value || 'duo';
+      (cat==='trio' ? trios : duos).push({nombre:b});
+    }
+  });
+  GRUPALES_ELECTI.forEach(b => {
+    const id='grp_'+b.replace(/[\s()]/g,'_');
+    if(document.getElementById(id)?.checked) grpElecti.push(b);
+  });
+  // Grupal Ballroom (solo si se seleccionó Ballroom)
+  if(ballroomSel !== 'no' && document.getElementById('grp_ballroom')?.checked) {
+    grpElecti.push('Grupal Ballroom');
+  }
+  GRUPALES_NAC.forEach(b => {
+    const id='grp_'+b.replace(/[\s—]/g,'_');
+    if(document.getElementById(id)?.checked) grpNac.push(b);
+  });
+
+  const talleresDC = [0,1,2].filter(i => document.getElementById('tdc_'+i)?.checked);
+  const ballroomCoreo = document.getElementById('chk-ballroom-coreo')?.checked || false;
+
+  return { hasDC, hasSt, solos, duos, trios, grpElecti, grpNac, talleresDC, ballroomCoreo };
+}
+
+// ═══════════════════════════════════════════
+// CALCULADORA (TOOL)
+// ═══════════════════════════════════════════
+function calcularCostos(sel) {
+  const tc = tcHoy || 7.75;
+  const {hasDC, hasSt, solos, duos, trios, grpElecti, grpNac, talleresDC, ballroomCoreo} = sel;
+  const totalGrupales = grpElecti.length + grpNac.length;
+
+  let lineasTalleres=[], lineasInsc=[], lineasEnsayos=[], lineasTrajes=[];
+  let subTalleres=0, subInscQ=0, subInscUSD=0, subEnsayos=0, subTrajesQ=0, subTrajesUSD=0;
+  const fechas=[];
+
+  // ── TALLERES ──
+  // ELECTI taller
+  const electiCosto = electiSel==='pre' ? P.electi_pre : P.electi_reg;
+  lineasTalleres.push({desc:`Taller ELECTI (${electiSel==='pre'?'pre-registro':'registro normal'})`, monto:electiCosto, moneda:'Q'});
+  subTalleres += electiCosto;
+  if(electiSel==='pre') {
+    fechas.push({desc:'ELECTI — Depósito pre-registro',date:'Antes 15 mar',montoQ:500,moneda:'Q'});
+    fechas.push({desc:'ELECTI — Resto del taller',date:'Antes 10 abr',montoQ:electiCosto-500,moneda:'Q'});
+  } else {
+    fechas.push({desc:'ELECTI — Pago completo',date:'Antes 10 abr',montoQ:electiCosto,moneda:'Q'});
+  }
+
+  // ELECTI coreo grupal (obligatoria)
+  lineasTalleres.push({desc:'Coreografía grupal ELECTI (obligatoria)', monto:P.electi_coreo, moneda:'Q'});
+  subTalleres += P.electi_coreo;
+  fechas.push({desc:'ELECTI Coreo grupal — Reserva',date:'Antes 10 mar',montoQ:300,moneda:'Q'});
+  fechas.push({desc:'ELECTI Coreo grupal — Resto',date:'Antes 10 abr',montoQ:P.electi_coreo-300,moneda:'Q'});
+
+  // BALLROOM
+  if(ballroomSel!=='no') {
+    const bc = ballroomSel==='pre' ? P.ballroom_pre : P.ballroom_reg;
+    lineasTalleres.push({desc:`Taller Ballroom Camila Cordero (${ballroomSel==='pre'?'pre-registro':'registro normal'})`,monto:bc,moneda:'Q'});
+    subTalleres += bc;
+    if(ballroomSel==='pre') {
+      fechas.push({desc:'Ballroom — Depósito',date:'Antes 15 mar',montoQ:200,moneda:'Q'});
+      fechas.push({desc:'Ballroom — Resto',date:'Antes 15 may',montoQ:bc-200,moneda:'Q'});
+    } else {
+      fechas.push({desc:'Ballroom — Pago completo',date:'Antes 15 may',montoQ:bc,moneda:'Q'});
+    }
+    if(ballroomCoreo) {
+      lineasTalleres.push({desc:'Coreografía grupal Ballroom (pre-seleccionada)',monto:P.ballroom_coreo,moneda:'Q'});
+      subTalleres += P.ballroom_coreo;
+      fechas.push({desc:'Ballroom Coreo — Reserva',date:'Antes 10 abr',montoQ:200,moneda:'Q'});
+      fechas.push({desc:'Ballroom Coreo — Resto',date:'Antes 15 may',montoQ:P.ballroom_coreo-200,moneda:'Q'});
+    }
+  }
+
+  // Taller extra Dance Challenge (Q150)
+  if(hasDC && talleresDC.includes(2)) {
+    lineasTalleres.push({desc:'Taller extra Dance Challenge (3er taller)',monto:P.dc_taller_extra,moneda:'Q'});
+    subTalleres += P.dc_taller_extra;
+  }
+
+  // ── FEES ACADEMIA ──
+  if(hasDC) {
+    lineasEnsayos.push({desc:'Fee academia — Dance Challenge',monto:P.fee_academia,moneda:'Q'});
+    subEnsayos += P.fee_academia;
+  }
+  if(hasSt) {
+    lineasEnsayos.push({desc:'Fee academia — Stage Championship',monto:P.fee_academia,moneda:'Q'});
+    subEnsayos += P.fee_academia;
+  }
+
+  // ── INSCRIPCIONES DANCE CHALLENGE ──
+  if(hasDC) {
+    solos.forEach(s => {
+      lineasInsc.push({desc:`Solo "${s.nombre}" — Dance Challenge`,monto:P.dc_solo,moneda:'Q'});
+      subInscQ += P.dc_solo;
+    });
+    duos.forEach(d => {
+      lineasInsc.push({desc:`Dúo "${d.nombre}" — Dance Challenge`,monto:P.dc_duo,moneda:'Q',nota:'por alumna'});
+      subInscQ += P.dc_duo;
+    });
+    trios.forEach(t => {
+      lineasInsc.push({desc:`Trío "${t.nombre}" — Dance Challenge`,monto:P.dc_trio,moneda:'Q',nota:'por alumna'});
+      subInscQ += P.dc_trio;
+    });
+    const gtot = grpElecti.length + grpNac.length;
+    if(gtot>0) {
+      lineasInsc.push({desc:`1er grupal — Dance Challenge`,monto:P.dc_grupal_1,moneda:'Q',nota:'por alumna'});
+      subInscQ += P.dc_grupal_1;
+      if(gtot>1) {
+        const extras = gtot-1;
+        const m = extras*P.dc_grupal_extra;
+        lineasInsc.push({desc:`${extras} grupal(es) adicional(es) — Dance Challenge`,monto:m,moneda:'Q',nota:`Q${P.dc_grupal_extra} c/u por alumna`});
+        subInscQ += m;
+      }
+    }
+    if(lineasInsc.length) fechas.push({desc:'Inscripciones Dance Challenge',date:'15 de marzo',montoQ:subInscQ,moneda:'Q'});
+  }
+
+  // ── INSCRIPCIONES STAGE ──
+  let stageUSDtotal = 0;
+  if(hasSt) {
+    solos.forEach(s => {
+      lineasInsc.push({desc:`Solo "${s.nombre}" — Stage`,monto:P.stage_solo_usd,moneda:'USD'});
+      stageUSDtotal += P.stage_solo_usd;
+    });
+    duos.forEach(d => {
+      lineasInsc.push({desc:`Dúo "${d.nombre}" — Stage`,monto:P.stage_duo_usd,moneda:'USD',nota:'por alumna'});
+      stageUSDtotal += P.stage_duo_usd;
+    });
+    trios.forEach(t => {
+      lineasInsc.push({desc:`Trío "${t.nombre}" — Stage`,monto:P.stage_trio_usd,moneda:'USD',nota:'por alumna'});
+      stageUSDtotal += P.stage_trio_usd;
+    });
+    const gtot2 = grpElecti.length + grpNac.length;
+    if(gtot2>0) {
+      const m = gtot2*P.stage_grupal_usd;
+      lineasInsc.push({desc:`${gtot2} grupal(es) — Stage`,monto:m,moneda:'USD',nota:'$40 por grupal por alumna'});
+      stageUSDtotal += m;
+    }
+    subInscUSD = stageUSDtotal;
+    if(stageUSDtotal>0) {
+      fechas.push({desc:'Inscripciones Stage Championship',date:'30 de marzo',montoQ:Math.round(stageUSDtotal*tc),monedaAlter:`$${stageUSDtotal} USD`,moneda:'USD'});
+    }
+  }
+
+  subInscQ += Math.round(subInscUSD * tc);
+
+  // ── MONTAJE Y LIMPIEZA ──
+  solos.forEach(s => {
+    if(s.montaje==='extran') {
+      const mUSD = P.montaje_extran_usd;
+      const limQ = P.limpieza_hora * P.limpieza_horas_promedio;
+      lineasEnsayos.push({desc:`Montaje solo "${s.nombre}" (maestras extranjeras)`,monto:mUSD,moneda:'USD',nota:'Promedio 4h limpieza adicional'});
+      lineasEnsayos.push({desc:`Limpieza solo "${s.nombre}" (~4h · puede variar)`,monto:limQ,moneda:'Q'});
+      subEnsayos += Math.round(mUSD*tc) + limQ;
+    } else {
+      lineasEnsayos.push({desc:`Montaje + limpieza solo "${s.nombre}" (maestra local, 6h)`,monto:P.montaje_local_solo,moneda:'Q'});
+      subEnsayos += P.montaje_local_solo;
+    }
+  });
+  [...duos,...trios].forEach(d => {
+    lineasEnsayos.push({desc:`Montaje + limpieza "${d.nombre}" (maestra local, 6h por alumna)`,monto:P.montaje_local_duo_trio,moneda:'Q'});
+    subEnsayos += P.montaje_local_duo_trio;
+  });
+  if(totalGrupales>0) {
+    let limGrp = totalGrupales<=3 ? P.limpieza_grupal_1_3 : totalGrupales<=6 ? P.limpieza_grupal_4_6 : P.limpieza_grupal_7plus;
+    const totalLimGrp = limGrp * totalGrupales;
+    lineasEnsayos.push({desc:`Limpieza grupales (${totalGrupales} baile(s), Q${limGrp} c/u)`,monto:totalLimGrp,moneda:'Q'});
+    subEnsayos += totalLimGrp;
+  }
+
+  // ── TRAJES ──
+  const trajeItems = [...solos.map(s=>s.nombre), ...duos.map(d=>d.nombre), ...trios.map(t=>t.nombre), ...grpElecti];
+  trajeItems.forEach(b => {
+    lineasTrajes.push({desc:`Traje: ${b}`,monto:P.traje_usd,moneda:'USD',nota:`+ Q${P.envio_traje_q} envío (se confirma al llegar a Guatemala)`});
+    subTrajesUSD += P.traje_usd;
+  });
+  subTrajesQ = Math.round(subTrajesUSD * tc) + (trajeItems.length > 0 ? P.envio_traje_q : 0);
+
+  // ── TOTALES ──
+  const totalQ = subTalleres + subInscQ + subEnsayos + subTrajesQ;
+  const totalUSD = subInscUSD + (solos.filter(s=>s.montaje==='extran').length * P.montaje_extran_usd) + subTrajesUSD;
+
+  return {
+    lineasTalleres, lineasInsc, lineasEnsayos, lineasTrajes,
+    subTalleres, subInscQ, subInscUSD, subEnsayos, subTrajesQ, subTrajesUSD,
+    totalQ, totalUSD, fechas, tc
+  };
+}
+
+// ═══════════════════════════════════════════
+// CALCULAR → RENDER
+// ═══════════════════════════════════════════
+function calcular() {
+  document.getElementById('btn-texto').style.display='none';
+  document.getElementById('spinner').style.display='block';
+  setTimeout(()=>{
+    const sel = recopilar();
+    const res = calcularCostos(sel);
+    const alumno = document.getElementById('nombre-alumno').value.trim();
+    const comps = [sel.hasDC?'Dance Challenge':'',sel.hasSt?'Stage':''].filter(Boolean).join(' + ');
+    ultimaCotizacion = {
+      alumno,
+      mama: document.getElementById('nombre-mama').value.trim(),
+      email: document.getElementById('email').value.trim(),
+      tel: document.getElementById('telefono').value.trim(),
+      sel, res, comps,
+      ts: new Date().toLocaleDateString('es-GT',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'})
+    };
+    historial.push({alumno,comps,totalQ:res.totalQ,ts:ultimaCotizacion.ts});
+    localStorage.setItem('dc_historial_v2', JSON.stringify(historial));
+
+    renderResultado(ultimaCotizacion);
+    document.getElementById('seccion-formulario').style.display='none';
+    document.getElementById('resultado').style.display='block';
+    document.getElementById('btn-texto').style.display='block';
+    document.getElementById('spinner').style.display='none';
+    window.scrollTo({top:0,behavior:'smooth'});
+    if(historial.length>1) mostrarComparativo();
+  },700);
+}
+
+function fmtQ(n){ return 'Q'+Math.round(n).toLocaleString('es-GT'); }
+function fmtU(n){ return '$'+n.toLocaleString('en-US'); }
+
+function renderResultado(q) {
+  const {alumno, comps, res, ts} = q;
+  document.getElementById('res-nombre').textContent = alumno;
+  document.getElementById('res-comps').textContent = comps + ' · ' + ts;
+  document.getElementById('res-total-q').innerHTML = fmtQ(res.totalQ)+'<span>estimado</span>';
+  document.getElementById('res-tc-ref').textContent = res.tc ? `Tipo de cambio usado: Q${res.tc.toFixed(2)}/USD` : '';
+
+  if(res.totalUSD>0){
+    document.getElementById('bloque-usd').style.display='block';
+    document.getElementById('res-total-usd').innerHTML = fmtU(res.totalUSD)+'<span>aprox.</span>';
+  }
+
+  function renderDesglose(contId, lineas) {
+    let h='';
+    lineas.forEach(l=>{
+      const m = l.moneda==='USD' ? fmtU(l.monto)+` <span style="font-size:10px;color:#888">(≈${fmtQ(l.monto*res.tc)})</span>` : fmtQ(l.monto);
+      h+=`<div class="desglose-line">
+        <div><div class="dl-name">${l.desc}</div>${l.nota?`<div class="dl-note">* ${l.nota}</div>`:''}</div>
+        <div class="dl-monto">${m}</div>
+      </div>`;
+    });
+    if(!h) h='<div class="desglose-line" style="color:#aaa;font-size:12px">Ninguno seleccionado</div>';
+    document.getElementById(contId).innerHTML=h;
+  }
+
+  renderDesglose('desglose-talleres',res.lineasTalleres);
+  renderDesglose('desglose-inscripciones',res.lineasInsc);
+  renderDesglose('desglose-ensayos',res.lineasEnsayos);
+  renderDesglose('desglose-trajes',res.lineasTrajes);
+
+  document.getElementById('sub-talleres').textContent = fmtQ(res.subTalleres);
+  document.getElementById('sub-inscripciones').textContent = fmtQ(res.subInscQ);
+  document.getElementById('sub-ensayos').textContent = fmtQ(res.subEnsayos);
+  document.getElementById('sub-trajes').textContent = res.subTrajesQ>0 ? fmtQ(res.subTrajesQ)+' + envío a confirmar' : fmtQ(0);
+
+  let hf='';
+  res.fechas.forEach(f=>{
+    const monto = f.moneda==='USD'
+      ? `<span class="fecha-amount usd">${f.monedaAlter}</span><span class="fecha-amount q" style="font-size:10px;margin-left:4px">≈${fmtQ(f.montoQ)}</span>`
+      : `<span class="fecha-amount q">${fmtQ(f.montoQ)}</span>`;
+    hf+=`<div class="fecha-item"><div class="fecha-dot"></div><span class="fecha-desc">${f.desc}</span><span class="fecha-date">${f.date}</span>${monto}</div>`;
+  });
+  document.getElementById('fechas-list').innerHTML=hf||'<div style="color:#aaa;font-size:12px">Sin fechas específicas</div>';
+}
+
+// ═══════════════════════════════════════════
+// COMPARATIVO
+// ═══════════════════════════════════════════
+function mostrarComparativo() {
+  document.getElementById('comparativo').classList.add('visible');
+  let rows='';
+  historial.forEach((h,i)=>{
+    rows+=`<tr><td>Escenario ${i+1}</td><td>${h.alumno}</td><td>${h.comps}</td><td class="td-total">${fmtQ(h.totalQ)}</td><td style="font-size:11px;color:#aaa">${h.ts}</td></tr>`;
+  });
+  document.getElementById('comp-tbody').innerHTML=rows;
+}
+
+// ═══════════════════════════════════════════
+// PDF
+// ═══════════════════════════════════════════
+function generarPDF() {
+  if(!ultimaCotizacion) return;
+  const {jsPDF} = window.jspdf;
+  const doc = new jsPDF({format:'a4',unit:'mm'});
+  const {alumno,mama,email,tel,comps,res,ts} = ultimaCotizacion;
+  const W=210, M=16;
+  let y=0;
+
+  // Header
+  doc.setFillColor(10,10,10); doc.rect(0,0,W,40,'F');
+  doc.setFillColor(200,16,46); doc.circle(W-20,20,16,'F');
+  doc.setFont('helvetica','bold'); doc.setFontSize(18); doc.setTextColor(255,255,255);
+  doc.text('Academia Ritmo',M,15);
+  doc.setFontSize(8); doc.setFont('helvetica','normal'); doc.setTextColor(150,150,150);
+  doc.text('Cotización de Competencias 2026',M,23);
+  doc.setTextColor(255,255,255); doc.setFontSize(7.5);
+  doc.text('Generado: '+ts,M,31);
+
+  y=50;
+  doc.setFillColor(245,242,238); doc.roundedRect(M,y,W-M*2,24,3,3,'F');
+  doc.setFont('helvetica','bold'); doc.setFontSize(10); doc.setTextColor(10,10,10);
+  doc.text(alumno,M+5,y+8);
+  doc.setFont('helvetica','normal'); doc.setFontSize(8); doc.setTextColor(100,100,100);
+  doc.text(comps,M+5,y+15);
+  if(mama) doc.text('Contacto: '+mama+(email?' · '+email:'')+(tel?' · '+tel:''),M+5,y+21);
+
+  y+=32;
+  doc.setFont('helvetica','bold'); doc.setFontSize(24); doc.setTextColor(200,16,46);
+  doc.text(fmtQ(res.totalQ),M,y);
+  doc.setFontSize(7); doc.setFont('helvetica','normal'); doc.setTextColor(130,130,130);
+  doc.text('TOTAL ESTIMADO EN QUETZALES (incluye equivalente en Q de costos USD al TC del día)',M,y+6);
+  if(res.totalUSD>0) {
+    doc.setFontSize(11); doc.setFont('helvetica','bold'); doc.setTextColor(37,99,235);
+    doc.text(fmtU(res.totalUSD)+' USD aprox.',M,y+14);
+    doc.setFontSize(7); doc.setFont('helvetica','normal'); doc.setTextColor(130,130,130);
+    doc.text(`TC de referencia: Q${res.tc?.toFixed(2)}/USD · Sujeto al tipo de cambio del día de pago`,M,y+20);
+    y+=10;
+  }
+
+  y+=22;
+  doc.setDrawColor(220,216,212); doc.setLineWidth(.3); doc.line(M,y,W-M,y); y+=8;
+
+  function bloquePDF(titulo, lineas, subtotalQ) {
+    if(!lineas.length) return;
+    if(y>255){ doc.addPage(); y=20; }
+    doc.setFillColor(248,246,243); doc.roundedRect(M,y,W-M*2,7,2,2,'F');
+    doc.setFont('helvetica','bold'); doc.setFontSize(7.5); doc.setTextColor(80,80,80);
+    doc.text(titulo.toUpperCase(),M+3,y+5); y+=11;
+    lineas.forEach(l=>{
+      if(y>268){ doc.addPage(); y=20; }
+      const mStr = l.moneda==='USD' ? `${fmtU(l.monto)} (≈${fmtQ(l.monto*res.tc)})` : fmtQ(l.monto);
+      doc.setFont('helvetica','normal'); doc.setFontSize(8); doc.setTextColor(40,40,40);
+      const lines = doc.splitTextToSize(l.desc,W-M*2-40);
+      doc.text(lines,M+2,y);
+      doc.setFont('helvetica','bold');
+      doc.text(mStr,W-M-2,y,{align:'right'});
+      if(l.nota){ doc.setFont('helvetica','italic'); doc.setFontSize(6.5); doc.setTextColor(150,150,150); doc.text('* '+l.nota,M+4,y+4); y+=4; }
+      y+=lines.length*5+2;
+    });
+    doc.setDrawColor(200,16,46); doc.setLineWidth(.4); doc.line(M,y,W-M,y); y+=4;
+    doc.setFont('helvetica','bold'); doc.setFontSize(8.5); doc.setTextColor(10,10,10);
+    doc.text('Subtotal',M+2,y); doc.setTextColor(200,16,46);
+    doc.text(fmtQ(subtotalQ),W-M-2,y,{align:'right'}); y+=10;
+  }
+
+  bloquePDF('Talleres',res.lineasTalleres,res.subTalleres);
+  bloquePDF('Inscripciones a Competencias',res.lineasInsc,res.subInscQ);
+  bloquePDF('Fees Academia + Ensayos',res.lineasEnsayos,res.subEnsayos);
+  bloquePDF('Trajes (referencia)',res.lineasTrajes,res.subTrajesQ);
+
+  // Fechas
+  if(res.fechas.length && y<240){
+    doc.setFillColor(255,248,249); doc.roundedRect(M,y,W-M*2,8+res.fechas.length*7,3,3,'F');
+    doc.setFont('helvetica','bold'); doc.setFontSize(7.5); doc.setTextColor(200,16,46);
+    doc.text('CALENDARIO DE PAGOS',M+3,y+5.5); y+=10;
+    res.fechas.forEach(f=>{
+      const mStr = f.moneda==='USD' ? `${f.monedaAlter} (≈${fmtQ(f.montoQ)})` : fmtQ(f.montoQ);
+      doc.setFont('helvetica','normal'); doc.setFontSize(8); doc.setTextColor(40,40,40);
+      doc.text(f.desc+' · '+f.date,M+3,y);
+      doc.setFont('helvetica','bold'); doc.setTextColor(200,16,46);
+      doc.text(mStr,W-M-2,y,{align:'right'}); y+=7;
+    });
+    y+=6;
+  }
+
+  // Nota pagos
+  doc.setFillColor(245,242,238); doc.roundedRect(M,y,W-M*2,26,3,3,'F');
+  doc.setFont('helvetica','bold'); doc.setFontSize(7.5); doc.setTextColor(80,80,80);
+  doc.text('INFORMACIÓN DE PAGOS',M+3,y+6);
+  doc.setFont('helvetica','normal'); doc.setFontSize(7); doc.setTextColor(100,100,100);
+  doc.text('Inscripciones a competencia: Efectivo/transferencia · Cta. Monetaria BI 783 000 237-9 (no generan factura de academia)',M+3,y+12);
+  doc.text('Talleres y ensayos: Tarjeta, transferencia o efectivo a la Academia (sí generan factura)',M+3,y+18);
+  doc.text('Stage: Se puede pagar en Q o USD · Trajes Weissman: $88 promedio + Q180 envío (se confirma al llegar a Guatemala)',M+3,y+24);
+
+  // Footer
+  doc.setFillColor(10,10,10); doc.rect(0,284,W,13,'F');
+  doc.setFont('helvetica','normal'); doc.setFontSize(6.5); doc.setTextColor(120,120,120);
+  doc.text('Academia Ritmo · Cotización generada '+ts+' · Sujeta a confirmación final',W/2,292,{align:'center'});
+
+  doc.save('cotizacion-dancecomplex-'+alumno.replace(/\s+/g,'_')+'.pdf');
+  showToast('📄 PDF descargado correctamente');
+}
+
+// ═══════════════════════════════════════════
+// MODAL + ACCIONES
+// ═══════════════════════════════════════════
+function mostrarModalConfirm() {
+  if(!ultimaCotizacion) return;
+  const {alumno,mama,comps,res} = ultimaCotizacion;
+  document.getElementById('modal-resumen').innerHTML = `
+    <strong>${alumno}</strong>${mama?' · '+mama:''}<br>
+    <span style="color:#666">${comps}</span><br>
+    <span style="color:var(--red);font-weight:700">${fmtQ(res.totalQ)} estimado</span>`;
+  document.getElementById('overlay-confirm').classList.add('visible');
+}
+function cerrarModal(){ document.getElementById('overlay-confirm').classList.remove('visible'); }
+async function confirmarInscripcion() {
+  cerrarModal();
+
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzbCDLJyI_o97PZaDXFyZyN7arzaa0qCy8m-336EiC-v_C8b3xMryfLogTTv8nbipPf/exec';
+
+  const payload = {
+    alumno:      ultimaCotizacion.alumno,
+    mama:        ultimaCotizacion.mama,
+    email:       ultimaCotizacion.email,
+    tel:         ultimaCotizacion.tel,
+    electiSel:   electiSel,
+    ballroomSel: ballroomSel,
+    sel:         ultimaCotizacion.sel,
+    res:         ultimaCotizacion.res,
+    ts:          ultimaCotizacion.ts,
+  };
+
+  // Enviar como GET con datos en URL — método más confiable con Apps Script
+  const url = APPS_SCRIPT_URL + '?datos=' + encodeURIComponent(JSON.stringify(payload));
+  fetch(url, { method: 'GET', mode: 'no-cors' }).catch(() => {});
+
+  showToast('✅ ¡Inscripción confirmada! La asistente se pondrá en contacto contigo pronto.');
+}
+
+function recotizar(){
+  document.getElementById('resultado').style.display='none';
+  document.getElementById('seccion-formulario').style.display='block';
+
+  // Reconstruir listas dinámicas para evitar IDs duplicados
+  document.getElementById('solos-list').innerHTML='';
+  document.getElementById('duos-list').innerHTML='';
+  document.getElementById('grupales-list').innerHTML='';
+  document.getElementById('talleres-dc-list').innerHTML='';
+  construirListaSolos();
+  construirListaDuos();
+  construirListaGrupales();
+  construirTalleresComp();
+
+  // Restaurar visibilidad correcta del grupal Ballroom
+  const rowBallroom = document.getElementById('row-grp-ballroom');
+  if(rowBallroom) rowBallroom.style.display = ballroomSel!=='no' ? 'flex' : 'none';
+
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function resetAll(){
+  if(!confirm('¿Deseas borrar todo y empezar de nuevo?')) return;
+  document.querySelectorAll('input[type=checkbox]').forEach(c=>c.checked=false);
+  document.querySelectorAll('input[type=text],input[type=email],input[type=tel]').forEach(i=>i.value='');
+  document.querySelectorAll('.montaje-opts').forEach(m=>m.classList.remove('visible'));  document.querySelectorAll('.comp-option,.taller-card,.taller-comp-item').forEach(o=>o.classList.remove('selected'));
+  document.querySelectorAll('.taller-check').forEach(c=>{c.innerHTML='';c.style.background='';c.style.borderColor='';});
+  document.querySelectorAll('.comp-check').forEach(c=>{c.innerHTML='';c.style.background='';c.style.borderColor='';});
+  document.getElementById('card-bailes').style.display='none';
+  document.getElementById('card-talleres-comp').style.display='none';
+  document.getElementById('ballroom-coreo-section').style.display='none';
+  document.getElementById('talleres-dc-section').style.display='none';
+  document.getElementById('talleres-stage-section').style.display='none';
+  document.getElementById('resultado').style.display='none';
+  document.getElementById('seccion-formulario').style.display='block';
+  electiSel=null; ballroomSel='no';
+  seleccionarBallroom('no');
+  document.getElementById('btn-calcular').disabled=true;
+  ultimaCotizacion=null;
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3500);
+}
+</script>
+</body>
+</html>
