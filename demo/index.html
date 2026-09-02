@@ -1,414 +1,663 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-<!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-WBDLWHS6');</script>
-<!-- End Google Tag Manager -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Vea la conversación completa: el bot revisa la agenda real, aparta el espacio, le avisa a la clínica y le recuerda al paciente un día antes. Demostración interactiva para clínicas dentales y centros de fisioterapia.">
+<meta name="theme-color" content="#124533">
+<link rel="canonical" href="https://www.clickwiseowl.com/demo/">
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Click Wise Owl — Sitios y apps web con IA para tu negocio</title>
-<meta name="description" content="Click Wise Owl crea sitios web, apps web y herramientas de marketing con inteligencia artificial para pymes en Latinoamérica. Fundado por Alba Nory de González.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Click Wise Owl">
+<meta property="og:locale" content="es_GT">
+<meta property="og:url" content="https://www.clickwiseowl.com/demo/">
+<meta property="og:title" content="El bot que sí agenda la cita">
+<meta property="og:description" content="Vea la conversación completa: el bot revisa la agenda real, aparta el espacio, le avisa a la clínica y le recuerda al paciente un día antes. Demostración interactiva para clínicas dentales y centros de fisioterapia.">
+<meta property="og:image" content="https://www.clickwiseowl.com/demo/card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="El bot que sí agenda la cita — Click Wise Owl">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="El bot que sí agenda la cita">
+<meta name="twitter:description" content="Vea la conversación completa: el bot revisa la agenda real, aparta el espacio, le avisa a la clínica y le recuerda al paciente un día antes. Demostración interactiva para clínicas dentales y centros de fisioterapia.">
+<meta name="twitter:image" content="https://www.clickwiseowl.com/demo/card.png">
+
+<title>Demo: el bot que agenda citas | Click Wise Owl</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+
 <style>
-  :root{--ink:#2d2545;--ink-soft:#645d7a;--bg:#faf9fb;--card:#ffffff;--accent:#7d2e8e;--accent-soft:#f3e9f6;--teal:#3ab5ae;--gold:#f0a13c;--cream:#f6ecd8;--line:#e9e5ee;--radius:16px}
-  *{margin:0;padding:0;box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  body{font-family:Inter,system-ui,sans-serif;color:var(--ink);background:var(--bg);line-height:1.6}
-  h1,h2,h3{font-family:Fraunces,serif;line-height:1.15}
-  a{color:var(--accent);text-decoration:none}
-  .wrap{max-width:1040px;margin:0 auto;padding:0 24px}
-  section{padding:88px 0}
-  .eyebrow{display:inline-block;font-size:.78rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);padding:6px 14px;border-radius:999px;margin-bottom:18px}
-  [data-en]{display:none}
-  html.en [data-es]{display:none}
-  html.en [data-en]{display:revert}
-  nav{position:sticky;top:0;background:rgba(253,252,249,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);z-index:10}
-  .nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px}
-  .brand{display:flex;align-items:center;gap:10px;font-family:Fraunces,serif;font-weight:700;font-size:1.1rem;color:var(--ink)}
-  .brand img{height:46px;width:auto}
-  .nav-links{display:flex;gap:26px;align-items:center;font-size:.92rem;font-weight:500}
-  .nav-links a{color:var(--ink-soft)}
-  .nav-links a:hover{color:var(--accent)}
-  .lang-btn{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:6px 14px;font:inherit;font-size:.85rem;font-weight:600;cursor:pointer;color:var(--ink-soft)}
-  .lang-btn:hover{border-color:var(--accent);color:var(--accent)}
-  .hero{padding:110px 0 96px;text-align:center}
-  .hero h1{font-size:clamp(2.3rem,5.5vw,3.6rem);max-width:780px;margin:0 auto 22px}
-  .hero h1 em{font-style:normal;color:var(--accent)}
-  .hero p{max-width:600px;margin:0 auto 36px;color:var(--ink-soft);font-size:1.13rem}
-  .btn{display:inline-block;background:var(--accent);color:#fff;padding:14px 32px;border-radius:999px;font-weight:600;transition:transform .15s,box-shadow .15s}
-  .btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(125,46,142,.25)}
-  .btn.ghost{background:transparent;color:var(--accent);border:1.5px solid var(--accent);margin-left:12px}
-  .grid{display:grid;gap:24px}
-  .grid.c3{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:32px 28px}
-  .card .icon{width:44px;height:44px;border-radius:12px;background:var(--accent-soft);display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin-bottom:18px}
-  .card h3{font-size:1.15rem;margin-bottom:10px}
-  .card p{color:var(--ink-soft);font-size:.96rem}
-  section h2{font-size:clamp(1.7rem,3.5vw,2.3rem);margin-bottom:14px}
-  .section-head{max-width:640px;margin-bottom:44px}
-  .section-head p{color:var(--ink-soft)}
-  .step{display:flex;gap:18px;align-items:flex-start}
-  .step-num{flex-shrink:0;width:36px;height:36px;border-radius:50%;background:var(--teal);color:#fff;font-weight:600;display:flex;align-items:center;justify-content:center;font-size:.95rem}
-  .price-flex{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
-  .price-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:36px 30px;text-align:center}
-  .price-card.feature{border-color:var(--accent);box-shadow:0 12px 32px rgba(125,46,142,.1)}
-  .price-card .tag{font-size:.8rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--gold)}
-  .price-card h3{font-size:1.35rem;margin:10px 0 8px}
-  .price-card p{color:var(--ink-soft);font-size:.95rem}
-  .price-card ul{list-style:none;margin:20px 0 0;text-align:left}
-  .price-card li{padding:8px 0;border-top:1px solid var(--line);font-size:.93rem;color:var(--ink-soft)}
-  .price-card li::before{content:"✓";color:var(--accent);font-weight:700;margin-right:10px}
-  .price-card .amount{display:block;font-size:2.5rem;font-weight:700;color:var(--ink);letter-spacing:-.025em;line-height:1.05;margin:14px 0 2px}
-  .price-card .per{display:block;font-size:.78rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:16px}
-  .price-note{text-align:center;margin-top:32px;color:var(--ink-soft);font-size:.97rem}
-  .price-note a{color:var(--accent);font-weight:600}
-  .about{display:grid;grid-template-columns:1fr 1.4fr;gap:48px;align-items:center}
-  .about-owl{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px;display:flex;justify-content:center}
-  .about-owl img{width:100%;max-width:280px;height:auto}
-  .about p{color:var(--ink-soft);margin-bottom:14px}
-  .creds{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
-  .creds span{font-size:.82rem;font-weight:500;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:6px 14px;color:var(--ink-soft)}
-  .contact{background:var(--ink);border-radius:var(--radius);color:#fff;text-align:center;padding:72px 32px}
-  .contact h2{color:#fff}
-  .contact p{color:#c8ccd6;max-width:520px;margin:0 auto 30px}
-  .contact .btn{background:var(--gold)}
-  .contact .btn:hover{box-shadow:0 8px 24px rgba(217,164,65,.35)}
-  button.btn{border:0;font:inherit;font-weight:600;cursor:pointer}
-  .contact .btn.cal{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.55);margin-left:12px}
-  .contact .btn.cal:hover{background:rgba(255,255,255,.08);border-color:#fff;box-shadow:none}
-  @media(max-width:560px){.contact .btn.cal{margin-left:0;margin-top:12px}}
-  footer{padding:36px 0;text-align:center;color:var(--ink-soft);font-size:.88rem}
-  .socials{margin-bottom:10px}
-  .socials a{margin:0 10px;font-weight:500}
-  @media (max-width:760px){.about{grid-template-columns:1fr}}
-  @media (max-width:640px){.nav-links a.hide-m{display:none}section{padding:64px 0}}
+  :root {
+    --ground:     #F6F7F6;
+    --surface:    #FFFFFF;
+    --surface-2:  #ECF0EE;
+    --ink:        #101A17;
+    --ink-2:      #3C4A45;
+    --muted:      #6D7C76;
+    --line:       #DBE2DF;
+    --line-soft:  #E8EDEB;
+
+    --jade:       #1B6E52;
+    --jade-ink:   #17593F;
+    --jade-soft:  #E2F0E9;
+    --jade-deep:  #124533;
+    --on-jade:    #FFFFFF;
+
+    --slate-ink:  #3D5665;
+    --amber:      #8E6210;
+
+    --chat-bg:    #EDE7DE;
+    --bub-in:     #FFFFFF;
+    --bub-out:    #D6F0DF;
+    --bub-ink:    #131A17;
+    --bub-time:   #7C8B84;
+
+    --shadow: 0 1px 2px rgba(16,26,23,.04), 0 8px 24px -12px rgba(16,26,23,.10);
+    --shadow-lg: 0 2px 6px rgba(16,26,23,.06), 0 30px 60px -30px rgba(16,26,23,.28);
+
+    --display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+    --body: "Source Serif 4", Georgia, "Times New Roman", serif;
+    --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+    --ui: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:     #0D1412;
+      --surface:    #151E1B;
+      --surface-2:  #1B2622;
+      --ink:        #E9EEEB;
+      --ink-2:      #B6C2BD;
+      --muted:      #84948E;
+      --line:       #27332E;
+      --line-soft:  #1F2A26;
+      --jade:       #55BC8F;
+      --jade-ink:   #7FD3AE;
+      --jade-soft:  #112C22;
+      --jade-deep:  #0E3A2B;
+      --on-jade:    #08110D;
+      --slate-ink:  #A9C6D4;
+      --amber:      #D3A452;
+      --chat-bg:    #101815;
+      --bub-in:     #1D2825;
+      --bub-out:    #16402F;
+      --bub-ink:    #E7EEEA;
+      --bub-time:   #7E8F88;
+      --shadow: 0 1px 2px rgba(0,0,0,.30), 0 8px 24px -12px rgba(0,0,0,.55);
+      --shadow-lg: 0 2px 6px rgba(0,0,0,.4), 0 30px 60px -30px rgba(0,0,0,.8);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ground:     #0D1412;
+    --surface:    #151E1B;
+    --surface-2:  #1B2622;
+    --ink:        #E9EEEB;
+    --ink-2:      #B6C2BD;
+    --muted:      #84948E;
+    --line:       #27332E;
+    --line-soft:  #1F2A26;
+    --jade:       #55BC8F;
+    --jade-ink:   #7FD3AE;
+    --jade-soft:  #112C22;
+    --jade-deep:  #0E3A2B;
+    --on-jade:    #08110D;
+    --slate-ink:  #A9C6D4;
+    --amber:      #D3A452;
+    --chat-bg:    #101815;
+    --bub-in:     #1D2825;
+    --bub-out:    #16402F;
+    --bub-ink:    #E7EEEA;
+    --bub-time:   #7E8F88;
+    --shadow: 0 1px 2px rgba(0,0,0,.30), 0 8px 24px -12px rgba(0,0,0,.55);
+    --shadow-lg: 0 2px 6px rgba(0,0,0,.4), 0 30px 60px -30px rgba(0,0,0,.8);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0; background: var(--ground); color: var(--ink);
+    font-family: var(--body); font-size: 17px; line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 22px 88px; }
+
+  h1, h2, h3 { font-family: var(--display); }
+
+  h1 {
+    font-size: clamp(2rem, 5vw, 3.1rem); line-height: 1.04;
+    letter-spacing: -0.028em; font-weight: 700; margin: 0 0 16px;
+    text-wrap: balance;
+  }
+  h2 { font-size: clamp(1.25rem, 2.8vw, 1.6rem); line-height: 1.18;
+       letter-spacing: -0.018em; font-weight: 700; margin: 0; text-wrap: balance; }
+  h3 { font-size: 1rem; font-weight: 600; letter-spacing: -0.006em; margin: 0; }
+
+  p { margin: 0 0 1em; }
+  p:last-child { margin-bottom: 0; }
+
+  .eyebrow {
+    font-family: var(--mono); font-size: .68rem; font-weight: 500;
+    letter-spacing: .16em; text-transform: uppercase;
+    color: var(--muted); margin: 0 0 14px;
+  }
+
+  header.masthead { padding: 64px 0 0; }
+  .lede { font-size: clamp(1.02rem, 2vw, 1.2rem); line-height: 1.5;
+          color: var(--ink-2); max-width: 56ch; margin: 0; }
+
+  /* ---------- controls ---------- */
+
+  .controls {
+    margin: 34px 0 26px; display: flex; flex-wrap: wrap;
+    gap: 10px; align-items: center;
+  }
+
+  .seg { display: flex; gap: 0; border: 1px solid var(--line); border-radius: 4px; overflow: hidden; background: var(--surface); }
+  .seg button {
+    font-family: var(--ui); font-size: .78rem; font-weight: 600;
+    letter-spacing: .01em; padding: 9px 16px; cursor: pointer;
+    background: transparent; color: var(--muted); border: 0;
+  }
+  .seg button + button { border-left: 1px solid var(--line); }
+  .seg button[aria-pressed="true"] { background: var(--ink); color: var(--ground); }
+  .seg button:focus-visible { outline: 2px solid var(--jade); outline-offset: -2px; }
+
+  .namefield { display: flex; align-items: center; gap: 8px; }
+  .namefield label {
+    font-family: var(--mono); font-size: .64rem; letter-spacing: .11em;
+    text-transform: uppercase; color: var(--muted);
+  }
+  .namefield input {
+    font-family: var(--ui); font-size: .82rem; color: var(--ink);
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 4px; padding: 9px 12px; min-width: 230px;
+  }
+  .namefield input:focus-visible { outline: 2px solid var(--jade); outline-offset: -1px; }
+
+  .btn {
+    font-family: var(--ui); font-size: .78rem; font-weight: 600;
+    padding: 10px 16px; border-radius: 4px; cursor: pointer;
+    background: var(--jade); color: var(--on-jade); border: 0;
+  }
+  .btn:focus-visible { outline: 2px solid var(--jade); outline-offset: 2px; }
+
+  /* ---------- stage ---------- */
+
+  .stage {
+    display: grid; grid-template-columns: minmax(0, 380px) minmax(0, 1fr);
+    gap: 34px; align-items: start;
+  }
+  @media (max-width: 820px) { .stage { grid-template-columns: 1fr; gap: 26px; } }
+
+  /* phone */
+
+  .phone {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 22px; overflow: hidden; box-shadow: var(--shadow-lg);
+  }
+
+  .phone-top {
+    background: var(--jade-deep); color: #EAF3EE;
+    padding: 14px 16px; display: flex; align-items: center; gap: 11px;
+  }
+  .avatar {
+    width: 36px; height: 36px; border-radius: 50%; flex: none;
+    background: var(--jade); display: grid; place-items: center;
+    font-family: var(--ui); font-weight: 700; font-size: .82rem; color: #EAF3EE;
+  }
+  .phone-top .who { min-width: 0; }
+  .phone-top .biz {
+    font-family: var(--ui); font-weight: 600; font-size: .92rem;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .phone-top .status {
+    font-family: var(--ui); font-size: .68rem; opacity: .78; letter-spacing: .02em;
+  }
+  .demo-tag {
+    margin-left: auto; flex: none;
+    font-family: var(--mono); font-size: .56rem; letter-spacing: .12em;
+    text-transform: uppercase; padding: 3px 7px; border-radius: 3px;
+    background: rgba(255,255,255,.16); color: #EAF3EE;
+  }
+
+  .chat {
+    background: var(--chat-bg);
+    height: 540px; overflow-y: auto; padding: 16px 12px 20px;
+    display: flex; flex-direction: column; gap: 7px;
+    scroll-behavior: smooth;
+  }
+  @media (prefers-reduced-motion: reduce) { .chat { scroll-behavior: auto; } }
+
+  .sep {
+    align-self: center; margin: 10px 0 4px;
+    font-family: var(--ui); font-size: .64rem; font-weight: 600;
+    letter-spacing: .04em; color: var(--bub-time);
+    background: var(--bub-in); padding: 5px 11px; border-radius: 10px;
+    box-shadow: 0 1px 1px rgba(0,0,0,.06); text-align: center; max-width: 84%;
+  }
+
+  .msg {
+    max-width: 84%; padding: 8px 11px 7px; border-radius: 9px;
+    font-family: var(--ui); font-size: .84rem; line-height: 1.45;
+    color: var(--bub-ink); white-space: pre-wrap;
+    box-shadow: 0 1px 1px rgba(0,0,0,.07);
+    animation: pop .18s ease-out;
+  }
+  @keyframes pop { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .msg { animation: none; } }
+
+  .msg .stamp {
+    display: block; text-align: right; font-size: .58rem;
+    color: var(--bub-time); margin-top: 3px; letter-spacing: .02em;
+  }
+
+  .bot  { align-self: flex-start; background: var(--bub-in);  border-top-left-radius: 2px; }
+  .user { align-self: flex-end;   background: var(--bub-out); border-top-right-radius: 2px; }
+
+  .typing {
+    align-self: flex-start; background: var(--bub-in);
+    padding: 11px 13px; border-radius: 9px; border-top-left-radius: 2px;
+    display: flex; gap: 4px; box-shadow: 0 1px 1px rgba(0,0,0,.07);
+  }
+  .typing i {
+    width: 6px; height: 6px; border-radius: 50%; background: var(--bub-time);
+    display: block; animation: blink 1.1s infinite;
+  }
+  .typing i:nth-child(2) { animation-delay: .18s; }
+  .typing i:nth-child(3) { animation-delay: .36s; }
+  @keyframes blink { 0%, 60%, 100% { opacity: .3; } 30% { opacity: 1; } }
+  @media (prefers-reduced-motion: reduce) { .typing i { animation: none; opacity: .6; } }
+
+  /* backstage */
+
+  .backstage { display: flex; flex-direction: column; gap: 18px; }
+
+  .bs-head .eyebrow { margin-bottom: 8px; }
+  .bs-head p { font-size: .96rem; color: var(--ink-2); margin: 8px 0 0; max-width: 46ch; }
+
+  .events { display: flex; flex-direction: column; gap: 8px; }
+
+  .ev {
+    background: var(--surface); border: 1px solid var(--line);
+    border-left: 3px solid var(--line); border-radius: 3px;
+    padding: 13px 15px; display: flex; gap: 11px; align-items: flex-start;
+    opacity: .34;
+  }
+  .ev[data-on="true"] { opacity: 1; border-left-color: var(--jade); }
+  .ev .tick {
+    flex: none; width: 17px; height: 17px; border-radius: 50%; margin-top: 2px;
+    border: 1.5px solid var(--line); display: grid; place-items: center;
+    font-size: .6rem; color: transparent; font-family: var(--ui); font-weight: 700;
+  }
+  .ev[data-on="true"] .tick { background: var(--jade); border-color: var(--jade); color: #fff; }
+  .ev .txt { min-width: 0; }
+  .ev .txt strong {
+    display: block; font-family: var(--ui); font-weight: 600;
+    font-size: .88rem; color: var(--ink); letter-spacing: -0.004em;
+  }
+  .ev .txt span {
+    display: block; font-size: .84rem; color: var(--muted); line-height: 1.45; margin-top: 2px;
+  }
+
+  .kicker {
+    background: var(--jade-soft); border-radius: 4px; padding: 18px 20px;
+  }
+  .kicker p { font-size: .93rem; color: var(--jade-ink); margin: 0; }
+  .kicker p strong { font-weight: 600; }
+
+  /* ---------- value ---------- */
+
+  section { margin-top: 66px; }
+
+  .value { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  @media (max-width: 780px) { .value { grid-template-columns: 1fr; } }
+
+  .val {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 4px; padding: 22px 22px 24px;
+    display: flex; flex-direction: column; gap: 9px;
+  }
+  .val .k {
+    font-family: var(--mono); font-size: .66rem; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--jade-ink);
+  }
+  .val p { font-size: .93rem; color: var(--ink-2); line-height: 1.5; margin: 0; }
+
+  .cta {
+    margin-top: 26px; background: var(--surface-2); border-radius: 4px;
+    padding: 30px 32px 32px;
+  }
+  .cta h2 { margin-bottom: 12px; }
+  .cta p { color: var(--ink-2); max-width: 58ch; }
+  .cta .go {
+    display: inline-block; margin-top: 18px; text-decoration: none;
+    font-family: var(--ui); font-weight: 600; font-size: .86rem;
+    background: var(--jade); color: var(--on-jade); padding: 12px 22px; border-radius: 4px;
+  }
+
+  footer {
+    margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--line);
+    font-family: var(--mono); font-size: .68rem; letter-spacing: .06em;
+    color: var(--muted); text-transform: uppercase;
+  }
+
+  a { color: var(--jade-ink); }
+  a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid var(--jade); outline-offset: 2px; }
+
+  .sitebar {
+    padding: 20px 0 0; display: flex; align-items: center; gap: 10px;
+  }
+  .sitebar a {
+    font-family: var(--mono); font-size: .68rem; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--muted); text-decoration: none;
+  }
+  .sitebar a:hover { color: var(--ink); }
 </style>
 </head>
 <body>
-<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WBDLWHS6"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
+<div class="wrap">
 
+  <nav class="sitebar"><a href="/">&larr; clickwiseowl.com</a></nav>
 
-<nav>
-  <div class="wrap nav-inner">
-    <div class="brand">
-      <img src="https://6a7d42bcadcaf6f0622a927e--clickwiseowl.netlify.app/clickwiseowl-logo-horizontal.png" alt="Click Wise Owl — AI Marketing Tools">
+  <header class="masthead">
+    <p class="eyebrow">Click Wise Owl · Demostración</p>
+    <h1>El bot que sí agenda la cita</h1>
+    <p class="lede">No es una respuesta automática. Revisa su agenda real, aparta el espacio, le avisa a usted, y le recuerda al paciente un día antes. Vea la conversación completa.</p>
+  </header>
+
+  <div class="controls">
+    <div class="seg" role="group" aria-label="Elegir tipo de negocio">
+      <button type="button" data-flow="dental" aria-pressed="true">Clínica dental</button>
+      <button type="button" data-flow="fisio" aria-pressed="false">Fisioterapia</button>
     </div>
-    <div class="nav-links">
-      <a class="hide-m" href="#servicios"><span data-es>Servicios</span><span data-en>Services</span></a>
-      <a class="hide-m" href="#precios"><span data-es>Precios</span><span data-en>Pricing</span></a>
-      <a class="hide-m" href="#portafolio"><span data-es>Portafolio</span><span data-en>Portfolio</span></a>
-      <a class="hide-m" href="#sobre-mi"><span data-es>Sobre mí</span><span data-en>About</span></a>
-      <a class="hide-m" href="#contacto"><span data-es>Contacto</span><span data-en>Contact</span></a>
-      <button class="lang-btn" onclick="toggleLang()"><span data-es>EN</span><span data-en>ES</span></button>
+    <div class="namefield">
+      <label for="biz">Nombre</label>
+      <input id="biz" type="text" autocomplete="off" spellcheck="false">
     </div>
+    <button type="button" class="btn" id="replay">Ver de nuevo</button>
   </div>
-</nav>
 
-<header class="hero wrap">
-  <span class="eyebrow"><span data-es>Sitios web · Apps con IA · Analítica · Latinoamérica</span><span data-en>Websites · AI apps · Analytics · Latin America</span></span>
-  <h1><span data-es>Tecnología <em>inteligente</em> para hacer crecer tu negocio</span><span data-en><em>Smart</em> technology to grow your business</span></h1>
-  <p><span data-es>Creo sitios web y apps con inteligencia artificial para pymes: sitios que convierten visitas en clientes, asistentes que atienden 24/7, herramientas que automatizan tareas repetitivas y tableros que convierten datos en decisiones.</span><span data-en>I build AI-powered websites and web apps for small and medium businesses: sites that turn visitors into customers, assistants that serve clients 24/7, tools that automate repetitive tasks, and dashboards that turn data into decisions.</span></p>
-  <a class="btn" href="#contacto"><span data-es>Hablemos de tu proyecto</span><span data-en>Let's talk about your project</span></a>
-  <a class="btn ghost" href="#servicios"><span data-es>Ver servicios</span><span data-en>See services</span></a>
-</header>
+  <div class="stage">
 
-<section id="servicios">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="eyebrow"><span data-es>Servicios</span><span data-en>Services</span></span>
-      <h2><span data-es>¿Qué puedo construir para ti?</span><span data-en>What can I build for you?</span></h2>
-      <p><span data-es>Soluciones prácticas, sin complicaciones técnicas para ti.</span><span data-en>Practical solutions, with zero technical hassle for you.</span></p>
+    <div class="phone">
+      <div class="phone-top">
+        <span class="avatar" id="ini">CD</span>
+        <span class="who">
+          <span class="biz" id="bizname">Clínica Dental</span>
+          <span class="status">en línea · responde al instante</span>
+        </span>
+        <span class="demo-tag">Demo</span>
+      </div>
+      <div class="chat" id="chat" aria-live="polite" aria-label="Conversación de demostración"></div>
     </div>
-    <div class="grid c3" style="grid-template-columns:repeat(auto-fit,minmax(230px,1fr))">
-      <div class="card" style="border-color:var(--accent)">
-        <div class="icon">🌐</div>
-        <h3><span data-es>Sitios web con IA</span><span data-en>AI Websites</span></h3>
-        <p style="margin-bottom:12px"><span data-es>Tu sitio web profesional creado con IA: moderno, rápido y listo en días. Optimizado para móvil y diseñado para convertir visitas en clientes.</span><span data-en>Your professional website built with AI: modern, fast, and live in days. Mobile-first and designed to turn visitors into customers.</span></p>
-        <a href="/demo/salon/" style="font-weight:600;font-size:.9rem"><span data-es>Ver demo en vivo →</span><span data-en>See live demo →</span></a>
+
+    <div class="backstage">
+      <div class="bs-head">
+        <p class="eyebrow">Lo que pasa por detrás</p>
+        <h2>Esto es lo que WhatsApp solo no puede hacer</h2>
+        <p>Las respuestas automáticas de WhatsApp contestan. Nada más. Cada paso de aquí toca un sistema fuera de WhatsApp.</p>
       </div>
-      <div class="card">
-        <div class="icon">🤖</div>
-        <h3><span data-es>Asistentes con IA</span><span data-en>AI Assistants</span></h3>
-        <p style="margin-bottom:12px"><span data-es>Chatbots y asistentes que responden a tus clientes 24/7, toman pedidos y agendan citas por ti.</span><span data-en>Chatbots and assistants that answer your customers 24/7, take orders, and book appointments for you.</span></p>
-        <a href="/demo/" style="font-weight:600;font-size:.9rem"><span data-es>Ver demo en vivo →</span><span data-en>See live demo →</span></a>
-      </div>
-      <div class="card">
-        <div class="icon">⚙️</div>
-        <h3><span data-es>Apps de automatización</span><span data-en>Automation Apps</span></h3>
-        <p style="margin-bottom:12px"><span data-es>Herramientas web que automatizan cotizaciones, inventarios, reportes y tareas repetitivas de tu negocio.</span><span data-en>Web tools that automate quotes, inventory, reports, and your business's repetitive tasks.</span></p>
-        <a href="/demo/cotizador/" style="font-weight:600;font-size:.9rem"><span data-es>Ver un cotizador funcionando →</span><span data-en>See a working quote tool →</span></a>
-      </div>
-      <div class="card">
-        <div class="icon">📊</div>
-        <h3><span data-es>Datos y analítica</span><span data-en>Data &amp; Analytics</span></h3>
-        <p style="margin-bottom:12px"><span data-es>Tableros claros con Google Analytics y tus datos de ventas, para que tomes decisiones con confianza.</span><span data-en>Clear dashboards with Google Analytics and your sales data, so you can decide with confidence.</span></p>
-        <a href="/demo/panel/" style="font-weight:600;font-size:.9rem"><span data-es>Ver demo en vivo →</span><span data-en>See live demo →</span></a>
+      <div class="events" id="events"></div>
+      <div class="kicker">
+        <p id="kicker"></p>
       </div>
     </div>
+
   </div>
-</section>
 
-<section id="proceso" style="padding-top:0">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="eyebrow"><span data-es>Proceso 100% digital</span><span data-en>100% digital process</span></span>
-      <h2><span data-es>Así trabajamos juntos</span><span data-en>How we work together</span></h2>
-      <p><span data-es>Todo se resuelve en línea, de principio a fin. ¿Para qué perder tiempo en el tráfico cuando tu solución está a una videollamada de distancia?</span><span data-en>Everything happens online, start to finish. Why waste time in traffic when your solution is just one video call away?</span></p>
-    </div>
-    <div class="grid c3">
-      <div class="step">
-        <div class="step-num">1</div>
-        <div>
-          <h3><span data-es>Conversamos</span><span data-en>We talk</span></h3>
-          <p><span data-es>Una videollamada gratuita para entender tu negocio y detectar dónde la IA te ahorra más tiempo y dinero.</span><span data-en>A free video call to understand your business and find where AI saves you the most time and money.</span></p>
-        </div>
+  <section>
+    <div class="value">
+      <div class="val">
+        <span class="k">A las 9 de la noche</span>
+        <h3>Cuando nadie contesta</h3>
+        <p>La mayoría de pacientes escribe fuera de horario. Hoy esos mensajes esperan hasta mañana — y muchos ya no vuelven a escribir.</p>
       </div>
-      <div class="step">
-        <div class="step-num">2</div>
-        <div>
-          <h3><span data-es>Construyo tu app</span><span data-en>I build your app</span></h3>
-          <p><span data-es>Diseño y desarrollo tu aplicación a la medida, con entregas rápidas y tu retroalimentación en cada paso.</span><span data-en>I design and build your custom application, with fast deliveries and your feedback at every step.</span></p>
-        </div>
+      <div class="val">
+        <span class="k">Un día antes</span>
+        <h3>El recordatorio que sí sirve</h3>
+        <p>Los estudios sobre recordatorios de citas muestran reducciones de alrededor del 40% en inasistencias. Y cuando el paciente reagenda, el espacio queda libre a tiempo para otro.</p>
       </div>
-      <div class="step">
-        <div class="step-num">3</div>
-        <div>
-          <h3><span data-es>Te acompaño</span><span data-en>I support you</span></h3>
-          <p><span data-es>Con una mensualidad accesible mantengo tu app funcionando, actualizada y mejorando cada mes.</span><span data-en>With an affordable monthly fee I keep your app running, updated, and improving every month.</span></p>
-        </div>
+      <div class="val">
+        <span class="k">Cada mes</span>
+        <h3>Usted se entera de todo</h3>
+        <p>Qué preguntan, cuántos agendaron, cuántos no llegaron, a qué hora escriben. La información queda en su sistema, no en el de nadie más.</p>
       </div>
     </div>
-  </div>
-</section>
 
-<section id="precios" style="padding-top:0">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="eyebrow"><span data-es>Precios</span><span data-en>Pricing</span></span>
-      <h2><span data-es>Precios claros, sin sorpresas</span><span data-en>Clear prices, no surprises</span></h2>
-      <p><span data-es>La mayoría de los proyectos ya tienen precio. Elige el que se parece a lo tuyo y escríbeme.</span><span data-en>Most projects are already priced. Pick the one that looks like yours and message me.</span></p>
+    <div class="cta">
+      <p class="eyebrow">¿Lo quiere para su clínica?</p>
+      <h2>Hablemos 15 minutos</h2>
+      <p>Le muestro cómo quedaría con el nombre, los servicios y los horarios de su clínica. Sin compromiso, y si al final resulta que con las respuestas automáticas gratis de WhatsApp le alcanza, se lo digo.</p>
+      <a class="go" href="https://cal.com/clickwiseowl">Agendar una llamada</a>
     </div>
-    <div class="price-flex">
-      <div class="price-card">
-        <span class="tag"><span data-es>Sitio web</span><span data-en>Website</span></span>
-        <h3><span data-es>Sitio profesional</span><span data-en>Professional site</span></h3>
-        <span class="amount">Q5,500</span>
-        <span class="per"><span data-es>Pago único</span><span data-en>One-time</span></span>
-        <p><span data-es>Tu negocio con página propia, lista para que te encuentren en Google.</span><span data-en>Your business with a page of its own, ready to be found on Google.</span></p>
-        <ul>
-          <li><span data-es>Hasta 5 secciones</span><span data-en>Up to 5 sections</span></li>
-          <li><span data-es>Diseño propio, no plantilla</span><span data-en>Custom design, not a template</span></li>
-          <li><span data-es>Optimizado para celular</span><span data-en>Mobile-optimised</span></li>
-          <li><span data-es>Botón de WhatsApp</span><span data-en>WhatsApp button</span></li>
-          <li><span data-es>Hosting y soporte: Q250/mes</span><span data-en>Hosting and support: Q250/mo</span></li>
-        </ul>
-      </div>
-      <div class="price-card feature">
-        <span class="tag"><span data-es>Más solicitado</span><span data-en>Most popular</span></span>
-        <h3><span data-es>Sitio + agenda</span><span data-en>Site + bookings</span></h3>
-        <span class="amount">Q9,500</span>
-        <span class="per"><span data-es>Pago único</span><span data-en>One-time</span></span>
-        <p><span data-es>Pensado para clínicas y salones: tus pacientes agendan solos, a cualquier hora.</span><span data-en>Built for clinics and salons: your patients book themselves, at any hour.</span></p>
-        <ul>
-          <li><span data-es>Todo lo del sitio profesional</span><span data-en>Everything in the professional site</span></li>
-          <li><span data-es>Agenda de citas en línea</span><span data-en>Online appointment booking</span></li>
-          <li><span data-es>Recordatorios por WhatsApp</span><span data-en>WhatsApp reminders</span></li>
-          <li><span data-es>Menos citas perdidas</span><span data-en>Fewer no-shows</span></li>
-          <li><span data-es>Hosting y soporte: Q250/mes</span><span data-en>Hosting and support: Q250/mo</span></li>
-        </ul>
-      </div>
-      <div class="price-card">
-        <span class="tag"><span data-es>Automatización</span><span data-en>Automation</span></span>
-        <h3><span data-es>Bot de WhatsApp</span><span data-en>WhatsApp bot</span></h3>
-        <span class="amount">Q3,500</span>
-        <span class="per"><span data-es>Pago único</span><span data-en>One-time</span></span>
-        <p><span data-es>Responde horarios, servicios y ubicación las 24 horas, sin que tengas que contestar.</span><span data-en>Answers hours, services and location 24/7, without you replying.</span></p>
-        <ul>
-          <li><span data-es>Respuestas automáticas</span><span data-en>Automated replies</span></li>
-          <li><span data-es>Horarios, precios y ubicación</span><span data-en>Hours, prices and location</span></li>
-          <li><span data-es>Deriva a una persona cuando hace falta</span><span data-en>Hands off to a human when needed</span></li>
-          <li><span data-es>Operación: Q250/mes</span><span data-en>Running cost: Q250/mo</span></li>
-        </ul>
-      </div>
-    </div>
-    <p class="price-note"><span data-es>¿Algo más grande? Apps y agentes a la medida desde Q25,000. </span><span data-en>Something bigger? Custom apps and agents from Q25,000. </span><a href="https://wa.me/50253771248"><span data-es>Hablemos por WhatsApp</span><span data-en>Talk on WhatsApp</span></a></p>
-  </div>
-</section>
+  </section>
 
-<section id="portafolio" style="padding-top:0">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="eyebrow"><span data-es>Portafolio</span><span data-en>Portfolio</span></span>
-      <h2><span data-es>Hecho con Click Wise Owl</span><span data-en>Built by Click Wise Owl</span></h2>
-      <p><span data-es>Productos reales funcionando hoy, y demos que puede probar ahora mismo.</span><span data-en>Real products live today, plus demos you can try right now.</span></p>
-    </div>
-    <div class="grid c3">
-      <div class="card" style="border-color:var(--accent)">
-        <div class="icon">🐱</div>
-        <h3>Moncho</h3>
-        <p style="margin-bottom:14px"><span data-es>App web con IA que genera unit studies completos y listos para imprimir para familias homeschoolers, adaptados a la edad e intereses de cada niño. En español e inglés, con modelo freemium.</span><span data-en>AI web app that generates complete, print-ready unit studies for homeschooling families, tailored to each child's age and interests. In Spanish and English, with a freemium model.</span></p>
-        <p style="font-size:.85rem;color:var(--ink-soft);margin-bottom:14px">IA generativa · EdTech · Suscripción</p>
-        <a href="https://www.monchounschooling.com" style="font-weight:600" target="_blank" rel="noopener"><span data-es>Visitar monchounschooling.com →</span><span data-en>Visit monchounschooling.com →</span></a>
-      </div>
-      <div class="card" style="border-color:var(--accent)">
-        <div class="icon">🧮</div>
-        <h3><span data-es>Cotizador de competencias</span><span data-en>Competition Quote Tool</span><span style="font-size:.7rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--gold)"><span data-es>· Demo en vivo</span><span data-en>· Live demo</span></span></h3>
-        <p style="margin-bottom:14px"><span data-es>App web funcionando, para una academia de baile: se eligen talleres, competencias y categorías, y la app calcula el costo completo en quetzales y dólares, arma el calendario de pagos y genera un PDF para llevarse. Lo que antes se hacía a mano, caso por caso.</span><span data-en>A working web app for a dance academy: pick workshops, competitions and categories, and it calculates the full cost in quetzales and dollars, builds the payment schedule, and generates a PDF to take away. What used to be done by hand, case by case.</span></p>
-        <p style="font-size:.85rem;color:var(--ink-soft);margin-bottom:14px"><span data-es>App web · Cálculo automático · PDF descargable</span><span data-en>Web app · Automatic pricing · Downloadable PDF</span></p>
-        <a href="/demo/cotizador/" style="font-weight:600"><span data-es>Probar el cotizador →</span><span data-en>Try the quote tool →</span></a>
-      </div>
-      <div class="card" style="border-color:var(--accent)">
-        <div class="icon">💬</div>
-        <h3><span data-es>Bot de citas por WhatsApp</span><span data-en>WhatsApp Booking Bot</span><span style="font-size:.7rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--gold)"><span data-es>· Demo en vivo</span><span data-en>· Live demo</span></span></h3>
-        <p style="margin-bottom:14px"><span data-es>Un asistente que no solo contesta: revisa la agenda real, aparta el espacio, avisa a la clínica y le recuerda al paciente un día antes. Vea la conversación completa, para clínica dental o fisioterapia.</span><span data-en>An assistant that does more than reply: it checks the real calendar, books the slot, notifies the clinic, and reminds the patient a day before. See the full conversation, for a dental clinic or a physio practice.</span></p>
-        <p style="font-size:.85rem;color:var(--ink-soft);margin-bottom:14px"><span data-es>WhatsApp · Agenda automática · Recordatorios</span><span data-en>WhatsApp · Auto-booking · Reminders</span></p>
-        <a href="/demo/" style="font-weight:600"><span data-es>Ver la demo →</span><span data-en>See the demo →</span></a>
-      </div>
-      <div class="card" style="border-color:var(--accent)">
-        <div class="icon">💇</div>
-        <h3><span data-es>Sitio web para salón</span><span data-en>Salon Website</span><span style="font-size:.7rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--gold)"><span data-es>· Demo en vivo</span><span data-en>· Live demo</span></span></h3>
-        <p style="margin-bottom:14px"><span data-es>Cómo se ve un sitio para un salón de belleza: carta de servicios con precios, galería de trabajos y reserva en línea por estilista. Cambie entre los dos paquetes y vea exactamente qué añade la agenda conectada.</span><span data-en>What a beauty salon's website looks like: service menu with prices, work gallery, and online booking by stylist. Switch between the two packages to see exactly what the connected calendar adds.</span></p>
-        <p style="font-size:.85rem;color:var(--ink-soft);margin-bottom:14px"><span data-es>Sitio web · Reserva en línea · Galería</span><span data-en>Website · Online booking · Gallery</span></p>
-        <a href="/demo/salon/" style="font-weight:600"><span data-es>Ver la demo →</span><span data-en>See the demo →</span></a>
-      </div>
-      <div class="card" style="border-color:var(--accent)">
-        <div class="icon">📊</div>
-        <h3><span data-es>Panel de datos</span><span data-en>Data Dashboard</span><span style="font-size:.7rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--gold)"><span data-es>· Demo en vivo</span><span data-en>· Live demo</span></span></h3>
-        <p style="margin-bottom:14px"><span data-es>Seis meses de citas convertidos en decisiones: ingresos por mes y por servicio, ocupación por día y hora, y clientas nuevas contra las que regresan. Con la lectura de qué hacer con cada número — que es la parte que casi nadie entrega.</span><span data-en>Six months of bookings turned into decisions: revenue by month and service, occupancy by day and hour, new versus returning clients. With the reading of what to do about each number — the part almost nobody delivers.</span></p>
-        <p style="font-size:.85rem;color:var(--ink-soft);margin-bottom:14px"><span data-es>Analítica · Tableros · Recomendaciones</span><span data-en>Analytics · Dashboards · Recommendations</span></p>
-        <a href="/demo/panel/" style="font-weight:600"><span data-es>Ver el panel →</span><span data-en>See the dashboard →</span></a>
-      </div>
-      <div class="card" style="border-color:var(--accent)">
-        <div class="icon">🧾</div>
-        <h3><span data-es>Catálogo con pedidos por WhatsApp</span><span data-en>Catalog with WhatsApp Ordering</span><span style="font-size:.7rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--gold)"><span data-es>· Demo en vivo</span><span data-en>· Live demo</span></span></h3>
-        <p style="margin-bottom:14px"><span data-es>Para el negocio que hoy reparte un PDF: el cliente arma su pedido por libra y le llega a usted por WhatsApp ya sumado, sin veinte mensajes preguntando precios. Cambie a la vista de dueño y suba un precio — eso es lo que un PDF nunca va a hacer.</span><span data-en>For the business still handing out a PDF: customers build their order by the pound and it reaches you on WhatsApp already totalled, with none of the twenty back-and-forth price questions. Switch to the owner view and change a price — that is the thing a PDF will never do.</span></p>
-        <p style="font-size:.85rem;color:var(--ink-soft);margin-bottom:14px"><span data-es>Catálogo · Pedidos por WhatsApp · Precios que el dueño actualiza</span><span data-en>Catalog · WhatsApp orders · Owner-updated prices</span></p>
-        <a href="/demo/catalogo/" style="font-weight:600"><span data-es>Ver el catálogo →</span><span data-en>See the catalog →</span></a>
-      </div>
-      <div class="card">
-        <div class="icon">💡</div>
-        <h3><span data-es>¿Qué agente necesita tu negocio?</span><span data-en>What agent does your business need?</span></h3>
-        <p><span data-es>Algunas ideas: bot que toma pedidos y agenda citas, cotizador automático, asistente que responde a tus clientes con tu catálogo, generador de contenido para redes, recordatorios de pago, tableros de ventas en tiempo real…</span><span data-en>Some ideas: a bot that takes orders and books appointments, automatic quote generator, an assistant that answers customers from your catalog, social content generator, payment reminders, live sales dashboards…</span></p>
-      </div>
-    </div>
-  </div>
-</section>
+  <footer>Click Wise Owl · Guatemala · Demostración con datos de ejemplo</footer>
 
-<section id="sobre-mi" style="padding-top:0">
-  <div class="wrap about">
-    <div class="about-owl">
-      <img src="https://6a7d42bcadcaf6f0622a927e--clickwiseowl.netlify.app/clickwiseowl-logo.png" alt="Logotipo de Click Wise Owl">
-    </div>
-    <div>
-      <span class="eyebrow"><span data-es>Sobre mí</span><span data-en>About me</span></span>
-      <h2><span data-es>Hola, soy Alba Nory</span><span data-en>Hi, I'm Alba Nory</span></h2>
-      <p><span data-es>Soy administradora de empresas con especialización en marketing (Universidad Francisco Marroquín), máster en e-Business y certificación de IBM en IA agéntica. Antes de fundar Click Wise Owl trabajé como freelancer en marketing digital, especializada en Google Analytics, SEO, SEM y comercio electrónico.</span><span data-en>I'm a business administrator with a marketing minor (Universidad Francisco Marroquín), a master's in e-Business, and an IBM certification in agentic AI. Before founding Click Wise Owl I worked as a freelance digital marketer, specializing in Google Analytics, SEO, SEM, and e-commerce.</span></p>
-      <p><span data-es>Esa combinación me permite algo poco común: entender primero tu negocio y tus números, y construir después la tecnología que de verdad te ayuda a crecer — sin tecnicismos y sin que tengas que volverte experta en nada.</span><span data-en>That mix lets me do something uncommon: first understand your business and your numbers, and then build the technology that actually helps you grow — no jargon, and no need to become a tech expert yourself.</span></p>
-      <div class="creds">
-        <span>Universidad Francisco Marroquín</span>
-        <span><span data-es>Máster en e-Business</span><span data-en>Master's in e-Business</span></span>
-        <span><span data-es>IBM · IA Agéntica</span><span data-en>IBM · Agentic AI</span></span>
-        <span>Google Analytics · SEO · SEM</span>
-      </div>
-    </div>
-  </div>
-</section>
+</div>
 
-<section id="contacto" style="padding-top:0">
-  <div class="wrap">
-    <div class="contact">
-      <h2><span data-es>¿Listo para hacer crecer tu negocio?</span><span data-en>Ready to grow your business?</span></h2>
-      <p><span data-es>Cuéntame tu idea por WhatsApp y agendamos una videollamada gratuita. Sin compromiso y sin tecnicismos.</span><span data-en>Tell me your idea on WhatsApp and we'll set up a free video call. No strings attached, no tech jargon.</span></p>
-      <a class="btn" href="https://wa.me/50253771248?text=Hola%20Nory%2C%20vi%20clickwiseowl.com%20y%20me%20gustar%C3%ADa%20m%C3%A1s%20informaci%C3%B3n." target="_blank" rel="noopener"><span data-es>Escríbeme por WhatsApp</span><span data-en>Message me on WhatsApp</span></a>
-      <button class="btn cal" data-cal-namespace="cafe" data-cal-link="clickwiseowl/15min" data-cal-config='{"layout":"month_view"}'><span data-es>Agenda una videollamada</span><span data-en>Book a video call</span></button>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div class="socials">
-    <a href="https://www.linkedin.com/in/albanory/" target="_blank" rel="noopener">LinkedIn</a>
-    <a href="https://www.instagram.com/clickwiseowl/" target="_blank" rel="noopener">Instagram</a>
-  </div>
-  <p>© 2026 Click Wise Owl · Guatemala</p>
-</footer>
-
-<script>
-  function toggleLang(){
-    var en = document.documentElement.classList.toggle('en');
-    document.documentElement.setAttribute('lang', en ? 'en' : 'es');
-    try { localStorage.setItem('cwo_lang', en ? 'en' : 'es'); } catch(e) {}
-  }
-  try {
-    if (localStorage.getItem('cwo_lang') === 'en') {
-      document.documentElement.classList.add('en');
-      document.documentElement.setAttribute('lang','en');
-    }
-  } catch(e) {}
-</script>
-
-<script>
-(function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if (typeof namespace === "string") { cal.ns[namespace] = cal.ns[namespace] || api; p(cal.ns[namespace], ar); p(cal, ["initNamespace", namespace]); } else p(cal, ar); return; } p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
-Cal("init", "cafe", {origin:"https://app.cal.com"});
-Cal.ns.cafe("ui", {"cssVarsPerTheme":{"light":{"cal-brand":"#7d2e8e"},"dark":{"cal-brand":"#7d2e8e"}},"hideEventTypeDetails":false,"layout":"month_view"});
-</script>
-
-
-<!-- Eventos al dataLayer: lo que vale la pena medir en este sitio -->
 <script>
 (function () {
-  window.dataLayer = window.dataLayer || [];
-  function push(o) { window.dataLayer.push(o); }
+  "use strict";
 
-  var DEMOS = { "/demo/": "bot_citas", "/demo/salon/": "sitio_salon", "/demo/cotizador/": "cotizador", "/demo/panel/": "panel_datos", "/demo/catalogo/": "catalogo" };
+  var FLOWS = {
+    dental: {
+      biz: "Clínica Dental Los Álamos",
+      kicker: "<strong>Sin el bot:</strong> ese mensaje de las 9:47 pm se contesta hasta mañana a las 8, la paciente ya buscó en otro lado, y el espacio del miércoles se queda vacío sin que nadie se entere.",
+      events: [
+        ["Consultó la agenda real", "Leyó los espacios libres del Google Calendar de la clínica. No inventó horarios."],
+        ["Apartó el espacio", "Escribió la cita en el calendario. El espacio ya no aparece disponible para nadie más."],
+        ["Le avisó a la clínica", "Notificación inmediata con el nombre, el servicio y la hora."],
+        ["Programó el recordatorio", "Agendó el mensaje de 24 horas antes, sin que nadie tenga que acordarse."],
+        ["Liberó el espacio a tiempo", "Al reagendar, el miércoles quedó libre con un día de anticipación para otro paciente."]
+      ],
+      steps: [
+        ["sep", "Ayer 9:47 p.m."],
+        ["user", "Buenas noches, quería saber si tienen campo esta semana para una limpieza", "9:47 p.m."],
+        ["bot", "¡Buenas noches! Con gusto le ayudo 😊\nSoy el asistente de {{BIZ}}. Déjeme revisar la agenda…", "9:47 p.m."],
+        ["ev", 0],
+        ["bot", "Tengo estos espacios disponibles:\n\n• Miércoles 3 · 10:00 a.m.\n• Miércoles 3 · 4:30 p.m.\n• Jueves 4 · 9:00 a.m.\n\n¿Cuál le queda mejor?", "9:47 p.m."],
+        ["user", "El miércoles a las 4:30 por favor", "9:48 p.m."],
+        ["bot", "Perfecto. ¿Me confirma su nombre completo?", "9:48 p.m."],
+        ["user", "Karla Súchite", "9:48 p.m."],
+        ["bot", "Listo, Karla ✅\n\n🦷 Limpieza dental\n📅 Miércoles 3 de septiembre, 4:30 p.m.\n📍 4a calle 5-32, zona 11\n\nLe llega un recordatorio un día antes. Si necesita cambiarla, solo escríbame por aquí.", "9:48 p.m."],
+        ["ev", 1],
+        ["ev", 2],
+        ["ev", 3],
+        ["sep", "Martes · un día antes de la cita"],
+        ["bot", "Hola Karla 👋 Le recuerdo su cita de mañana miércoles a las 4:30 p.m.\n\n¿Nos confirma que viene?\n\n1️⃣ Sí, ahí estaré\n2️⃣ Necesito cambiarla", "3:00 p.m."],
+        ["user", "2, me salió algo en el trabajo", "3:14 p.m."],
+        ["bot", "Sin problema. Estos son los espacios más cercanos:\n\n• Jueves 4 · 9:00 a.m.\n• Jueves 4 · 2:00 p.m.\n• Viernes 5 · 11:30 a.m.", "3:14 p.m."],
+        ["user", "Jueves a las 9", "3:15 p.m."],
+        ["bot", "Cambiada ✅\n\n📅 Jueves 4 de septiembre, 9:00 a.m.\n\nGracias por avisar — así el espacio de mañana queda libre para otro paciente. Nos vemos el jueves 🙂", "3:15 p.m."],
+        ["ev", 4]
+      ]
+    },
 
-  document.addEventListener("click", function (e) {
-    var a = e.target.closest("a, button");
-    if (!a) { return; }
-
-    // WhatsApp
-    var href = a.getAttribute("href") || "";
-    if (href.indexOf("wa.me") > -1) {
-      push({ event: "whatsapp_click", ubicacion: a.closest("section, footer, nav") ? (a.closest("section, footer, nav").id || "otro") : "otro" });
-      return;
+    fisio: {
+      biz: "Centro de Fisioterapia Reactiva",
+      kicker: "<strong>Sin el bot:</strong> el paciente abandona en la sesión 4 de 10, nadie se da cuenta hasta fin de mes, el tratamiento no funcionó y el paquete quedó a medias.",
+      events: [
+        ["Consultó la agenda real", "Leyó los espacios libres de la fisioterapeuta. No inventó horarios."],
+        ["Apartó la evaluación", "Escribió la cita en el calendario y bloqueó los 45 minutos que necesita."],
+        ["Le avisó al centro", "Notificación inmediata: paciente nuevo, con orden médica, hombro."],
+        ["Agendó el plan completo", "Las 10 sesiones quedaron en el calendario de una sola vez, con su recordatorio cada una."],
+        ["Detectó el abandono", "Nadie tuvo que revisar la lista: el sistema vio la sesión perdida y escribió el mismo día."]
+      ],
+      steps: [
+        ["sep", "Ayer 8:12 p.m."],
+        ["user", "Buenas, me mandaron a terapia por el hombro. ¿Cómo hago para empezar?", "8:12 p.m."],
+        ["bot", "¡Buenas noches! Con gusto le ayudo 😊\nSoy el asistente de {{BIZ}}.\n\n¿Ya tiene la orden del médico?", "8:12 p.m."],
+        ["user", "Sí, me la dieron hoy", "8:13 p.m."],
+        ["bot", "Perfecto. La primera cita es una evaluación de 45 minutos, ahí la fisio define cuántas sesiones necesita.\n\nDéjeme ver la agenda…", "8:13 p.m."],
+        ["ev", 0],
+        ["bot", "Estos son los espacios de esta semana:\n\n• Martes 2 · 8:00 a.m.\n• Martes 2 · 5:00 p.m.\n• Miércoles 3 · 3:30 p.m.", "8:13 p.m."],
+        ["user", "Martes a las 5", "8:14 p.m."],
+        ["bot", "Listo ✅\n\n🩺 Evaluación inicial (45 min)\n📅 Martes 2 de septiembre, 5:00 p.m.\n📍 Calzada San Juan 12-40, zona 7\n\nTraiga la orden médica y ropa cómoda. Le recuerdo un día antes.", "8:14 p.m."],
+        ["ev", 1],
+        ["ev", 2],
+        ["sep", "Miércoles · después de la evaluación"],
+        ["bot", "Karla, la Licda. Ortiz ya dejó su plan: 10 sesiones, 2 por semana.\n\nLe puedo apartar martes y jueves a las 5:00 p.m. durante 5 semanas. ¿Le sirven esos días?", "10:20 a.m."],
+        ["user", "Sí, esos días me quedan bien", "10:31 a.m."],
+        ["bot", "Listo ✅ Sus 10 sesiones quedaron agendadas, del 9 de septiembre al 9 de octubre.\n\nLe recuerdo cada una el día anterior. Si un día no puede, me escribe y la movemos.", "10:31 a.m."],
+        ["ev", 3],
+        ["sep", "Tres semanas después"],
+        ["bot", "Karla, no la vimos ayer en su sesión 4 👀\n\nLos tratamientos de hombro funcionan cuando se completan — si lo deja a medias suele regresar la molestia.\n\n¿Le reagendo esa sesión esta semana?", "9:05 a.m."],
+        ["user", "Sí porfa, se me pasó", "9:22 a.m."],
+        ["bot", "Reagendada ✅ Sábado 27 · 9:00 a.m.\n\nVa 3 de 10. Ahí la esperamos 💪", "9:22 a.m."],
+        ["ev", 4]
+      ]
     }
+  };
 
-    // Cal.com
-    if (a.hasAttribute("data-cal-link")) {
-      push({ event: "agendar_click", origen: a.getAttribute("data-cal-link") });
-      return;
-    }
+  var chat = document.getElementById("chat");
+  var evBox = document.getElementById("events");
+  var bizInput = document.getElementById("biz");
+  var bizName = document.getElementById("bizname");
+  var ini = document.getElementById("ini");
+  var kicker = document.getElementById("kicker");
+  var replay = document.getElementById("replay");
 
-    // demos
-    if (DEMOS[href]) {
-      push({ event: "demo_click", demo: DEMOS[href] });
-      return;
-    }
+  var current = "dental";
+  var timers = [];
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    // idioma
-    if (a.classList.contains("lang-btn")) {
-      push({ event: "cambio_idioma", idioma: document.body.classList.contains("en") ? "es" : "en" });
-    }
-  }, true);
+  function clearTimers() { timers.forEach(clearTimeout); timers = []; }
+  function later(fn, ms) { timers.push(setTimeout(fn, ms)); }
 
-  // el visitante llego a ver los precios
-  var precios = document.getElementById("precios");
-  if (precios && "IntersectionObserver" in window) {
-    var seen = false;
-    new IntersectionObserver(function (en, obs) {
-      if (!seen && en[0].isIntersecting) { seen = true; push({ event: "vio_precios" }); obs.disconnect(); }
-    }, { threshold: 0.35 }).observe(precios);
+  function initials(s) {
+    var w = s.trim().split(/\s+/).filter(function (x) { return x.length > 2; });
+    return ((w[0] || "C")[0] + ((w[1] || "")[0] || "")).toUpperCase();
   }
+
+  function esc(s) {
+    return String(s).replace(/[&<>]/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c];
+    });
+  }
+
+  function setBiz(name) {
+    bizName.textContent = name;
+    ini.textContent = initials(name);
+  }
+
+  function buildEvents(flow) {
+    evBox.innerHTML = flow.events.map(function (e) {
+      return '<div class="ev" data-on="false"><span class="tick">✓</span>'
+        + '<span class="txt"><strong>' + esc(e[0]) + "</strong><span>" + esc(e[1]) + "</span></span></div>";
+    }).join("");
+  }
+
+  function scrollDown() { chat.scrollTop = chat.scrollHeight; }
+
+  function addSep(text) {
+    var d = document.createElement("div");
+    d.className = "sep";
+    d.textContent = text;
+    chat.appendChild(d);
+    scrollDown();
+  }
+
+  function addMsg(kind, text, stamp) {
+    var d = document.createElement("div");
+    d.className = "msg " + kind;
+    d.appendChild(document.createTextNode(text));
+    var s = document.createElement("span");
+    s.className = "stamp";
+    s.textContent = stamp || "";
+    d.appendChild(s);
+    chat.appendChild(d);
+    scrollDown();
+  }
+
+  function showTyping() {
+    var d = document.createElement("div");
+    d.className = "typing";
+    d.id = "typing";
+    d.innerHTML = "<i></i><i></i><i></i>";
+    chat.appendChild(d);
+    scrollDown();
+  }
+
+  function hideTyping() {
+    var t = document.getElementById("typing");
+    if (t) { t.remove(); }
+  }
+
+  function fireEvent(i) {
+    var nodes = evBox.children;
+    if (nodes[i]) { nodes[i].setAttribute("data-on", "true"); }
+  }
+
+  function play() {
+    clearTimers();
+    var flow = FLOWS[current];
+    var name = (bizInput.value || "").trim() || flow.biz;
+
+    chat.innerHTML = "";
+    buildEvents(flow);
+    kicker.innerHTML = flow.kicker;
+    setBiz(name);
+
+    var t = 300;
+
+    flow.steps.forEach(function (step) {
+      var kind = step[0];
+
+      if (kind === "sep") {
+        later(function () { addSep(step[1]); }, t);
+        t += reduce ? 120 : 560;
+        return;
+      }
+
+      if (kind === "ev") {
+        later(function () { fireEvent(step[1]); }, t);
+        t += reduce ? 80 : 340;
+        return;
+      }
+
+      var text = String(step[1]).replace(/\{\{BIZ\}\}/g, name);
+      var stamp = step[2];
+
+      if (kind === "bot") {
+        var think = reduce ? 120 : Math.min(1500, 420 + text.length * 7);
+        later(function () { showTyping(); }, t);
+        t += think;
+        later(function () { hideTyping(); addMsg("bot", text, stamp); }, t);
+        t += reduce ? 140 : 480;
+      } else {
+        later(function () { addMsg("user", text, stamp); }, t);
+        t += reduce ? 140 : 780;
+      }
+    });
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll(".seg button"), function (b) {
+    b.addEventListener("click", function () {
+      current = b.getAttribute("data-flow");
+      Array.prototype.forEach.call(document.querySelectorAll(".seg button"), function (o) {
+        o.setAttribute("aria-pressed", o === b ? "true" : "false");
+      });
+      bizInput.value = "";
+      bizInput.placeholder = FLOWS[current].biz;
+      play();
+    });
+  });
+
+  var debounce;
+  bizInput.addEventListener("input", function () {
+    clearTimeout(debounce);
+    debounce = setTimeout(play, 500);
+  });
+
+  replay.addEventListener("click", play);
+
+  bizInput.placeholder = FLOWS.dental.biz;
+  play();
 })();
 </script>
 </body>

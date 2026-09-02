@@ -288,6 +288,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <p style="font-size:.85rem;color:var(--ink-soft);margin-bottom:14px"><span data-es>Analítica · Tableros · Recomendaciones</span><span data-en>Analytics · Dashboards · Recommendations</span></p>
         <a href="/demo/panel/" style="font-weight:600"><span data-es>Ver el panel →</span><span data-en>See the dashboard →</span></a>
       </div>
+      <div class="card" style="border-color:var(--accent)">
+        <div class="icon">🧾</div>
+        <h3><span data-es>Catálogo con pedidos por WhatsApp</span><span data-en>Catalog with WhatsApp Ordering</span><span style="font-size:.7rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--gold)"><span data-es>· Demo en vivo</span><span data-en>· Live demo</span></span></h3>
+        <p style="margin-bottom:14px"><span data-es>Para el negocio que hoy reparte un PDF: el cliente arma su pedido por libra y le llega a usted por WhatsApp ya sumado, sin veinte mensajes preguntando precios. Cambie a la vista de dueño y suba un precio — eso es lo que un PDF nunca va a hacer.</span><span data-en>For the business still handing out a PDF: customers build their order by the pound and it reaches you on WhatsApp already totalled, with none of the twenty back-and-forth price questions. Switch to the owner view and change a price — that is the thing a PDF will never do.</span></p>
+        <p style="font-size:.85rem;color:var(--ink-soft);margin-bottom:14px"><span data-es>Catálogo · Pedidos por WhatsApp · Precios que el dueño actualiza</span><span data-en>Catalog · WhatsApp orders · Owner-updated prices</span></p>
+        <a href="/demo/catalogo/" style="font-weight:600"><span data-es>Ver el catálogo →</span><span data-en>See the catalog →</span></a>
+      </div>
       <div class="card">
         <div class="icon">💡</div>
         <h3><span data-es>¿Qué agente necesita tu negocio?</span><span data-en>What agent does your business need?</span></h3>
@@ -363,7 +370,7 @@ Cal.ns.cafe("ui", {"cssVarsPerTheme":{"light":{"cal-brand":"#7d2e8e"},"dark":{"c
   window.dataLayer = window.dataLayer || [];
   function push(o) { window.dataLayer.push(o); }
 
-  var DEMOS = { "/demo/": "bot_citas", "/demo/salon/": "sitio_salon", "/demo/cotizador/": "cotizador" };
+  var DEMOS = { "/demo/": "bot_citas", "/demo/salon/": "sitio_salon", "/demo/cotizador/": "cotizador", "/demo/panel/": "panel_datos", "/demo/catalogo/": "catalogo" };
 
   document.addEventListener("click", function (e) {
     var a = e.target.closest("a, button");
