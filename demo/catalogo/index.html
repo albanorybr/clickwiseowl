@@ -30,6 +30,9 @@
 <style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@600;700&family=Public+Sans:wght@400;500;600;700&family=Roboto+Mono:wght@400;500;700&display=swap">
 <style>
 :root{
   --papel:#FBF6EE; --tarjeta:#FFFFFF; --tarjeta-2:#F3EADC;
@@ -289,6 +292,122 @@ var BASE = [
 ];
 
 /* ---------- estado ---------- */
+/* ---------- la hoja de calculo del dueno ----------
+   Esta es la unica linea que hay que cambiar para otro cliente:
+   se publica la hoja con Archivo > Compartir > Publicar en la web > .csv
+   y se pega aqui la direccion que da Google. --------------------------- */
+var HOJA = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQuwByvE3Psy04nnWLytgH8oyaZdrg6L1MoxADfcKFw-u40AAh7tvyEF3_HGWCg2Q1ciGh5yhPgBDIC/pub?output=csv";
+var HOJA_EDITAR = "https://docs.google.com/spreadsheets/d/1_Tl0U3d78ojYo8RmHTpVEVdEfbCGUoAVtXKcidEUKXw/edit";
+
+var hojaEstado = "cargando";   // cargando | viva | sinHoja
+var hojaHora = "";
+
+function leerCSV(txt){
+  var filas = [], f = [], c = "", com = false;
+  txt = String(txt).replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+  for(var i = 0; i < txt.length; i++){
+    var ch = txt.charAt(i);
+    if(com){
+      if(ch === '"'){ if(txt.charAt(i+1) === '"'){ c += '"'; i++; } else com = false; }
+      else c += ch;
+    } else if(ch === '"'){ com = true; }
+    else if(ch === ","){ f.push(c); c = ""; }
+    else if(ch === "\n"){ f.push(c); filas.push(f); f = []; c = ""; }
+    else c += ch;
+  }
+  if(c.length || f.length){ f.push(c); filas.push(f); }
+  return filas.filter(function(r){
+    return r.some(function(x){ return String(x).trim() !== ""; });
+  });
+}
+
+function sinTildes(s){
+  return String(s || "").toLowerCase()
+    .replace(/[áàä]/g,"a").replace(/[éèë]/g,"e").replace(/[íìï]/g,"i")
+    .replace(/[óòö]/g,"o").replace(/[úùü]/g,"u").replace(/ñ/g,"n").trim();
+}
+
+var CAT_POR_NOMBRE = {"embutidos":"embutidos","carnes frias":"frias","frias":"frias",
+                      "quesos":"quesos","paquetes":"paquetes"};
+var ART_POR_CAT = {embutidos:"chorizo", frias:"jamon", quesos:"queso", paquetes:"paquete"};
+
+function aplicarHoja(filas){
+  var enc = null, ini = 0;
+  for(var r = 0; r < filas.length && r < 5; r++){
+    if(filas[r].some(function(x){ return sinTildes(x).indexOf("codigo") === 0; })){
+      enc = filas[r].map(sinTildes); ini = r + 1; break;
+    }
+  }
+  if(!enc) return false;
+  function col(re){ for(var i = 0; i < enc.length; i++) if(re.test(enc[i])) return i; return -1; }
+  var iId = col(/codigo/), iN = col(/producto|nombre/), iCat = col(/categor/),
+      iP = col(/precio/), iHay = col(/hay|disponib|existe/),
+      iU = col(/vende|unidad/), iD = col(/descripc|nota/);
+  if(iId < 0 || iP < 0) return false;
+
+  var vistos = {}, nuevos = [], cambios = 0;
+  for(var k = ini; k < filas.length; k++){
+    var fila = filas[k];
+    var id = String(fila[iId] || "").trim();
+    if(!id) continue;
+    var precio = Number(String(fila[iP] || "").replace(/[^0-9.,]/g, "").replace(",", "."));
+    if(!isFinite(precio) || precio <= 0) continue;
+    var hay = iHay < 0 ? "s" : sinTildes(fila[iHay]);
+    var ok = hay === "" ? true : /^(s|1|x|v|t)/.test(hay);
+    var pr = porId(id);
+    if(pr){
+      pr.p = precio; pr.ok = ok;
+      if(iN >= 0 && String(fila[iN]).trim()) pr.n = String(fila[iN]).trim();
+      if(iD >= 0 && String(fila[iD]).trim()) pr.nota = String(fila[iD]).trim();
+      if(iU >= 0 && sinTildes(fila[iU])) pr.u = /paquete|unidad|pieza/.test(sinTildes(fila[iU])) ? "paquete" : "lb";
+      cambios++;
+    } else {
+      var cat = CAT_POR_NOMBRE[sinTildes(fila[iCat])] || "embutidos";
+      nuevos.push({ id:id, cat:cat, art:ART_POR_CAT[cat] || "chorizo",
+        n: iN >= 0 ? String(fila[iN]).trim() : id,
+        p: precio, ok: ok,
+        u: (iU >= 0 && /paquete|unidad|pieza/.test(sinTildes(fila[iU]))) ? "paquete" : "lb",
+        nota: iD >= 0 ? String(fila[iD]).trim() : "",
+        foto: FOTOS[id] || "" });
+    }
+    vistos[id] = true;
+  }
+  if(!cambios && !nuevos.length) return false;
+  // lo que el dueno borro de la hoja, desaparece del catalogo
+  prods = prods.filter(function(x){ return vistos[x.id]; }).concat(nuevos);
+  return true;
+}
+
+function horaLinda(d){
+  var h = d.getHours(), m = d.getMinutes(), t = h < 12 ? "a.m." : "p.m.";
+  var h12 = h % 12; if(h12 === 0) h12 = 12;
+  return h12 + ":" + (m < 10 ? "0" : "") + m + " " + t;
+}
+
+function traerHoja(){
+  if(!HOJA || typeof fetch !== "function"){ hojaEstado = "sinHoja"; return; }
+  var corta = setTimeout(function(){
+    if(hojaEstado === "cargando"){ hojaEstado = "sinHoja"; pintar(); }
+  }, 8000);
+  fetch(HOJA, {cache:"no-store"}).then(function(r){
+    if(!r.ok) throw new Error("http " + r.status);
+    return r.text();
+  }).then(function(txt){
+    clearTimeout(corta);
+    if(aplicarHoja(leerCSV(txt))){
+      hojaEstado = "viva"; hojaHora = horaLinda(new Date());
+      // limpia del pedido lo que ya no existe o se agoto
+      Object.keys(carro).forEach(function(k){
+        var pr = porId(k); if(!pr || !pr.ok) delete carro[k];
+      });
+      guardarCarro();
+    } else { hojaEstado = "sinHoja"; }
+    pintar();
+  }).catch(function(){
+    clearTimeout(corta); hojaEstado = "sinHoja"; pintar();
+  });
+}
+
 var LS_P = "labendicion-precios", LS_C = "labendicion-pedido";
 var prods, carro = {}, cat = "todo", abierto = false, dueno = false, guardado = false, limpio = false;
 
@@ -298,10 +417,6 @@ function cargar(){
     // Nombre esperado: img/<id en minúsculas>.jpg  (ej. img/e1.jpg)
     return Object.assign({u:"lb", ok:true, foto: FOTOS[x.id] || ""}, x);
   });
-  try{
-    var g = JSON.parse(localStorage.getItem(LS_P) || "null");
-    if(g) prods.forEach(function(x){ if(g[x.id]){ x.p = g[x.id].p; x.ok = g[x.id].ok; } });
-  }catch(e){}
   try{ carro = JSON.parse(localStorage.getItem(LS_C) || "{}") || {}; }catch(e){ carro = {}; }
 }
 function guardarPrecios(){
@@ -341,11 +456,16 @@ function pintar(){
   if(dueno){
     h += '<div class="dueno"><div class="env">'
        + '<span class="et">Modo dueño</span>'
-       + '<span style="font-size:13.5px;color:var(--tinta-media)">Cambie precios y marque lo que se agotó. Cada tarjeta tiene sus controles abajo.</span>'
-       + '<button class="bt-sm solido" data-a="guardar">Publicar cambios</button>'
-       + '<button class="bt-sm" data-a="restablecer" title="Deja el demo con los precios originales, como recién publicado">Restablecer demo</button>'
-       + (guardado ? '<span class="aviso-guardar">✓ Publicado — sus clientes ya lo ven</span>' : '')
-       + (limpio ? '<span class="aviso-guardar">✓ Demo restablecido — precios originales</span>' : '')
+       + '<span style="font-size:13.5px;color:var(--tinta-media);flex:1;min-width:240px">'
+       +   'Su panel es una hoja de cálculo. Cambie un precio ahí, marque lo que se agotó, '
+       +   'y esta página lo muestra sola. No hay contraseña nueva que aprender.</span>'
+       + '<a class="bt-sm solido" href="' + HOJA_EDITAR + '" target="_blank" rel="noopener">Abrir la hoja de precios</a>'
+       + '<button class="bt-sm" data-a="recargar">Ya la cambié, actualizar</button>'
+       + (hojaEstado === "viva"
+            ? '<span class="aviso-guardar">✓ Leído de la hoja a las ' + hojaHora + '</span>'
+            : hojaEstado === "cargando" ? ''
+            : '<span class="aviso-guardar" style="color:var(--tinta-media)">Esta copia no alcanza la hoja — muestra los precios de respaldo. En el sitio publicado sí la lee.</span>')
+       + (limpio ? '<span class="aviso-guardar">✓ Pedido vaciado</span>' : '')
        + '</div></div>';
   }
 
@@ -353,7 +473,12 @@ function pintar(){
      + '<div class="marca"><div class="logo">' + TIENDA.inicial + '</div>'
      + '<div><h1>' + TIENDA.nombre + '</h1><p class="bajada">' + TIENDA.bajada + '</p></div></div>'
      + '<div class="datos">'
-     +   '<span class="dato fresco"><span class="punto"></span>Precios actualizados ' + TIENDA.actualizado + '</span>'
+     +   '<span class="dato' + (hojaEstado === "viva" ? " fresco" : "") + '">'
+     +     (hojaEstado === "viva" ? '<span class="punto"></span>' : '')
+     +     (hojaEstado === "cargando" ? 'Consultando precios…'
+          : hojaEstado === "viva" ? 'Precios actualizados hoy a las ' + hojaHora
+          : 'Precios actualizados ' + TIENDA.actualizado)
+     +   '</span>'
      +   '<span class="dato">' + TIENDA.horario + '</span>'
      +   '<span class="dato">' + TIENDA.entrega + '</span>'
      + '</div></div></header>';
@@ -438,11 +563,8 @@ function tarjeta(p){
   }
 
   if(dueno){
-    h += '<div class="editor">'
-       +   '<span style="font-size:12.5px;color:var(--tinta-tenue)">Q</span>'
-       +   '<input type="number" step="0.5" min="0" value="' + p.p + '" data-precio="' + p.id + '" aria-label="Precio">'
-       +   '<label><input type="checkbox" data-ok="' + p.id + '"' + (p.ok ? "" : " checked") + '> Se agotó</label>'
-       + '</div>';
+    h += '<div class="editor"><span style="font-size:12px;color:var(--tinta-tenue)">'
+       +   'Fila <b>' + esc(p.id) + '</b> de la hoja</span></div>';
   }
   return h + '</div></article>';
 }
@@ -484,30 +606,20 @@ document.addEventListener("click", function(e){
   else if(a === "vaciar"){ carro = {}; abierto = false; guardarCarro(); pintar(); }
   else if(a === "entrar"){ dueno = true; guardado = false; limpio = false; pintar(); }
   else if(a === "salir"){ dueno = false; guardado = false; limpio = false; pintar(); }
-  else if(a === "guardar"){ guardarPrecios(); guardado = true; limpio = false; pintar(); }
+  else if(a === "recargar"){
+    hojaEstado = "cargando"; limpio = false; pintar(); traerHoja();
+  }
   else if(a === "restablecer"){
-    if(!window.confirm("¿Dejar el demo con los precios originales y el pedido vacío?")) return;
-    try{ localStorage.removeItem(LS_P); localStorage.removeItem(LS_C); }catch(e){}
-    cargar(); carro = {}; abierto = false; guardado = false; limpio = true; pintar();
-  }
-});
-
-document.addEventListener("change", function(e){
-  var el = e.target;
-  if(el.hasAttribute && el.hasAttribute("data-precio")){
-    var p1 = porId(el.getAttribute("data-precio"));
-    p1.p = Math.max(0, Number(el.value) || 0); guardado = false; limpio = false; pintar();
-  }
-  if(el.hasAttribute && el.hasAttribute("data-ok")){
-    var p2 = porId(el.getAttribute("data-ok"));
-    p2.ok = !el.checked; guardado = false; limpio = false; pintar();
+    if(!window.confirm("¿Vaciar el pedido?")) return;
+    try{ localStorage.removeItem(LS_C); }catch(e){}
+    carro = {}; abierto = false; limpio = true; pintar();
   }
 });
 
 cargar();
 pintar();
+traerHoja();
 })();
 </script>
-
 </body>
 </html>
