@@ -1,279 +1,1329 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cotizador de Competencias - Dance Complex</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="repisa-modo" content="publico">
+<meta name="robots" content="noindex">
+<meta name="description" content="Libros y juegos de mesa de homeschool que ya se nos quedaron chicos en casa. Guatemala.">
+<meta property="og:title" content="La Repisa de Enfrente">
+<meta property="og:description" content="Libros y juegos de mesa de homeschool, usados y cuidados. Guatemala.">
+<meta property="og:type" content="website">
+<title>La Repisa de Enfrente</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Karla:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  
-  body {
-    font-family: 'Segoe UI', sans-serif;
-    background: #111111;
-    color: #ffffff;
-    min-height: 100vh;
+:root{
+  --paper:#EDEEE8; --card:#F8F8F4; --card-2:#E4E6DD;
+  --ink:#1C2220; --ink-soft:#5D6761; --ink-faint:#8B948D;
+  --rule:#D2D6CB; --rule-strong:#B9BFB2;
+  --accent:#1F5C4A; --accent-soft:#DCE7E1; --accent-ink:#F8F8F4;
+  --stamp:#A2322A; --stamp-soft:#F0DEDB;
+  --warn:#8A6013; --warn-soft:#F3E6CC;
+  --shadow:0 1px 2px rgba(28,34,32,.06), 0 8px 24px -14px rgba(28,34,32,.28);
+  --aviso:#F6C445; --aviso-ink:#241E08; --aviso-linea:rgba(36,30,8,.22);
+  --r:4px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#14181A; --card:#1D2225; --card-2:#262C2F;
+    --ink:#E7EAE5; --ink-soft:#9BA59E; --ink-faint:#6E7873;
+    --rule:#2C3336; --rule-strong:#3B4448;
+    --accent:#74C4A5; --accent-soft:#1E2E29; --accent-ink:#0F1517;
+    --stamp:#E07C72; --stamp-soft:#2E1F1E;
+    --warn:#D9A94E; --warn-soft:#2C2517;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px -16px rgba(0,0,0,.7);
+  --aviso:#E8B62C; --aviso-ink:#20190A; --aviso-linea:rgba(32,25,10,.3);
   }
+}
+:root[data-theme="dark"]{
+  --paper:#14181A; --card:#1D2225; --card-2:#262C2F;
+  --ink:#E7EAE5; --ink-soft:#9BA59E; --ink-faint:#6E7873;
+  --rule:#2C3336; --rule-strong:#3B4448;
+  --accent:#74C4A5; --accent-soft:#1E2E29; --accent-ink:#0F1517;
+  --stamp:#E07C72; --stamp-soft:#2E1F1E;
+  --warn:#D9A94E; --warn-soft:#2C2517;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px -16px rgba(0,0,0,.7);
+  --aviso:#E8B62C; --aviso-ink:#20190A; --aviso-linea:rgba(32,25,10,.3);
+}
 
-  header {
-    background: #000000;
-    border-bottom: 3px solid #cc0000;
-    padding: 18px 20px;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-  }
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:"Karla","Helvetica Neue",Arial,sans-serif;
+  font-size:16px; line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+h1,h2,h3{font-family:"Fraunces",Georgia,serif;font-weight:700;text-wrap:balance;margin:0}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}
+a{color:inherit}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 
-  .logo-circle {
-    width: 48px;
-    height: 48px;
-    background: #cc0000;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 22px;
-    flex-shrink: 0;
-  }
+/* ---------- masthead ---------- */
+.masthead{border-bottom:1px solid var(--rule);background:var(--card);}
+.masthead .wrap{padding-top:34px;padding-bottom:26px}
+.eyebrow{
+  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ink-faint);margin-bottom:12px
+}
+h1{font-size:clamp(30px,5.4vw,46px);line-height:1.05;letter-spacing:-.015em}
+.lede{margin:12px 0 0;max-width:56ch;color:var(--ink-soft);font-size:16.5px}
+.tally{
+  display:flex;flex-wrap:wrap;gap:0 22px;margin-top:20px;
+  font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:var(--ink-soft)
+}
+.tally b{color:var(--ink);font-weight:600}
 
-  .header-text h1 {
-    font-size: 20px;
-    font-weight: 700;
-    color: #ffffff;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-  }
+/* ---------- cómo funciona ---------- */
+/* ---------- pestañas de sección ---------- */
+.secciones{background:var(--card);border-bottom:1px solid var(--rule)}
+.secciones .wrap{display:flex;gap:0;align-items:stretch}
+.tab{
+  background:none;border:0;border-bottom:2px solid transparent;padding:13px 2px 11px;
+  margin-right:30px;font-family:"Fraunces",Georgia,serif;font-size:18px;font-weight:700;
+  color:var(--accent);opacity:.5;letter-spacing:-.005em;
+  transition:opacity .14s,border-color .14s
+}
+.tab:hover{opacity:.78}
+.tab[aria-selected="true"]{opacity:1;border-bottom-color:var(--accent)}
+.tab .n{
+  font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:500;
+  color:var(--accent);opacity:.75;margin-left:7px;vertical-align:2px
+}
+@media(max-width:520px){ .tab{font-size:16px;margin-right:22px} }
 
-  .header-text p {
-    font-size: 12px;
-    color: #999999;
-    margin-top: 2px;
-    letter-spacing: 0.5px;
-  }
+.how{border-bottom:1px solid var(--rule)}
+.how .wrap{display:grid;grid-template-columns:repeat(3,1fr);gap:0}
+.how-item{padding:18px 22px 20px;border-right:1px solid var(--rule)}
+.how-item:first-child{padding-left:0}
+.how-item:last-child{border-right:0;padding-right:0}
+.how-item h3{font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.how-item p{margin:0;font-size:14.5px;color:var(--ink-soft);line-height:1.5}
+@media(max-width:680px){
+  .how .wrap{grid-template-columns:1fr}
+  .how-item{border-right:0;border-bottom:1px solid var(--rule);padding:14px 0}
+  .how-item:last-child{border-bottom:0}
+}
 
-  .hero {
-    background: linear-gradient(135deg, #1a0000 0%, #111111 60%);
-    padding: 36px 20px 28px;
-    text-align: center;
-    border-bottom: 1px solid #222222;
-  }
+/* ---------- controles ---------- */
+.controls{position:sticky;top:0;z-index:30;background:var(--paper);
+  border-bottom:1px solid var(--rule);box-shadow:0 1px 0 rgba(0,0,0,.02)}
+.controls .wrap{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding-top:12px;padding-bottom:12px}
+.search{flex:1 1 220px;min-width:0}
+input[type=text],input[type=number],input[type=url],select,textarea{
+  width:100%;padding:8px 11px;border:1px solid var(--rule-strong);border-radius:var(--r);
+  background:var(--card);color:var(--ink);font:inherit;font-size:14.5px
+}
+textarea{resize:vertical;min-height:62px;line-height:1.45}
+.seg{display:flex;border:1px solid var(--rule-strong);border-radius:var(--r);overflow:hidden;background:var(--card)}
+.seg button{
+  border:0;background:transparent;padding:8px 13px;font-size:13.5px;color:var(--ink-soft);
+  border-right:1px solid var(--rule);transition:background .12s,color .12s
+}
+.seg button:last-child{border-right:0}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);font-weight:700}
+.chk{display:inline-flex;align-items:center;gap:7px;font-size:14px;color:var(--ink-soft);
+  white-space:nowrap;cursor:pointer;user-select:none}
+.chk input{accent-color:var(--accent);width:15px;height:15px;cursor:pointer}
 
-  .hero h2 {
-    font-size: 26px;
-    font-weight: 700;
-    line-height: 1.3;
-    margin-bottom: 10px;
-  }
+/* ---------- grid ---------- */
+main .wrap{padding-top:26px;padding-bottom:60px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:14px}
+.card{
+  position:relative;background:var(--card);border:1px solid var(--rule);border-radius:var(--r);
+  padding:15px 16px 14px;display:flex;flex-direction:column;gap:9px;box-shadow:var(--shadow);
+  transition:border-color .14s, transform .14s
+}
+.card:hover{border-color:var(--rule-strong)}
+.card-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.ref{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.1em;
+  color:var(--ink-faint);text-transform:uppercase}
+.precio{font-family:"IBM Plex Mono",monospace;font-size:16px;font-weight:600;
+  font-variant-numeric:tabular-nums;white-space:nowrap}
+.card h2{font-size:19px;line-height:1.2;letter-spacing:-.01em}
+.meta{font-size:13.5px;color:var(--ink-soft);line-height:1.45}
+.meta em{font-style:normal;color:var(--ink-faint)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:1px}
+.chip{
+  font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;
+  padding:3px 7px;border-radius:2px;background:var(--card-2);color:var(--ink-soft);white-space:nowrap
+}
+.chip.cond-nuevo{background:var(--accent-soft);color:var(--accent)}
+.chip.cond-marcas{background:var(--warn-soft);color:var(--warn)}
+.nota{font-size:13.5px;color:var(--ink-soft);border-left:2px solid var(--rule-strong);padding-left:9px;margin:0}
+.card-actions{display:flex;gap:8px;margin-top:auto;padding-top:11px;border-top:1px solid var(--rule)}
+.btn{
+  flex:1;text-align:center;text-decoration:none;padding:9px 10px;border-radius:var(--r);
+  font-size:13.5px;font-weight:700;border:1px solid transparent;transition:opacity .12s,background .12s
+}
+.btn:hover{opacity:.87}
+.btn-primary{background:var(--accent);color:var(--accent-ink)}
+.btn-ghost{background:transparent;color:var(--ink);border-color:var(--rule-strong);font-weight:500;flex:0 0 auto;padding:9px 13px}
+.btn[aria-disabled="true"]{opacity:.4;pointer-events:none}
 
-  .hero h2 span {
-    color: #cc0000;
-  }
+.card.is-vendido,.card.is-apartado{background:var(--card-2)}
+.card.is-vendido h2,.card.is-vendido .precio,.card.is-apartado h2{opacity:.5}
+.card.is-vendido .meta,.card.is-vendido .chips,.card.is-vendido .nota{opacity:.45}
+.stamp{
+  position:absolute;top:38%;right:12px;font-family:"IBM Plex Mono",monospace;font-weight:600;
+  font-size:15px;letter-spacing:.2em;padding:5px 12px;border:2.5px double currentColor;
+  border-radius:3px;transform:rotate(-9deg);pointer-events:none;opacity:.82
+}
+.stamp.vendido{color:var(--stamp)}
+.stamp.apartado{color:var(--warn);font-size:13px}
 
-  .hero p {
-    font-size: 14px;
-    color: #aaaaaa;
-    line-height: 1.6;
-    max-width: 480px;
-    margin: 0 auto 20px;
-  }
+.thumb{
+  display:block;width:calc(100% + 32px);margin:-15px -16px 2px;padding:0;border:0;
+  border-bottom:1px solid var(--rule);background:var(--card-2);cursor:zoom-in;
+  border-radius:var(--r) var(--r) 0 0;overflow:hidden
+}
+.thumb img{display:block;width:100%;aspect-ratio:4/3;object-fit:contain}
+.card.is-vendido .thumb img{filter:grayscale(1);opacity:.5}
+.card.is-apartado .thumb img{opacity:.72}
 
-  .badges {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    flex-wrap: wrap;
-  }
+.fotorow{display:flex;gap:13px;align-items:flex-start}
+.fotoprev{
+  flex:0 0 96px;height:96px;border:1px solid var(--rule-strong);border-radius:var(--r);
+  background:var(--card-2);display:flex;align-items:center;justify-content:center;
+  overflow:hidden;font-family:"IBM Plex Mono",monospace;font-size:10px;
+  letter-spacing:.08em;color:var(--ink-faint);text-align:center;padding:6px
+}
+.fotoprev img{width:100%;height:100%;object-fit:contain}
+.fotocol{flex:1;min-width:0;display:flex;flex-direction:column;gap:7px}
+input[type=file]{
+  width:100%;font-size:13px;color:var(--ink-soft);padding:7px;
+  border:1px dashed var(--rule-strong);border-radius:var(--r);background:var(--card-2)
+}
+input[type=file]::file-selector-button{
+  font:inherit;font-size:13px;margin-right:9px;padding:5px 11px;border-radius:var(--r);
+  border:1px solid var(--rule-strong);background:var(--card);color:var(--ink);cursor:pointer
+}
+.precio.falta{color:var(--warn)}
+.pendientes{
+  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.05em;
+  background:var(--warn-soft);color:var(--warn);padding:4px 9px;border-radius:2px;font-weight:600
+}
+.peso{
+  font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--ink-soft);
+  margin-left:auto;white-space:nowrap
+}
+.peso.alto{color:var(--warn);font-weight:600}
+dialog.lightbox{max-width:min(94vw,860px);background:var(--card-2);padding:0}
+dialog.lightbox img{display:block;width:100%;height:auto;max-height:82vh;object-fit:contain}
+dialog.lightbox .lb-foot{display:flex;justify-content:space-between;align-items:center;
+  gap:12px;padding:11px 16px;background:var(--card);border-top:1px solid var(--rule);font-size:14px}
 
-  .badge {
-    background: #1e1e1e;
-    border: 1px solid #333333;
-    border-radius: 20px;
-    padding: 6px 14px;
-    font-size: 12px;
-    color: #cccccc;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-  }
+.resumen{
+  font-size:14px;line-height:1.5;color:var(--ink-soft);margin:0;
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden
+}
+.card h2{cursor:pointer}
+.card h2:hover{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
+.chip.completo{background:var(--accent-soft);color:var(--accent);font-weight:600}
+.chip.faltan{background:var(--warn-soft);color:var(--warn);font-weight:600}
+.chip.col{background:var(--stamp-soft);color:var(--stamp);font-weight:600}
+.precio-sub{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--ink-faint);
+  text-align:right;margin-top:-5px}
+.titulos{margin:0;padding-left:17px;font-size:14.5px;line-height:1.6;color:var(--ink)}
+.titulos li{margin-bottom:3px}
+.titulos .idm{color:var(--ink-faint);font-size:12.5px}
+.chip.pais{background:transparent;border:1px solid var(--rule-strong);color:var(--ink-soft)}
+.chip.pais::before{content:"◍ ";opacity:.6}
 
-  .badge .dot {
-    width: 6px;
-    height: 6px;
-    background: #cc0000;
-    border-radius: 50%;
-  }
+.ficha .dlg-body{gap:16px}
+.ficha-foto{width:100%;max-height:320px;object-fit:contain;background:var(--card-2);
+  border:1px solid var(--rule);border-radius:var(--r)}
+.ficha h3.t{font-size:25px;line-height:1.15;margin-bottom:3px}
+.ficha .autor{font-size:15px;color:var(--ink-soft);margin:0}
+.ficha .cuerpo{font-size:15.5px;line-height:1.6;margin:0}
+.ficha dl{display:grid;grid-template-columns:auto 1fr;gap:7px 16px;margin:0;font-size:14.5px}
+.ficha dt{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--ink-faint);padding-top:3px}
+.ficha dd{margin:0;color:var(--ink)}
+.ai-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:6px}
+.ai-btn{padding:6px 12px;border-radius:var(--r);border:1px dashed var(--accent);
+  background:transparent;color:var(--accent);font-size:13px;font-weight:600}
+.ai-btn:disabled{opacity:.5;cursor:wait}
 
-  .app-section {
-    padding: 24px 16px;
-  }
+/* ---------- lista de apartados ---------- */
+.btn-add{background:var(--accent);color:var(--accent-ink)}
+.btn-add.en{background:transparent;color:var(--accent);border-color:var(--accent)}
 
-  .section-label {
-    text-align: center;
-    font-size: 12px;
-    color: #666666;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 16px;
-  }
+.barra{
+  position:fixed;left:0;right:0;bottom:0;z-index:55;
+  background:var(--aviso);color:var(--aviso-ink);
+  border-top:2px solid var(--aviso-ink);
+  box-shadow:0 -10px 30px -14px rgba(0,0,0,.45)
+}
+.barra-fila{
+  max-width:1080px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;
+  gap:14px;flex-wrap:wrap
+}
+.barra-cuenta{
+  font-family:"IBM Plex Mono",monospace;font-size:14px;font-variant-numeric:tabular-nums;
+  background:none;border:0;color:var(--aviso-ink);padding:4px 0;text-align:left;
+  text-decoration:underline;text-underline-offset:4px;text-decoration-color:var(--aviso-linea)
+}
+.barra-cuenta b{font-weight:600}
+.barra .btn-sm{background:var(--aviso-ink);color:var(--aviso);border-color:transparent;
+  font-weight:700;margin-left:auto}
+.barra .btn-sm.ghost{background:transparent;color:var(--aviso-ink);border-color:var(--aviso-linea);
+  font-weight:600;margin-left:0}
+.barra-lista{
+  max-width:1080px;margin:0 auto;padding:0 20px 14px;
+  max-height:44vh;overflow-y:auto
+}
+.barra-lista ul{list-style:none;margin:0 0 12px;padding:0;
+  border-top:1px solid var(--aviso-linea)}
+.barra-lista li{display:flex;align-items:center;gap:12px;padding:9px 0;
+  border-bottom:1px solid var(--aviso-linea);font-size:14.5px}
+.barra-lista .ref{color:rgba(36,30,8,.55);flex:0 0 42px}
+.barra-lista .t{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.barra-lista .pr{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums}
+.barra-lista .quitar{background:none;border:0;color:rgba(36,30,8,.55);font-size:19px;
+  line-height:1;padding:0 2px;cursor:pointer}
+.barra-lista .quitar:hover{color:var(--aviso-ink)}
+.barra-gracias{max-width:1080px;margin:0 auto;padding:18px 20px 14px}
+.barra-gracias h3{font-size:20px;color:var(--aviso-ink);margin-bottom:7px}
+.barra-gracias p{margin:0 0 8px;font-size:14.5px;line-height:1.55;color:rgba(36,30,8,.88);max-width:62ch}
+.barra-gracias p.chiquito{font-size:13px;color:rgba(36,30,8,.66)}
+.barra-gracias b{color:var(--aviso-ink)}
+.barra-nota{font-size:12.5px;color:rgba(255,255,255,.6);margin:0 0 4px;line-height:1.45}
 
-  .iframe-wrapper {
-    background: #1a1a1a;
-    border: 1px solid #2a2a2a;
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
-  }
+.corte{
+  display:flex;align-items:center;gap:14px;margin:34px 0 16px;
+  font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ink-faint)
+}
+.corte::before,.corte::after{content:"";flex:1;height:1px;background:var(--rule)}
 
-  iframe {
-    width: 100%;
-    height: 700px;
-    border: none;
-    display: block;
-  }
+.empty{
+  border:1px dashed var(--rule-strong);border-radius:var(--r);padding:46px 26px;text-align:center;color:var(--ink-soft)
+}
+.empty h2{font-size:22px;color:var(--ink);margin-bottom:8px}
+.empty p{margin:0 auto;max-width:44ch;font-size:15px}
 
-  .how-it-works {
-    padding: 32px 20px;
-    background: #0d0d0d;
-    border-top: 1px solid #1e1e1e;
-  }
+/* ---------- footer ---------- */
+footer{border-top:1px solid var(--rule);background:var(--card)}
+footer .wrap{padding-top:20px;padding-bottom:28px;display:flex;justify-content:space-between;
+  align-items:center;gap:14px;flex-wrap:wrap;font-size:13.5px;color:var(--ink-faint)}
+.linkish{background:none;border:0;color:var(--ink-soft);text-decoration:underline;
+  text-underline-offset:3px;padding:0;font-size:13.5px}
 
-  .how-it-works h3 {
-    text-align: center;
-    font-size: 18px;
-    margin-bottom: 24px;
-    color: #ffffff;
-  }
+/* ---------- admin ---------- */
+.adminbar{background:var(--accent-soft);border-bottom:1px solid var(--rule)}
+.adminbar .wrap{padding-top:11px;padding-bottom:11px;display:flex;flex-wrap:wrap;gap:9px;align-items:center}
+.adminbar .lbl{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--accent);font-weight:600;margin-right:4px}
+.btn-sm{padding:6px 12px;border-radius:var(--r);border:1px solid var(--rule-strong);
+  background:var(--card);color:var(--ink);font-size:13.5px}
+.btn-sm.solid{background:var(--accent);color:var(--accent-ink);border-color:transparent;font-weight:700}
+.btn-sm.danger{color:var(--stamp);border-color:var(--stamp)}
+.rowtools{display:flex;gap:6px;flex-wrap:wrap;padding-top:10px;margin-top:2px;border-top:1px dashed var(--rule-strong)}
+.rowtools select{width:auto;padding:5px 8px;font-size:12.5px}
+.rowtools button{padding:5px 9px;font-size:12.5px;border-radius:var(--r);
+  border:1px solid var(--rule-strong);background:var(--card);color:var(--ink-soft)}
 
-  .how-it-works h3 span {
-    color: #cc0000;
-  }
+dialog{
+  border:1px solid var(--rule-strong);border-radius:6px;background:var(--card);color:var(--ink);
+  padding:0;max-width:560px;width:calc(100% - 32px);box-shadow:0 24px 60px -20px rgba(0,0,0,.45)
+}
+dialog::backdrop{background:rgba(15,20,18,.5)}
+.dlg-head{padding:18px 22px 12px;border-bottom:1px solid var(--rule);display:flex;
+  justify-content:space-between;align-items:center;gap:12px}
+.dlg-head h2{font-size:21px}
+.dlg-body{padding:18px 22px;max-height:64vh;overflow-y:auto;display:flex;flex-direction:column;gap:13px}
+.dlg-foot{padding:14px 22px 18px;border-top:1px solid var(--rule);display:flex;justify-content:flex-end;gap:9px}
+.field label{display:block;font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--ink-faint);margin-bottom:5px}
+.field .hint{font-size:12.5px;color:var(--ink-faint);margin:5px 0 0}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+@media(max-width:520px){.two{grid-template-columns:1fr}}
 
-  .steps {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    max-width: 480px;
-    margin: 0 auto;
-  }
-
-  .step {
-    display: flex;
-    align-items: flex-start;
-    gap: 14px;
-    background: #1a1a1a;
-    border: 1px solid #2a2a2a;
-    border-radius: 12px;
-    padding: 16px;
-  }
-
-  .step-num {
-    width: 32px;
-    height: 32px;
-    background: #cc0000;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    font-weight: 700;
-    flex-shrink: 0;
-  }
-
-  .step-text h4 {
-    font-size: 14px;
-    font-weight: 600;
-    margin-bottom: 4px;
-  }
-
-  .step-text p {
-    font-size: 13px;
-    color: #888888;
-    line-height: 1.5;
-  }
-
-  footer {
-    background: #000000;
-    border-top: 1px solid #1e1e1e;
-    padding: 20px;
-    text-align: center;
-  }
-
-  footer p {
-    font-size: 12px;
-    color: #555555;
-  }
-
-  footer span {
-    color: #cc0000;
-  }
-
-  @media (min-width: 600px) {
-    .hero h2 { font-size: 32px; }
-    iframe { height: 750px; }
-    .steps { flex-direction: row; flex-wrap: wrap; }
-    .step { flex: 1; min-width: 200px; }
-  }
+.savebar{
+  position:fixed;left:0;right:0;bottom:0;z-index:60;
+  background:var(--aviso);color:var(--aviso-ink);border-top:2px solid var(--aviso-ink);
+  padding:12px 20px;display:flex;justify-content:center;align-items:center;gap:14px;flex-wrap:wrap;
+  font-size:14.5px;box-shadow:0 -8px 26px -12px rgba(0,0,0,.45)
+}
+.savebar b{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums}
+.savebar .btn-sm{background:var(--aviso-ink);color:var(--aviso);border-color:transparent;font-weight:700}
+.savebar .btn-sm.ghost{background:transparent;color:var(--aviso-ink);border-color:var(--aviso-linea);font-weight:600}
+.toast{
+  position:fixed;left:50%;transform:translateX(-50%);bottom:76px;z-index:70;
+  background:var(--ink);color:var(--paper);padding:10px 18px;border-radius:var(--r);
+  font-size:14px;box-shadow:var(--shadow);max-width:min(92vw,460px);text-align:center
+}
+[hidden]{display:none!important}
 </style>
+
 </head>
 <body>
+<script type="application/json" id="catalogo">{"config": {"whatsapp": "50253771248", "titulo": "La Repisa de Enfrente", "lede": "Libros y juegos de mesa que ya se nos quedaron chicos en casa. Todos usados, todos cuidados. Los libros sueltos van a Q20, las colecciones a Q15 el libro, y los juegos a Q75.", "apartado": "Me escribís y te lo aparto 48 horas. Si no entra la transferencia en ese tiempo, vuelve a la lista.", "pago": "Transferencia bancaria. Los datos te los paso por WhatsApp cuando confirmemos.", "entrega": "Pasás a traerlo a la casa sin costo. Si preferís envío, te lo mando por Guatex y el flete va aparte. Ojo con eso: mandar una sola cosa casi siempre sale más caro que lo que estás llevando, así que si vas a pedir envío juntá tres o cuatro — ahí sí sale a cuenta."}, "items": [{"id": "C-01", "tipo": "coleccion", "titulo": "Colección Tea Stilton", "autor": "Tea Stilton · Destino y Scholastic", "nivel": "8–12 años", "idioma": "Español e inglés", "pais": "Italia", "cond": "bueno", "cantidad": 8, "precioUnit": 15, "precio": 120, "libros": [{"t": "Este caballo es un tesoro", "i": "español"}, {"t": "El camino a la fama", "i": "español"}, {"t": "Los secretos del Olimpo", "i": "español"}, {"t": "¡Eres especial! Descubre tus talentos", "i": "español"}, {"t": "La leyenda del jardín chino", "i": "español"}, {"t": "Thea Stilton and the Black Forest Burglary", "i": "inglés"}, {"t": "Thea Stilton and the Rainforest Rescue", "i": "inglés"}, {"t": "Mouseford Academy: Dance Challenge", "i": "inglés"}], "resumen": "Las cinco amigas del Club de Tea viajan por el mundo resolviendo misterios: un caballo robado, un jardín con leyenda, una academia de baile, la selva del Amazonas. Páginas a todo color, letra grande y capítulos cortos — de los que enganchan a las niñas que todavía no se animan con novelas largas. Cinco están en español y tres en inglés, así que sirve para leer en los dos idiomas.", "video": "", "nota": "", "foto": "fotos/C-01.webp", "status": "disponible"}, {"id": "C-02", "tipo": "coleccion", "titulo": "Colección Unicorn Magic", "autor": "Daisy Meadows · Orchard Books", "nivel": "6–9 años", "idioma": "Inglés", "pais": "Reino Unido", "cond": "bueno", "cantidad": 8, "precioUnit": 15, "precio": 120, "libros": [{"t": "Shimmerbreeze & the Sky Spell", "i": ""}, {"t": "Sparklesplash Meets the Mermaids", "i": ""}, {"t": "Slumbertail & the Sleep Pixies", "i": ""}, {"t": "Brighteye & the Blue Moon", "i": ""}, {"t": "Silvermane Saves the Stars", "i": ""}, {"t": "Snowstar and the Big Freeze — tres historias en un tomo", "i": ""}, {"t": "Glitterhoof's Secret Garden", "i": ""}, {"t": "Dreamspell's Special Wish", "i": ""}], "resumen": "Aisha y Emily cruzan a la Isla del Unicornio, donde cada libro sigue a un unicornio distinto que perdió su poder mágico. De las mismas autoras de Rainbow Magic: inglés sencillo, capítulos de tres o cuatro páginas y portadas con brillos. Son ocho, y el último trae tres historias juntas.", "video": "", "nota": "", "foto": "fotos/C-02.webp", "status": "disponible"}, {"id": "C-03", "tipo": "coleccion", "titulo": "Colección Los Cinco", "autor": "Enid Blyton · Juventud", "nivel": "7–10 años", "idioma": "Español", "pais": "Inglaterra", "cond": "bueno", "cantidad": 3, "precioUnit": 15, "precio": 45, "libros": [{"t": "Tim persiguió a un gato", "i": ""}, {"t": "Los Cinco y la perrita perdida", "i": ""}, {"t": "¡Bien por los Cinco!", "i": ""}], "resumen": "Los Cinco de siempre — Julián, Dick, Ana, Jorge y el perro Tim — en la versión ilustrada a todo color para lectores chiquitos, con historias cortas en vez de la novela completa. Es la puerta de entrada al clásico de Enid Blyton antes de dar el salto a los libros gordos.", "video": "", "nota": "", "foto": "fotos/C-03.webp", "status": "disponible"}, {"id": "C-04", "tipo": "coleccion", "titulo": "Colección National Geographic Kids", "autor": "Susan B. Neuman y Laura Marsh", "nivel": "4–8 años", "idioma": "Español e inglés", "pais": "Estados Unidos", "cond": "bueno", "cantidad": 4, "precioUnit": 15, "precio": 60, "libros": [{"t": "¡Balancéate, Perezoso! Exploremos la selva tropical", "i": "español · pre-lector"}, {"t": "¡Agárrate, Mono!", "i": "español · pre-lector"}, {"t": "¡Salta, Cachorrito!", "i": "español · pre-lector"}, {"t": "Koalas", "i": "inglés · nivel 1"}], "resumen": "Lectores graduados de National Geographic, con fotografía real en cada página. Los tres en español son de nivel pre-lector: una frase por página, letra enorme. El de koalas es nivel 1 en inglés. Perfectos para el que está aprendiendo a leer solo y quiere animales de verdad, no dibujos.", "video": "", "nota": "", "foto": "fotos/C-04.webp", "status": "disponible"}, {"id": "C-05", "tipo": "coleccion", "titulo": "Colección Guatemala: museo y naturaleza", "autor": "Museo Miraflores · The Nature Conservancy", "nivel": "6–12 años", "idioma": "Español", "pais": "Guatemala", "cond": "bueno", "cantidad": 3, "precioUnit": 15, "precio": 45, "libros": [{"t": "Guía didáctica — Museo Miraflores", "i": ""}, {"t": "Guía para niños — Museo Miraflores", "i": ""}, {"t": "Guía para explorar la biodiversidad de Guatemala", "i": ""}], "resumen": "Tres materiales guatemaltecos difíciles de conseguir: las dos guías del Museo Miraflores sobre Kaminaljuyú y el mundo maya, y la guía de biodiversidad de Guatemala hecha con The Nature Conservancy. Pensados para acompañar una visita o un proyecto, con actividades y mucha ilustración.", "video": "", "nota": "", "foto": "fotos/C-05.webp", "status": "vendido"}, {"id": "C-06", "tipo": "coleccion", "titulo": "Colección Geronimo Stilton — Grandes Historias", "autor": "Geronimo Stilton · Destino", "nivel": "8–12 años", "idioma": "Español", "pais": "Italia", "cond": "bueno", "cantidad": 2, "precioUnit": 15, "precio": 30, "libros": [{"t": "Moby Dick — adaptación de la novela de Herman Melville", "i": ""}, {"t": "Las aventuras de Sherlocko: La niebla negra", "i": ""}], "resumen": "Dos clásicos de la literatura contados por Geronimo Stilton, con sus letras de colores y sus ilustraciones en cada página: Moby Dick y una aventura al estilo Sherlock Holmes. Es la manera más amable de que conozcan las historias grandes antes de leerlas en serio.", "video": "", "nota": "", "foto": "fotos/C-06.webp", "status": "disponible"}, {"id": "L-01", "tipo": "libro", "titulo": "Nicté, la niña maya que quería viajar", "autor": "Itala Vettorazzi", "nivel": "4–8 años", "idioma": "Español", "pais": "Guatemala", "cond": "bueno", "precio": 20, "resumen": "Nicté es una niña maya que sueña con salir de su aldea y conocer el mundo más allá de la selva. Es de los poquísimos álbumes infantiles hechos en Guatemala y con una protagonista maya, así que sirve tanto de cuento como de espejo. Ilustraciones grandes y coloridas, texto corto.", "video": "", "nota": "", "foto": "fotos/L-01.webp", "status": "disponible"}, {"id": "L-02", "tipo": "libro", "titulo": "Ice Cream Summer", "autor": "Peter Sís", "nivel": "5–9 años", "idioma": "Inglés", "pais": "Estados Unidos", "cond": "bueno", "precio": 20, "resumen": "Un niño le escribe a su abuelo para convencerlo de que se pasó el verano estudiando. Las ilustraciones lo delatan: se lo pasó comiendo helado. Entre barquillo y barquillo se le cuela historia, geografía y matemática del helado, sin que se sienta lección.", "video": "", "nota": "", "foto": "fotos/L-02.webp", "status": "disponible"}, {"id": "L-03", "tipo": "libro", "titulo": "If I Built a House", "autor": "Chris Van Dusen", "nivel": "4–8 años", "idioma": "Inglés", "pais": "Estados Unidos", "cond": "bueno", "precio": 20, "resumen": "Jack describe la casa que construiría si de él dependiera: cuarto de juegos con tobogán, pista de carreras adentro, un cuarto que vuela. Va todo en rima y las ilustraciones son de un futuro retro precioso. De los que piden que se los lean otra vez.", "video": "", "nota": "", "foto": "fotos/L-03.webp", "status": "disponible"}, {"id": "L-04", "tipo": "libro", "titulo": "Lemonade in Winter", "autor": "Emily Jenkins · G. Brian Karas", "nivel": "5–8 años", "idioma": "Inglés", "pais": "Estados Unidos", "cond": "bueno", "precio": 20, "resumen": "Pauline y su hermanito John-John ponen un puesto de limonada en pleno invierno, con nieve y sin clientes. Van contando monedas para ver si ganan o pierden, y al final hacen cuentas de verdad. Es cuento y clase de dinero al mismo tiempo.", "video": "", "nota": "", "foto": "fotos/L-04.webp", "status": "disponible"}, {"id": "L-05", "tipo": "libro", "titulo": "Albert's Tree", "autor": "Jenni Desmond", "nivel": "3–7 años", "idioma": "Inglés", "pais": "Reino Unido", "cond": "bueno", "precio": 20, "resumen": "Albert el oso sale de su hibernación con toda la ilusión de saludar a su árbol favorito, y lo encuentra llorando. Con la ayuda de sus amigos del bosque trata de averiguar qué le pasa. Ternura, amistad y un final que sorprende.", "video": "", "nota": "", "foto": "fotos/L-05.webp", "status": "vendido"}, {"id": "L-06", "tipo": "libro", "titulo": "Millions to Measure", "autor": "David M. Schwartz · Steven Kellogg", "nivel": "6–10 años", "idioma": "Inglés", "pais": "Estados Unidos", "cond": "bueno", "precio": 20, "resumen": "El mago Marvelossissimo explica cómo la humanidad fue inventando las medidas: de contar en pies y codos al metro, el litro y el kilo. Trae un desplegable de un metro de largo para medir de verdad. De los mismos creadores de How Much Is a Million?", "video": "", "nota": "", "foto": "fotos/L-06.webp", "status": "disponible"}, {"id": "L-07", "tipo": "libro", "titulo": "Rosie Revere, Engineer", "autor": "Andrea Beaty · David Roberts", "nivel": "5–9 años", "idioma": "Inglés", "pais": "Estados Unidos", "cond": "bueno", "precio": 20, "resumen": "Rosie construye inventos a escondidas debajo de la cama porque una vez se rieron de ella. Su tía abuela le enseña que un invento que falla no es un fracaso: es el primer intento. Va en rima y es de los libros que dan ganas de armar algo.", "video": "", "nota": "", "foto": "fotos/L-07.webp", "status": "vendido"}, {"id": "L-08", "tipo": "libro", "titulo": "The Mitten", "autor": "Jan Brett", "nivel": "3–8 años", "idioma": "Inglés", "pais": "Ucrania", "cond": "bueno", "precio": 20, "resumen": "Nicki pierde un mitón blanco en la nieve y, uno tras otro, los animales del bosque se van metiendo adentro a calentarse — hasta que llega el oso. Es un cuento tradicional ucraniano, y Jan Brett lo ilustra con unos bordes que van contando en paralelo lo que pasa afuera.", "video": "", "nota": "", "foto": "fotos/L-08.webp", "status": "vendido"}, {"id": "L-09", "tipo": "libro", "titulo": "Exploración Submarina", "autor": "", "nivel": "3–7 años", "idioma": "Español", "pais": "", "cond": "bueno", "precio": 20, "resumen": "Libro de buscar y encontrar sobre el fondo del mar, con una linterna de cartón que se desliza detrás de las páginas y va revelando los animales escondidos. Pensado para leer en voz alta y para que el chiquito vaya señalando.", "video": "", "nota": "", "foto": "fotos/L-09.webp", "status": "disponible"}, {"id": "L-10", "tipo": "libro", "titulo": "La Caperucita Roja", "autor": "Roberto Piumini · ilustr. Elena Temporin", "nivel": "4–8 años", "idioma": "Español", "pais": "Europa", "cond": "bueno", "precio": 20, "resumen": "El cuento de siempre en edición de álbum grande, con ilustraciones de bosque oscuro y aves negras que le devuelven al cuento su lado inquietante. Nada de versión azucarada: es Caperucita como se contaba antes.", "video": "", "nota": "", "foto": "fotos/L-10.webp", "status": "disponible"}, {"id": "L-11", "tipo": "libro", "titulo": "El misterio de los caballos chimuelos", "autor": "José Luis Zárate · El Arca", "nivel": "7–10 años", "idioma": "Español", "pais": "México", "cond": "bueno", "precio": 20, "resumen": "Novelita de misterio mexicana, de capítulos cortos y humor absurdo: alguien anda dejando caballos sin dientes y hay que averiguar quién. Buena para el que ya lee solo pero se aburre con libros largos.", "video": "", "nota": "", "foto": "fotos/L-11.webp", "status": "disponible"}, {"id": "L-12", "tipo": "libro", "titulo": "Incredible Insects", "autor": "Zoe Barnes · Scholastic", "nivel": "6–9 años", "idioma": "Inglés", "pais": "Estados Unidos", "cond": "bueno", "precio": 20, "resumen": "Lector de vocabulario científico con fotografía macro de insectos — las patas, los ojos, las alas en detalle. Trae el vocabulario técnico en inglés marcado, así que sirve para ciencia y para idioma al mismo tiempo.", "video": "", "nota": "", "foto": "fotos/L-12.webp", "status": "disponible"}, {"id": "L-13", "tipo": "libro", "titulo": "Amelia Bedelia Helps Out", "autor": "Peggy Parish", "nivel": "5–8 años", "idioma": "Inglés", "pais": "Estados Unidos", "cond": "bueno", "precio": 20, "resumen": "Amelia Bedelia entiende todo al pie de la letra: si le dicen que 'pique' las flores, las pica. El chiste está en el doble sentido del inglés, así que además de divertir enseña muchísimo idioma. Nivel 2 de I Can Read.", "video": "", "nota": "", "foto": "fotos/L-13.webp", "status": "disponible"}, {"id": "L-14", "tipo": "libro", "titulo": "Pet Show!", "autor": "Ezra Jack Keats · Scholastic", "nivel": "4–8 años", "idioma": "Inglés", "pais": "Estados Unidos", "cond": "bueno", "precio": 20, "resumen": "Archie no encuentra a su gato justo el día del concurso de mascotas del barrio, así que se presenta con un germen en un frasco. De Ezra Jack Keats, el mismo de The Snowy Day, con sus collages de colores planos.", "video": "", "nota": "", "foto": "fotos/L-14.webp", "status": "disponible"}, {"id": "L-15", "tipo": "libro", "titulo": "How a City Works", "autor": "D. J. Ward · ilustr. Violet Lemay", "nivel": "6–9 años", "idioma": "Inglés", "pais": "Estados Unidos", "cond": "bueno", "precio": 20, "resumen": "De la serie Let's Read and Find Out Science, nivel 2: de dónde sale el agua de la llave, a dónde va la basura, cómo llega la luz. Explica la ciudad como un sistema, con ilustraciones de corte transversal.", "video": "", "nota": "", "foto": "fotos/L-15.webp", "status": "disponible"}, {"id": "L-16", "tipo": "libro", "titulo": "Ready, Set, Swim!", "autor": "Ellen Smith · ilustr. Katie Kear", "nivel": "5–8 años", "idioma": "Inglés", "pais": "Reino Unido", "cond": "bueno", "precio": 20, "resumen": "De la serie Kids' Sports Stories: la primera competencia de natación, los nervios de la salida y lo que pasa cuando el resultado no es el que uno esperaba. Historia corta y directa sobre perder bien.", "video": "", "nota": "", "foto": "fotos/L-16.webp", "status": "disponible"}, {"id": "L-17", "tipo": "libro", "titulo": "El dragón color frambuesa", "autor": "Georg Bydlinski · ilustr. Leire Martín", "nivel": "5–8 años", "idioma": "Español", "pais": "Austria", "cond": "bueno", "precio": 20, "resumen": "Un dragón que en vez de fuego echa flores, y que por eso no encaja con lo que se espera de un dragón. De El Barco de Vapor, serie blanca — de las primeras lecturas por capítulos en español.", "video": "", "nota": "", "foto": "fotos/L-17.webp", "status": "disponible"}, {"id": "L-18", "tipo": "libro", "titulo": "El dragón y el caballero apestoso", "autor": "Elli Woollard · ilustr. Benji Davies", "nivel": "4–8 años", "idioma": "Español", "pais": "Reino Unido", "cond": "bueno", "precio": 20, "resumen": "Un dragoncito sale a comerse un caballero pero se confunde y termina haciéndose su amigo. Va en rima, con las ilustraciones de Benji Davies, que son de las más lindas que hay en álbum ilustrado.", "video": "", "nota": "", "foto": "fotos/L-18.webp", "status": "disponible"}, {"id": "L-19", "tipo": "libro", "titulo": "Truckery Rhymes", "autor": "Jon Scieszka · Trucktown", "nivel": "3–6 años", "idioma": "Inglés", "pais": "Estados Unidos", "cond": "bueno", "precio": 20, "resumen": "Las rimas infantiles clásicas en inglés, pero con camiones en vez de personajes. Suena raro y funciona: el ritmo es el mismo que ya conocen y por eso se aprenden solas. Ilustrado por David Shannon y David Gordon.", "video": "", "nota": "", "foto": "fotos/L-19.webp", "status": "disponible"}, {"id": "L-20", "tipo": "libro", "titulo": "50 cuentos de personajes extraordinarios", "autor": "Teresa Durán · Edelvives", "nivel": "6–12 años", "idioma": "Español", "pais": "España", "cond": "bueno", "precio": 20, "resumen": "Antología gorda de cuentos tradicionales del mundo entero, cincuenta en total, cada uno con su ilustración. De los libros que duran años porque siempre hay uno que no habían leído. Ideal para leer en voz alta.", "video": "", "nota": "", "foto": "fotos/L-20.webp", "status": "disponible"}, {"id": "L-21", "tipo": "libro", "titulo": "Spirit Riding Free: Lucky's Guide to Horses & Friendship", "autor": "DreamWorks", "nivel": "7–11 años", "idioma": "Inglés", "pais": "Estados Unidos", "cond": "bueno", "precio": 20, "resumen": "El libro-guía de la serie Spirit de Netflix: cómo cuidar un caballo, cómo montarlo, cómo leerle el humor, mezclado con test y consejos de amistad. Para la que anda en la etapa de los caballos.", "video": "", "nota": "", "foto": "fotos/L-21.webp", "status": "disponible"}, {"id": "L-22", "tipo": "libro", "titulo": "Moana", "autor": "Disney", "nivel": "4–8 años", "idioma": "Español", "pais": "Estados Unidos", "cond": "bueno", "precio": 20, "resumen": "El cuento de la película, con las ilustraciones oficiales: Moana cruzando el océano para devolverle el corazón a Te Fiti. Texto corto, formato grande, de los que se leen antes de dormir.", "video": "", "nota": "", "foto": "fotos/L-22.webp", "status": "disponible"}, {"id": "L-23", "tipo": "libro", "titulo": "Clever Creatures and Boundless Beasts: A Land of Dinosaurs", "autor": "Kaley Carpenter", "nivel": "3–7 años", "idioma": "Inglés", "pais": "Estados Unidos", "cond": "bueno", "precio": 20, "resumen": "Libro de sonidos con panel de botones: cada dinosaurio de la página tiene su rugido. Tapa dura acolchada y páginas gruesas, hecho para manos chiquitas. Vale probar las pilas antes de llevárselo.", "video": "", "nota": "", "foto": "fotos/L-23.webp", "status": "disponible"}, {"id": "L-24", "tipo": "libro", "titulo": "Unicorn and the Rainbow Snow", "autor": "Emma Adams · ilustr. Katy Halford", "nivel": "3–7 años", "idioma": "Inglés", "pais": "Reino Unido", "cond": "bueno", "precio": 20, "resumen": "Un unicornio, nieve de arcoíris y bastante humor de baño — es de los que hacen reír a carcajadas a los de cinco años. Ilustraciones con brillos y colores pastel.", "video": "", "nota": "", "foto": "fotos/L-24.webp", "status": "disponible"}, {"id": "J-01", "tipo": "juego", "titulo": "Scrabble Junior", "autor": "Mattel", "nivel": "5–10 años", "idioma": "Español", "pais": "", "cond": "bueno", "jugadores": "2–4 jugadores", "duracion": "20 min", "completo": "si", "precio": 90, "resumen": "El Scrabble para los que apenas están leyendo. Un lado del tablero trae palabras ya impresas y solo hay que ir cubriéndolas con las letras que tocan; se le da la vuelta y del otro lado se juega libre, formando palabras propias. Fichas grandes, en español, y se puede jugar en los dos niveles con el mismo tablero.", "video": "", "nota": "Completo, con tablero de dos caras. El juego está nítido; la caja sí se ve usada.", "foto": "fotos/J-01.webp", "status": "disponible"}, {"id": "J-02", "tipo": "juego", "titulo": "Destreza", "autor": "Hasbro", "nivel": "5+ años", "idioma": "Español", "pais": "", "cond": "bueno", "jugadores": "1–2 jugadores", "duracion": "5 min", "completo": "si", "precio": 75, "resumen": "Es el Perfection de toda la vida, en español: veinticinco piezas de formas distintas que hay que meter en su hueco antes de que se acabe el tiempo. Cuando salta el tablero vuelan todas y hay que empezar de nuevo. Puro pulso, y grito garantizado.", "video": "", "nota": "Completo. Funciona con cuerda, no con pilas. El juego está nítido; la caja sí se ve usada.", "foto": "fotos/J-02.webp", "status": "vendido"}, {"id": "J-03", "tipo": "juego", "titulo": "Cat & Mouse GoGetter", "autor": "SmartGames", "nivel": "6+ años", "idioma": "Inglés", "pais": "", "cond": "bueno", "jugadores": "1 jugador", "duracion": "10–20 min", "completo": "si", "precio": 110, "resumen": "Rompecabezas de lógica de un solo jugador: hay que acomodar las piezas de camino para que cada perro llegue a su hueso sin toparse con los gatos. Trae 48 desafíos que van de principiante a maestro en el cuadernillo, con sus soluciones atrás. De los que el niño juega solo sin pedir ayuda.", "video": "", "nota": "Completo, con su cuadernillo de 48 retos. El juego está nítido; la caja sí se ve usada.", "foto": "fotos/J-03.webp", "status": "disponible"}, {"id": "J-04", "tipo": "juego", "titulo": "Walk the Dog", "autor": "SmartGames", "nivel": "7+ años", "idioma": "Inglés", "pais": "", "cond": "bueno", "jugadores": "1 jugador", "duracion": "10–20 min", "completo": "si", "precio": 110, "resumen": "Cinco perros con correa sobre un tablero de hoyos, y el reto es acomodarlos para que las correas no se crucen ni se peleen entre ellos. Ochenta desafíos en cuatro niveles. Las piezas son de plástico grueso y las correas de hule, así que aguanta.", "video": "", "nota": "Completo, con la bolsita de tela y el cuadernillo de 80 retos. El juego está nítido; la caja sí se ve usada.", "foto": "fotos/J-04.webp", "status": "disponible"}, {"id": "J-05", "tipo": "juego", "titulo": "Q-bitz Solo", "autor": "MindWare", "nivel": "8+ años", "idioma": "Sin texto", "pais": "", "cond": "bueno", "jugadores": "1–2 jugadores", "duracion": "15 min", "completo": "si", "precio": 85, "resumen": "Una lata de metal con cubos y tarjetas de patrones: hay que reproducir el diseño de la tarjeta girando los cubos, lo más rápido posible. Se juega solo contra el reloj o compitiendo con alguien más. No lleva texto, así que sirve en cualquier idioma, y del tamaño perfecto para llevar de viaje.", "video": "", "nota": "Completo, en su lata de metal. El juego está nítido; la caja sí se ve usada.", "foto": "fotos/J-05.webp", "status": "disponible"}, {"id": "J-06", "tipo": "juego", "titulo": "Vowel Owls Sorting Set", "autor": "Learning Resources", "nivel": "4–8 años", "idioma": "Inglés", "pais": "", "cond": "bueno", "jugadores": "1–6 jugadores", "duracion": "15 min", "completo": "si", "precio": 110, "resumen": "Seis búhos de plástico, uno por cada vocal, y cien tarjetas con dibujos: hay que ir metiendo cada palabra en el búho de la vocal que le suena. Es de los materiales que hacen que el sonido de las vocales en inglés se entienda sin explicarlo. Los búhos son grandes y de plástico duro.", "video": "", "nota": "Completo, las 106 piezas. Las tarjetas están solo en inglés. El juego está nítido; la caja sí se ve usada.", "foto": "fotos/J-06.webp", "status": "disponible"}, {"id": "J-07", "tipo": "juego", "titulo": "Smart Farmer", "autor": "SmartGames", "nivel": "4+ años", "idioma": "Sin texto", "pais": "", "cond": "bueno", "jugadores": "1 jugador", "duracion": "10–15 min", "completo": "si", "precio": 110, "resumen": "Hay que acomodar las cercas y los establos para que cada animal quede en su corral y ninguno se mezcle con el vecino. Sesenta desafíos, de principiante a maestro. No lleva nada de texto, así que un niño que todavía no lee puede jugarlo solo — es de los mejores primeros juegos de lógica que hay.", "video": "", "nota": "Completo, con su cuadernillo de 60 retos. El juego está nítido; la caja sí se ve usada.", "foto": "fotos/J-07.webp", "status": "disponible"}, {"id": "J-08", "tipo": "juego", "titulo": "Spelling Game — letras de madera", "autor": "", "nivel": "3+ años", "idioma": "Inglés", "pais": "", "cond": "bueno", "jugadores": "1–2 jugadores", "duracion": "15 min", "completo": "si", "precio": 50, "resumen": "Letras de madera de colores y tarjetas con dibujo: se ve el barco, se lee «boat» punteado, y hay que ir encajando las letras en su lugar. Para los que están empezando a deletrear en inglés y todavía necesitan tocar la letra para acordarse de ella.", "video": "", "nota": "Completo, las letras en su bolsa de tela. El juego está nítido; la caja sí se ve usada.", "foto": "fotos/J-08.webp", "status": "disponible"}, {"id": "J-09", "tipo": "juego", "titulo": "GridBlock", "autor": "Fat Brain Toy Co.", "nivel": "6+ años", "idioma": "Inglés", "pais": "", "cond": "bueno", "jugadores": "2–4 jugadores", "duracion": "20 min", "completo": "si", "precio": 95, "resumen": "Piezas de colores que se van encajando en un tablero de clavijas. Gana el que logra colocar todas las suyas — o el que deja a los demás sin espacio, que es la parte divertida. Trae dos reglas, una fácil y una con más estrategia, y se aprende en dos minutos.", "video": "", "nota": "Completo, los cuatro juegos de piezas. El juego está nítido; la caja sí se ve usada.", "foto": "fotos/J-09.webp", "status": "disponible"}, {"id": "J-10", "tipo": "juego", "titulo": "What's Going On Here?", "autor": "eeBoo", "nivel": "5+ años", "idioma": "Inglés", "pais": "", "cond": "bueno", "jugadores": "2+ jugadores", "duracion": "20 min", "completo": "si", "precio": 75, "resumen": "Cartas de inferencia social y lógica: de un lado una escena ilustrada — el zorro trepado al árbol, el perro ladrando abajo — y del otro las preguntas: ¿qué está pasando aquí?, ¿quién está en peligro?, ¿qué debería hacer el zorro? No se gana ni se pierde; se conversa. De los mejores materiales que hay para trabajar comprensión y punto de vista.", "video": "", "nota": "Mazo completo, en su cajita. El juego está nítido; la caja sí se ve usada.", "foto": "fotos/J-10.webp", "status": "disponible"}, {"id": "J-11", "tipo": "juego", "titulo": "Sentence Building", "autor": "Key Education", "nivel": "K–2 · 5–8 años", "idioma": "Inglés", "pais": "", "cond": "bueno", "jugadores": "1–4 jugadores", "duracion": "20 min", "completo": "si", "precio": 75, "resumen": "Tarjetas que encajan como rompecabezas para armar oraciones completas: 55 de palabras, 4 de puntuación y 27 con foto. Se arma «He is funny.» y se lee de corrido, con el punto y todo. Pensado para lectura temprana y para quien está aprendiendo inglés como segundo idioma.", "video": "", "nota": "Completo, las 86 piezas. El juego está nítido; la caja sí se ve usada.", "foto": "fotos/J-11.webp", "status": "disponible"}, {"id": "J-12", "tipo": "juego", "titulo": "Caperucita Roja — Little Red Riding Hood", "autor": "SmartGames", "nivel": "4+ años", "idioma": "Sin texto", "pais": "", "cond": "bueno", "jugadores": "1 jugador", "duracion": "10–20 min", "completo": "si", "precio": 85, "resumen": "El cuento vuelto rompecabezas de lógica: hay que acomodar las piezas del bosque para que Caperucita llegue a la casa de la abuela sin toparse con el lobo. Cuarenta y ocho desafíos en cuatro niveles. El estuche se abre y es el escenario, con árboles y figuras paradas — a los chiquitos les encanta antes de entender que es un reto.", "video": "", "nota": "Las piezas y las figuras están completas. Ojo con el folleto de retos: tiene una hoja rota y otra zafada del espiral — se leen bien las dos, pero hay que decirlo. El juego está nítido; la caja sí se ve usada.", "foto": "fotos/J-12.webp", "status": "disponible"}, {"id": "J-13", "tipo": "juego", "titulo": "Robot Races — Future Coders", "autor": "ALEX Brands", "nivel": "4+ años", "idioma": "Inglés", "pais": "", "cond": "bueno", "jugadores": "1–4 jugadores", "duracion": "20 min", "completo": "si", "precio": 120, "resumen": "Programación sin pantalla: se arma una ruta con tarjetas de flechas y después el niño es el robot que la recorre sobre un tapete grande, bailando, girando y saltando hasta la meta. Enseña secuencias y pensamiento lógico moviendo el cuerpo, que a esa edad es como de verdad se aprende.", "video": "", "nota": "Completo, con el tapete grande, las tarjetas y el gorro de robot. El juego está nítido; la caja sí se ve usada.", "foto": "fotos/J-13.webp", "status": "disponible"}, {"id": "J-14", "tipo": "juego", "titulo": "Plus-Plus Basic 1200", "autor": "Plus-Plus · Dinamarca", "nivel": "5+ años", "idioma": "Sin texto", "pais": "", "cond": "bueno", "jugadores": "1+ jugadores", "duracion": "Libre", "completo": "faltan", "precio": 120, "resumen": "Mil doscientas piecitas de esa forma de dos puntas que encaja en todas direcciones. Se construye plano, como mosaico sobre la placa, o en tres dimensiones. No trae instrucciones ni hay que seguirlas: es de los juguetes que se quedan años porque cada edad los usa distinto. Hecho en Dinamarca.", "video": "", "nota": "Ya no están las 1,200 piezas originales — se han ido perdiendo con los años — pero queda muchísimo material para construir, y trae la placa base verde. La caja está bastante golpeada.", "foto": "fotos/J-14.webp", "status": "disponible"}, {"id": "J-15", "tipo": "juego", "titulo": "miniLÜK — sistema completo", "autor": "Westermann · Alemania", "nivel": "5–10 años", "idioma": "Inglés", "pais": "", "cond": "bueno", "jugadores": "1 jugador", "duracion": "15 min", "completo": "si", "precio": 450, "resumen": "El sistema alemán de autocorrección, completo. El estuche trae doce fichas numeradas: el niño resuelve cada ejercicio poniendo la ficha sobre la respuesta, cierra la tapa, le da vuelta — y si el patrón de colores del reverso coincide con el del libro, lo hizo bien. Se corrige solo, sin que nadie le diga nada. Van desde contar hasta seis hasta geometría y pensamiento lógico avanzado.", "video": "", "nota": "El estuche de control con sus fichas, más los cuadernos. Los cuadernos están limpios y sin escribir.", "foto": "fotos/J-15.webp", "status": "disponible", "libros": [{"t": "My First miniLÜK Workbook", "i": ""}, {"t": "Count to 6 · Math", "i": ""}, {"t": "Count to 10 · Math", "i": ""}, {"t": "Basic Geometry and More · Math", "i": ""}, {"t": "Playing with Colors and Shapes", "i": ""}, {"t": "More Playing with Colors and Shapes", "i": ""}, {"t": "Visual Perception Games", "i": ""}, {"t": "Visual Discrimination Games", "i": ""}, {"t": "Concentration Training", "i": ""}, {"t": "Concentration Training 2", "i": ""}, {"t": "Brain Jogging", "i": ""}, {"t": "More Brain Jogging", "i": ""}, {"t": "Teddy and Mausi", "i": ""}, {"t": "Cheeky in the Wintertime", "i": ""}, {"t": "Cheeky in the Summertime", "i": ""}, {"t": "Visual Perception 1 · Advance", "i": ""}, {"t": "Visual Perception 2 · Advance", "i": ""}, {"t": "Higher Order Thinking 1 · Advance", "i": ""}, {"t": "Higher Order Thinking 2 · Advance", "i": ""}, {"t": "Geometry 1 · Advance", "i": ""}, {"t": "Geometry 2 · Advance", "i": ""}], "cantidad": 21}]}</script>
 
-<header>
-  <div class="logo-circle">💃</div>
-  <div class="header-text">
-    <h1>Dance Complex</h1>
-    <p>Cotizador de Competencias</p>
-  </div>
-</header>
+<div id="app"></div>
 
-<div class="hero">
-  <h2>Calcula el costo de tu <span>competencia</span> al instante</h2>
-  <p>Escríbenos la participación de tu hija y nuestro asistente calculará la cotización completa en segundos.</p>
-  <div class="badges">
-    <div class="badge"><span class="dot"></span> Dance Challenge</div>
-    <div class="badge"><span class="dot"></span> Stage</div>
-    <div class="badge"><span class="dot"></span> Electi</div>
-  </div>
-</div>
+<script>
+(function(){
+  "use strict";
 
-<div class="app-section">
-  <p class="section-label">Asistente de cotización</p>
-  <div class="iframe-wrapper">
-    <iframe
-      src="https://albanorybr-cotizador-baile.hf.space"
-      allow="microphone">
-    </iframe>
-  </div>
-</div>
+  var PRISTINE = null, state = null, dirty = false, admin = false, editing = null;
+  var PUBLICO = !!document.querySelector('meta[name="repisa-modo"][content="publico"]');
+  var CONDS = {nuevo:"Como nuevo", bueno:"Buen estado", marcas:"Con marcas de uso"};
+  var STATUS = {disponible:"Disponible", apartado:"Apartado", vendido:"Vendido"};
+  var COMPLETO = {si:"Completo", faltan:"Le faltan piezas", nose:"Sin revisar"};
+  var DRAFT_KEY = "repisa-borrador-v1";
+  var CART_KEY  = "repisa-lista-v1";
+  var SENT_KEY  = "repisa-lista-enviada-v1";
+  var cart = [], cartOpen = false, cartSent = false;
 
-<div class="how-it-works">
-  <h3>¿Cómo <span>funciona</span>?</h3>
-  <div class="steps">
-    <div class="step">
-      <div class="step-num">1</div>
-      <div class="step-text">
-        <h4>Escribe la participación</h4>
-        <p>Descríbenos los solos, dúos, tríos y grupales de tu hija.</p>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-num">2</div>
-      <div class="step-text">
-        <h4>El agente calcula</h4>
-        <p>Nuestro asistente entiende tu mensaje y calcula todo automáticamente.</p>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-num">3</div>
-      <div class="step-text">
-        <h4>Recibe tu cotización</h4>
-        <p>Obtén el desglose completo en quetzales y dólares al instante.</p>
-      </div>
-    </div>
-  </div>
-</div>
+  function cartLoad(){
+    try{ var r = localStorage.getItem(CART_KEY); cart = r ? JSON.parse(r) : []; }
+    catch(e){ cart = []; }
+    if(!Array.isArray(cart)) cart = [];
+    try{ cartSent = localStorage.getItem(SENT_KEY) === "1"; }catch(e){ cartSent = false; }
+  }
+  function cartSave(){
+    try{
+      localStorage.setItem(CART_KEY, JSON.stringify(cart));
+      localStorage.setItem(SENT_KEY, cartSent ? "1" : "");
+    }catch(e){}
+  }
+  function enLista(id){ return cart.indexOf(id) !== -1; }
+  function cartItems(){
+    return cart.map(function(id){
+      return state.items.filter(function(x){ return x.id === id; })[0];
+    }).filter(Boolean);
+  }
+  function cartLibros(){
+    return cartItems().reduce(function(a, i){
+      return a + (i.tipo === "coleccion" ? (i.cantidad || 1) : 1);
+    }, 0);
+  }
+  // Cómo nombrar lo que llevan: libros, juegos, o «cosas» si va mezclado.
+  function cartPalabra(){
+    var its = cartItems(), n = cartLibros();
+    var hayJ = its.some(function(i){ return i.tipo === "juego"; });
+    var hayL = its.some(function(i){ return i.tipo !== "juego"; });
+    if(hayJ && hayL) return n === 1 ? " cosa" : " cosas";
+    if(hayJ) return n === 1 ? " juego" : " juegos";
+    return n === 1 ? " libro" : " libros";
+  }
+  function cartTotal(){
+    return cartItems().reduce(function(a, i){ return a + (Number(i.precio) || 0); }, 0);
+  }
+  function cartPodar(){
+    var antes = cart.length;
+    cart = cart.filter(function(id){
+      var it = state.items.filter(function(x){ return x.id === id; })[0];
+      return it && it.status === "disponible" && it.precio;
+    });
+    if(cart.length !== antes){ cartSave(); return antes - cart.length; }
+    return 0;
+  }
+  function cartToggle(id){
+    var i = cart.indexOf(id);
+    if(i === -1) cart.push(id); else cart.splice(i, 1);
+    cartSent = false;              // cambió la lista: vuelve a estar por enviar
+    cartSave(); render();
+  }
 
-<footer>
-  <p>© 2026 <span>Dance Complex</span> · Todos los derechos reservados</p>
-</footer>
+  function esc(s){
+    return String(s==null?"":s).replace(/[&<>"']/g,function(c){
+      return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];
+    });
+  }
+  function readState(){
+    try{ return JSON.parse(document.getElementById("catalogo").textContent); }
+    catch(e){ return {config:{},items:[]}; }
+  }
+  var draftFull = true;
+  function draftSave(){
+    try{
+      localStorage.setItem(DRAFT_KEY, JSON.stringify(state));
+      draftFull = true; return;
+    }catch(e){}
+    // Demasiadas fotos para el respaldo del navegador: guardamos al menos el texto.
+    try{
+      var slim = {config: state.config, items: state.items.map(function(x){
+        return Object.assign({}, x, {foto: ""});
+      })};
+      localStorage.setItem(DRAFT_KEY, JSON.stringify(slim));
+      draftFull = false;
+    }catch(e2){
+      draftFull = false;
+      try{ localStorage.removeItem(DRAFT_KEY); }catch(e3){}
+    }
+  }
+  function draftClear(){ draftFull = true; try{ localStorage.removeItem(DRAFT_KEY); }catch(e){} }
+
+  /* ---------- construir el documento nuevo ---------- */
+  function buildDoc(next){
+    var doc = new DOMParser().parseFromString(PRISTINE, "text/html");
+    var slot = doc.getElementById("catalogo");
+    slot.textContent = JSON.stringify(next).replace(/</g,"\\u003c");
+    return "<!doctype html>\n" + doc.documentElement.outerHTML;
+  }
+
+  var PUBLICADAS = ["C-01.webp", "C-02.webp", "C-03.webp", "C-04.webp", "C-05.webp", "C-06.webp", "J-01.webp", "J-02.webp", "J-03.webp", "J-04.webp", "J-05.webp", "J-06.webp", "J-07.webp", "J-08.webp", "J-09.webp", "J-10.webp", "J-11.webp", "J-12.webp", "J-13.webp", "J-14.webp", "J-15.webp", "L-01.webp", "L-02.webp", "L-03.webp", "L-04.webp", "L-05.webp", "L-06.webp", "L-07.webp", "L-08.webp", "L-09.webp", "L-10.webp", "L-11.webp", "L-12.webp", "L-13.webp", "L-14.webp", "L-15.webp", "L-16.webp", "L-17.webp", "L-18.webp", "L-19.webp", "L-20.webp", "L-21.webp", "L-22.webp", "L-23.webp", "L-24.webp"];
+
+  /* ---------- version para el sitio propio (GitHub Pages) ---------- */
+  function buildSitio(){
+    var copia = JSON.parse(JSON.stringify(state));
+    var faltan = [];
+    copia.items.forEach(function(it){
+      var f = it.foto || "";
+      if(f.indexOf("data:image/") !== 0) return;
+      var ext = f.slice(11, f.indexOf(";"));
+      it.foto = "fotos/" + it.id + "." + ext;
+      if(PUBLICADAS.indexOf(it.id + "." + ext) < 0) faltan.push({id:it.id, ext:ext, dato:f});
+    });
+    var doc = new DOMParser().parseFromString(PRISTINE, "text/html");
+    doc.documentElement.setAttribute("lang", "es");
+    var head = doc.head, ref = head.firstChild;
+    function meta(at){
+      var m = doc.createElement("meta");
+      for(var k in at) m.setAttribute(k, at[k]);
+      head.insertBefore(m, ref);
+    }
+    meta({charset:"utf-8"});
+    meta({name:"viewport", content:"width=device-width, initial-scale=1"});
+    meta({name:"repisa-modo", content:"publico"});
+    meta({name:"robots", content:"noindex"});
+    meta({name:"description", content:"Libros y juegos de mesa de homeschool que ya se nos quedaron chicos en casa. Guatemala."});
+    meta({property:"og:title", content:"La Repisa de Enfrente"});
+    meta({property:"og:description", content:"Libros y juegos de mesa de homeschool, usados y cuidados. Guatemala."});
+    doc.getElementById("catalogo").textContent = JSON.stringify(copia).replace(/</g,"\\u003c");
+    return {html:"<!doctype html>\n" + doc.documentElement.outerHTML, faltan:faltan};
+  }
+
+  function b64aBlob(uri){
+    var coma = uri.indexOf(","), tipo = uri.slice(5, uri.indexOf(";"));
+    var bin = atob(uri.slice(coma + 1)), n = bin.length, buf = new Uint8Array(n);
+    for(var i = 0; i < n; i++) buf[i] = bin.charCodeAt(i);
+    return new Blob([buf], {type: tipo});
+  }
+
+  var bajando = false;
+  function bajarSitio(){
+    if(bajando) return;
+    if(!downloadsApi){ toast("La descarga todavia no cargo. Espera unos segundos y proba de nuevo."); return; }
+    var r = buildSitio();
+    bajando = true; render();
+    downloadsApi.save({filename:"index.html", data:r.html}).then(function(){
+      if(!r.faltan.length){
+        toast("Listo. Subi ese index.html a la carpeta repisa en GitHub y reemplaza el que esta.");
+        return null;
+      }
+      return (function siguiente(i){
+        if(i >= r.faltan.length){
+          toast("Listo: el index.html y " + r.faltan.length + " foto(s) nueva(s). Todo va en la carpeta repisa.");
+          return null;
+        }
+        var f = r.faltan[i];
+        return downloadsApi.save({filename:f.id + "." + f.ext, data:b64aBlob(f.dato)})
+          .then(function(){ return siguiente(i + 1); });
+      })(0);
+    }).catch(function(err){
+      var c = err && err.code;
+      if(c === "declined") toast("Descarga cancelada.");
+      else if(c === "too_large") toast("El archivo salio muy grande para descargarlo.");
+      else toast("No se pudo descargar. Proba otra vez.");
+    }).then(function(){ bajando = false; render(); });
+  }
+
+  var artifactApi = null, sampleApi = null, downloadsApi = null;
+  function connect(tries){
+    if(typeof window.claude === "undefined" || !window.claude.use){
+      if(tries > 0) setTimeout(function(){ connect(tries-1); }, 400);
+      return;
+    }
+    window.claude.use("artifact").then(function(a){ artifactApi = a; }).catch(function(){});
+    window.claude.use("sample").then(function(x){ sampleApi = x; }).catch(function(){});
+    window.claude.use("downloads").then(function(d){ downloadsApi = d; render(); }).catch(function(){});
+  }
+  connect(25);
+
+  function publish(){
+    if(!artifactApi){ toast("Todavía no cargó el guardado. Esperá unos segundos y probá de nuevo."); return; }
+    var btn = document.getElementById("btn-publicar");
+    if(btn){ btn.disabled = true; btn.textContent = "Guardando…"; }
+    artifactApi.publish(buildDoc(state)).then(function(){
+      dirty = false; draftClear(); render();
+      toast("Guardado. Ya lo ven todos con el link.");
+    }).catch(function(err){
+      var code = err && err.code;
+      if(code === "conflict") toast("Alguien más guardó primero. Se recargó la versión más reciente.");
+      else if(code === "not_granted" || code === "not_writer") toast("Este catálogo es de solo lectura para vos. No se guardaron los cambios.");
+      else toast("No se pudo guardar. Revisá tu conexión y probá otra vez.");
+      if(btn){ btn.disabled = false; btn.textContent = "Guardar cambios"; }
+      render();
+    });
+  }
+
+  var toastTimer = null;
+  function toast(msg){
+    var old = document.getElementById("toast"); if(old) old.remove();
+    var el = document.createElement("div");
+    el.id = "toast"; el.className = "toast"; el.setAttribute("role","status"); el.textContent = msg;
+    document.body.appendChild(el);
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ if(el.parentNode) el.remove(); }, 5200);
+  }
+
+  function touch(){ dirty = true; draftSave(); render(); }
+
+  function pesoBytes(){ return JSON.stringify(state).length; }
+  function pesoBadge(){
+    var b = pesoBytes(), mb = b/1048576;
+    var txt = mb >= 1 ? mb.toFixed(1) + " MB" : Math.round(b/1024) + " KB";
+    var alto = mb > 11;
+    return '<span class="peso' + (alto ? " alto" : "") + '" title="Peso del catálogo con todas las fotos. El límite es 16 MB.">'
+      + txt + " / 16 MB" + (alto ? " · ya casi" : "") + '</span>';
+  }
+
+  // Achica la foto en el navegador antes de guardarla dentro de la página.
+  function shrink(file, cb){
+    if(!file || !/^image\//.test(file.type)){ cb(null, "Eso no parece una imagen."); return; }
+    var url = URL.createObjectURL(file);
+    var img = new Image();
+    img.onload = function(){
+      var MAX = 820;
+      var w = img.naturalWidth, h = img.naturalHeight;
+      var k = Math.min(1, MAX / Math.max(w, h));
+      var cv = document.createElement("canvas");
+      cv.width = Math.max(1, Math.round(w * k));
+      cv.height = Math.max(1, Math.round(h * k));
+      cv.getContext("2d").drawImage(img, 0, 0, cv.width, cv.height);
+      var out = cv.toDataURL("image/jpeg", 0.7);
+      try{
+        var wp = cv.toDataURL("image/webp", 0.72);
+        if(wp.indexOf("data:image/webp") === 0 && wp.length < out.length) out = wp;
+      }catch(e){}
+      URL.revokeObjectURL(url);
+      cb(out, null);
+    };
+    img.onerror = function(){ URL.revokeObjectURL(url); cb(null, "No se pudo leer esa imagen."); };
+    img.src = url;
+  }
+
+  function openFoto(it){
+    var d = document.createElement("dialog");
+    d.className = "lightbox";
+    d.innerHTML = '<img src="' + esc(it.foto) + '" alt="Foto de ' + esc(it.titulo) + '">'
+      + '<form method="dialog" class="lb-foot"><span>' + esc(it.titulo) + '</span>'
+      + '<button class="btn-sm" value="cerrar">Cerrar</button></form>';
+    document.body.appendChild(d);
+    d.addEventListener("close", function(){ d.remove(); });
+    d.addEventListener("click", function(e){ if(e.target === d) d.close(); });
+    d.showModal();
+  }
+
+  /* ---------- filtros ---------- */
+  var filt = {q:"", tipo:"todos", soloDisp:false, seccion:"libros"};
+
+  function esJuego(it){ return it.tipo === "juego"; }
+  function deSeccion(it){ return filt.seccion === "juegos" ? esJuego(it) : !esJuego(it); }
+
+  var ORDEN = {disponible:0, apartado:1, vendido:2};
+
+  function visibles(){
+    var q = filt.q.trim().toLowerCase();
+    return state.items.filter(function(it){
+      if(!admin && !it.precio) return false;
+      if(!deSeccion(it)) return false;
+      if(filt.seccion === "libros" && filt.tipo !== "todos" && it.tipo !== filt.tipo) return false;
+      if(filt.soloDisp && it.status !== "disponible") return false;
+      if(q){
+        var hay = [it.titulo,it.autor,it.nivel,it.idioma,it.id,it.nota,it.resumen,it.pais,
+                   it.jugadores,it.duracion].join(" ").toLowerCase();
+        if(hay.indexOf(q) === -1) return false;
+      }
+      return true;
+    }).map(function(it, i){ return [it, i]; })
+      .sort(function(a, b){
+        // lo disponible primero, lo vendido al final; dentro de cada grupo, el orden de siempre
+        var d = (ORDEN[a[0].status] || 0) - (ORDEN[b[0].status] || 0);
+        return d !== 0 ? d : a[1] - b[1];
+      })
+      .map(function(par){ return par[0]; });
+  }
+
+  function waLista(){
+    var n = (state.config.whatsapp||"").replace(/[^0-9]/g,"");
+    var its = cartItems();
+    if(!n || !its.length) return null;
+    var lineas = its.map(function(i){
+      return "• " + i.id + " — " + i.titulo
+        + (i.tipo === "coleccion" ? " (" + i.cantidad + " libros)" : "")
+        + " — Q" + i.precio;
+    });
+    var txt = "Hola 👋 Vengo del catálogo. Me interesan estos:\n\n"
+            + lineas.join("\n")
+            + "\n\nSon " + cartLibros() + cartPalabra()
+            + " en total — Q" + cartTotal() + ".\n¿Me los podés apartar?";
+    return "https://wa.me/" + n + "?text=" + encodeURIComponent(txt);
+  }
+
+  function nextId(tipo){
+    var p = tipo === "juego" ? "J" : (tipo === "coleccion" ? "C" : "L"), max = 0;
+    state.items.forEach(function(it){
+      if(it.id && it.id.indexOf(p+"-") === 0){
+        var n = parseInt(it.id.slice(2),10); if(!isNaN(n) && n > max) max = n;
+      }
+    });
+    return p + "-" + String(max+1).padStart(2,"0");
+  }
+
+  /* ---------- render ---------- */
+  function render(){
+    var c = state.config, items = state.items;
+    var deSecc = items.filter(deSeccion);
+    var disp   = deSecc.filter(function(i){return i.status==="disponible";}).length;
+    var libros = deSecc.filter(function(i){return i.tipo==="libro";}).length;
+    var cols   = deSecc.filter(function(i){return i.tipo==="coleccion";});
+    var juegos = items.filter(esJuego).length;
+    var nLibros = items.filter(function(i){ return !esJuego(i); })
+                       .reduce(function(a,i){ return a + (i.cantidad || 1); }, 0);
+    var vend   = deSecc.filter(function(i){return i.status==="vendido";}).length;
+    var hayJuegos = juegos > 0;
+    var list = visibles();
+
+    var h = "";
+
+    if(admin){
+      h += '<div class="adminbar"><div class="wrap">'
+        + '<span class="lbl">Modo administradora</span>'
+        + '<button class="btn-sm solid" data-act="nuevo-libro">+ Libro</button>'
+        + '<button class="btn-sm solid" data-act="nueva-coleccion">+ Colección</button>'
+        + '<button class="btn-sm solid" data-act="nuevo-juego">+ Juego de mesa</button>'
+        + '<button class="btn-sm" data-act="ajustes">Ajustes del catálogo</button>'
+        + (downloadsApi ? '<button class="btn-sm" data-act="bajar-sitio"' + (bajando ? ' disabled' : '')
+            + ' title="Baja el index.html para subirlo a la carpeta repisa en GitHub">'
+            + (bajando ? 'Preparando…' : 'Bajar sitio') + '</button>' : '')
+        + '<button class="btn-sm" data-act="salir-admin">Salir</button>'
+        + (function(){
+            var n = items.filter(function(i){ return !i.precio; }).length;
+            return n ? '<span class="pendientes">' + n + ' sin precio · no se ven todavía</span>' : '';
+          })()
+        + pesoBadge()
+        + '</div></div>';
+    }
+
+    h += '<header class="masthead"><div class="wrap">'
+      + '<div class="eyebrow">Catálogo de casa · Guatemala</div>'
+      + '<h1>' + esc(c.titulo||"La Repisa de Enfrente") + '</h1>'
+      + '<p class="lede">' + esc(c.lede||"") + '</p>'
+      + '<div class="tally">'
+      + '<span><b>' + disp + '</b> disponibles</span>'
+      + (filt.seccion === "libros"
+          ? '<span><b>' + libros + '</b> sueltos</span>'
+            + (cols.length ? '<span><b>' + cols.length + '</b> colecciones · '
+                + cols.reduce(function(a,c){ return a + (c.cantidad||0); }, 0) + ' libros</span>' : '')
+          : '<span><b>' + juegos + '</b> juegos de mesa</span>')
+      + (vend ? '<span><b>' + vend + '</b> ya vendidos</span>' : '')
+      + '</div></div></header>';
+
+    if(hayJuegos || admin){
+      h += '<nav class="secciones" aria-label="Secciones"><div class="wrap">'
+        + '<button class="tab" data-secc="libros" aria-selected="' + (filt.seccion==="libros") + '">'
+        +   'Libros<span class="n">' + nLibros + '</span></button>'
+        + '<button class="tab" data-secc="juegos" aria-selected="' + (filt.seccion==="juegos") + '">'
+        +   'Juegos de mesa<span class="n">' + juegos + '</span></button>'
+        + '</div></nav>';
+    }
+
+    h += '<section class="how"><div class="wrap">'
+      + '<div class="how-item"><h3>Apartado</h3><p>' + esc(c.apartado||"") + '</p></div>'
+      + '<div class="how-item"><h3>Pago</h3><p>' + esc(c.pago||"") + '</p></div>'
+      + '<div class="how-item"><h3>Entrega</h3><p>' + esc(c.entrega||"") + '</p></div>'
+      + '</div></section>';
+
+    h += '<div class="controls"><div class="wrap">'
+      + '<div class="search"><input type="text" id="q" placeholder="Buscar por título, autor o edad…" value="' + esc(filt.q) + '" aria-label="Buscar"></div>'
+      + (filt.seccion === "libros"
+          ? '<div class="seg" role="group" aria-label="Tipo">'
+            + seg("todos","Todo") + seg("libro","Sueltos") + seg("coleccion","Colecciones")
+            + '</div>'
+          : '')
+      + '<label class="chk"><input type="checkbox" id="solo"' + (filt.soloDisp?" checked":"") + '> Solo disponibles</label>'
+      + '</div></div>';
+
+    h += '<main><div class="wrap">';
+    if(!deSecc.length && filt.seccion === "juegos"){
+      h += '<div class="empty"><h2>Los juegos vienen en camino</h2>'
+        + '<p>Los estamos fotografiando. Si andás buscando alguno en particular, escribime y te digo si lo tengo.</p></div>';
+    } else if(!items.length){
+      h += '<div class="empty"><h2>Todavía no hay nada en la repisa</h2>'
+        + '<p>Entrá a <em>Modo administradora</em> abajo y agregá el primer título. Te toma un minuto por libro.</p></div>';
+    } else if(!list.length && !admin && items.every(function(i){ return !i.precio; })){
+      h += '<div class="empty"><h2>Estamos subiendo los libros</h2>'
+        + '<p>Ya están fotografiados, solo falta ponerles precio. Volvé en un rato y aquí van a estar.</p></div>';
+    } else if(!list.length){
+      h += '<div class="empty"><h2>Nada con ese filtro</h2><p>Probá con otra palabra o quitá el filtro de disponibles.</p></div>';
+    } else {
+      var vivos = list.filter(function(i){ return i.status !== "vendido"; });
+      var idos  = list.filter(function(i){ return i.status === "vendido"; });
+      h += '<div class="grid">' + vivos.map(card).join("") + '</div>';
+      if(idos.length){
+        h += '<div class="corte"><span>Ya se fueron</span></div>'
+           + '<div class="grid">' + idos.map(card).join("") + '</div>';
+      }
+    }
+    h += '</div></main>';
+
+    h += '<footer><div class="wrap">'
+      + '<span>Actualizado a mano por Nory · los precios son simbólicos</span>'
+      + (admin || PUBLICO ? '<span></span>' : '<button class="linkish" data-act="entrar-admin">Modo administradora</button>')
+      + '</div></footer>';
+
+    if(!admin && cart.length && cartSent){
+      h += '<div class="barra"><div class="barra-gracias">'
+        + '<h3>¡Listo! Ya te llegó mi lista</h3>'
+        + '<p>Apenas la vea te confirmo cuáles de los ' + cartLibros() + ' te puedo guardar. '
+        + 'Desde que te confirmo quedan <b>apartados 48 horas</b>, para que hagas la transferencia con calma.</p>'
+        + '<p class="chiquito">Si en ese rato no llega, los vuelvo a publicar y ya — sin pena y sin apuro. '
+        + 'Se te antojó otro después, me escribís de nuevo y con gusto.</p>'
+        + '<div class="barra-fila" style="padding-left:0;padding-right:0">'
+        +   '<button class="btn-sm ghost" data-act="ver-lista">Ver lo que mandé</button>'
+        +   '<button class="btn-sm ghost" data-act="vaciar">Empezar otra lista</button>'
+        + '</div></div>'
+        + (cartOpen
+            ? '<div class="barra-lista"><ul>'
+              + cartItems().map(function(i){
+                  return '<li><span class="ref">' + esc(i.id) + '</span>'
+                       + '<span class="t">' + esc(i.titulo) + '</span>'
+                       + '<span class="pr">Q' + esc(i.precio) + '</span></li>';
+                }).join("")
+              + '</ul></div>'
+            : '')
+        + '</div>';
+    }
+    else if(!admin && cart.length){
+      var its = cartItems(), wa = waLista();
+      h += '<div class="barra">'
+        + (cartOpen
+            ? '<div class="barra-lista"><ul>'
+              + its.map(function(i){
+                  return '<li><span class="ref">' + esc(i.id) + '</span>'
+                       + '<span class="t">' + esc(i.titulo)
+                       + (i.tipo === "coleccion" ? ' · ' + esc(i.cantidad) + ' libros' : '') + '</span>'
+                       + '<span class="pr">Q' + esc(i.precio) + '</span>'
+                       + '<button class="quitar" data-quitar="' + esc(i.id) + '" '
+                       + 'aria-label="Quitar ' + esc(i.titulo) + ' de la lista">×</button></li>';
+                }).join("")
+              + '</ul>'
+              + '<p class="barra-nota">Todavía no están apartados — esta lista es tuya nomás, no me llega hasta '
+              + 'que la mandés. Cuando me la mandés te confirmo cuáles puedo guardarte, y desde ahí son 48 horas.</p></div>'
+            : '')
+        + '<div class="barra-fila">'
+        +   '<button class="barra-cuenta" data-act="ver-lista">'
+        +     '<b>' + cartLibros() + cartPalabra() + '</b> · Q' + cartTotal()
+        +     '  ' + (cartOpen ? "▾ ocultar" : "▸ ver mi lista")
+        +   '</button>'
+        +   (wa ? '<a class="btn-sm" href="' + esc(wa) + '" target="_blank" rel="noopener" '
+                + 'data-enviar="1" style="text-decoration:none">Enviar mi lista por WhatsApp</a>' : '')
+        +   '<button class="btn-sm ghost" data-act="vaciar">Vaciar</button>'
+        + '</div></div>';
+    }
+
+    if(dirty){
+      h += '<div class="savebar"><span><b>Hay cambios sin guardar.</b> '
+        + (draftFull ? 'Nadie más los ve hasta que guardes.'
+                     : 'Ojo: ya hay tantas fotos que el navegador no las respalda — guardá ahora.')
+        + '</span>'
+        + '<button class="btn-sm" id="btn-publicar" data-act="publicar">Guardar cambios</button>'
+        + '<button class="btn-sm ghost" data-act="descartar">Descartar</button></div>';
+    }
+
+    document.getElementById("app").innerHTML = h;
+    var barra = document.querySelector(".barra"), save = document.querySelector(".savebar");
+    document.body.style.paddingBottom =
+      ((barra ? barra.offsetHeight : 0) + (save ? save.offsetHeight : 0) + 8) + "px";
+  }
+
+  function seg(v,label){
+    return '<button data-tipo="' + v + '" aria-pressed="' + (filt.tipo===v) + '">' + label + '</button>';
+  }
+
+  function card(it){
+    var cls = "card" + (it.status !== "disponible" ? " is-" + it.status : "");
+    var h = '<article class="' + cls + '">';
+    if(it.status === "vendido") h += '<span class="stamp vendido">VENDIDO</span>';
+    if(it.status === "apartado") h += '<span class="stamp apartado">APARTADO</span>';
+    if(it.foto){
+      h += '<button class="thumb" data-foto="' + esc(it.id) + '" aria-label="Ver foto grande de ' + esc(it.titulo) + '">'
+         + '<img src="' + esc(it.foto) + '" alt="Portada de ' + esc(it.titulo) + '" loading="lazy"></button>';
+    }
+    h += '<div class="card-top"><span class="ref">' + esc(it.id) + '</span>'
+       + (it.precio
+            ? '<span class="precio">Q' + esc(it.precio) + '</span>'
+            : '<span class="precio falta" title="Sin precio: no se ve en el catálogo público">Q —</span>')
+       + '</div>'
+       + (it.tipo === "coleccion" && it.precioUnit
+            ? '<p class="precio-sub">' + esc(it.cantidad) + ' libros · Q' + esc(it.precioUnit) + ' c/u</p>'
+            : '');
+    h += '<h2 data-ficha="' + esc(it.id) + '" tabindex="0" role="button">' + esc(it.titulo) + '</h2>';
+    var bits = [];
+    if(it.autor) bits.push(esc(it.autor));
+    if(it.nivel) bits.push('<em>' + esc(it.nivel) + '</em>');
+    if(bits.length) h += '<p class="meta">' + bits.join(" · ") + '</p>';
+    h += '<div class="chips">'
+       + (it.tipo === "coleccion" ? '<span class="chip col">Colección de ' + esc(it.cantidad) + '</span>' : '')
+       + '<span class="chip cond-' + esc(it.cond) + '">' + esc(CONDS[it.cond]||it.cond) + '</span>'
+       + (it.idioma ? '<span class="chip">' + esc(it.idioma) + '</span>' : '')
+       + (it.pais ? '<span class="chip pais">' + esc(it.pais) + '</span>' : '')
+       + (it.jugadores ? '<span class="chip">' + esc(it.jugadores) + '</span>' : '')
+       + (it.duracion ? '<span class="chip">' + esc(it.duracion) + '</span>' : '')
+       + (it.tipo === "juego" && it.completo
+            ? '<span class="chip ' + (it.completo === "si" ? "completo" : it.completo === "faltan" ? "faltan" : "") + '">'
+              + esc(COMPLETO[it.completo]) + '</span>'
+            : '')
+       + '</div>';
+    if(it.resumen) h += '<p class="resumen">' + esc(it.resumen) + '</p>';
+
+    h += '<div class="card-actions">';
+    if(it.video) h += '<a class="btn btn-ghost" href="' + esc(it.video) + '" target="_blank" rel="noopener">▶ Video</a>';
+    if(it.status === "vendido"){
+      h += '<span class="btn btn-ghost" aria-disabled="true">Ya se fue</span>';
+    } else if(!it.precio){
+      h += '<span class="btn btn-ghost" aria-disabled="true">Falta ponerle precio</span>';
+    } else if(!(state.config.whatsapp||"").replace(/[^0-9]/g,"")){
+      h += '<span class="btn btn-ghost" aria-disabled="true">Falta configurar WhatsApp</span>';
+    } else if(it.status === "apartado"){
+      h += '<span class="btn btn-ghost" aria-disabled="true">Apartado por alguien más</span>';
+    } else {
+      var dentro = enLista(it.id);
+      h += '<button class="btn btn-add' + (dentro ? " en" : "") + '" data-add="' + esc(it.id) + '">'
+         + (dentro ? "✓ En mi lista" : "Apartar") + '</button>';
+    }
+    h += '</div>';
+
+    if(admin){
+      h += '<div class="rowtools">'
+        + '<select data-status="' + esc(it.id) + '" aria-label="Estado">'
+        + Object.keys(STATUS).map(function(k){
+            return '<option value="' + k + '"' + (it.status===k?" selected":"") + '>' + STATUS[k] + '</option>';
+          }).join("")
+        + '</select>'
+        + '<button data-edit="' + esc(it.id) + '">Editar</button>'
+        + '<button data-del="' + esc(it.id) + '">Borrar</button>'
+        + '</div>';
+    }
+    return h + '</article>';
+  }
+
+  /* ---------- diálogos ---------- */
+  function field(label,id,val,type,hint,ph){
+    return '<div class="field"><label for="' + id + '">' + label + '</label>'
+      + '<input type="' + (type||"text") + '" id="' + id + '" value="' + esc(val==null?"":val) + '"'
+      + (ph ? ' placeholder="' + esc(ph) + '"' : '') + '>'
+      + (hint ? '<p class="hint">' + hint + '</p>' : '') + '</div>';
+  }
+
+  function openItem(it){
+    var isNew = !it.id;
+    var d = document.createElement("dialog");
+    d.innerHTML =
+      '<form method="dialog">'
+      + '<div class="dlg-head"><h2>' + (isNew ? "Agregar" : "Editar") + " "
+      + (it.tipo==="juego" ? "juego" : it.tipo==="coleccion" ? "colección" : "libro") + '</h2>'
+      + '<span class="ref">' + esc(it.id || nextId(it.tipo)) + '</span></div>'
+      + '<div class="dlg-body">'
+      + field("Título","f-titulo",it.titulo,"text","",
+          it.tipo==="juego" ? "Catan Junior" : it.tipo==="coleccion" ? "Colección Tea Stilton" : "The Hobbit")
+      + (it.tipo==="coleccion"
+          ? '<div class="field"><label for="f-libros">Los títulos, uno por línea</label>'
+            + '<textarea id="f-libros" style="min-height:130px" placeholder="El camino a la fama\nLos secretos del Olimpo\n…">'
+            + esc((it.libros||[]).map(function(l){ return l.t || l; }).join("\n")) + '</textarea>'
+            + '<p class="hint">El precio total se calcula solo: cuántos títulos hay × el precio por libro.</p></div>'
+          : '')
+      + '<div class="two">'
+      +   field(it.tipo==="juego"?"Editorial o autor":"Autor","f-autor",it.autor)
+      +   field("Edad o nivel","f-nivel",it.nivel,"text","",'8–12 años')
+      + '</div>'
+      + '<div class="two">'
+      +   field("Idioma","f-idioma",it.idioma,"text","",'Inglés')
+      +   (it.tipo==="coleccion"
+            ? field("Precio POR LIBRO","f-precio",it.precioUnit || 15,"number")
+            : field("Precio en quetzales","f-precio",it.precio,"number"))
+      + '</div>'
+      + '<div class="field"><label for="f-resumen">De qué trata</label>'
+      +   '<textarea id="f-resumen" placeholder="Dos o tres frases, sin arruinar el final.">' + esc(it.resumen||"") + '</textarea>'
+      +   '<div class="ai-row">'
+      +     '<button type="button" class="ai-btn" id="f-ai" hidden>✦ Sugerir resumen, origen y edad</button>'
+      +     '<span class="hint" id="f-ai-msg" style="margin:0"></span>'
+      +   '</div></div>'
+      + (it.tipo === "juego"
+          ? '<div class="two">'
+            + field("Jugadores","f-jugadores",it.jugadores,"text","",'2\u20134 jugadores')
+            + field("Duración de una partida","f-duracion",it.duracion,"text","",'30 min')
+            + '</div>'
+            + '<div class="field"><label for="f-completo">¿Están todas las piezas?</label>'
+            + '<select id="f-completo">'
+            + Object.keys(COMPLETO).map(function(k){
+                return '<option value="' + k + '"' + ((it.completo||"nose")===k?" selected":"") + '>'
+                     + COMPLETO[k] + '</option>';
+              }).join("")
+            + '</select><p class="hint">Es LA pregunta que siempre hacen. Contá las piezas contra el manual antes de publicarlo.</p></div>'
+          : '')
+      + field("País o cultura de origen de la historia","f-pais",it.pais,"text",
+          "Solo si es un living book y la historia viene de algún lugar concreto. Si no aplica, dejalo vacío.","Inglaterra")
+      + '<div class="field"><label for="f-cond">Estado</label><select id="f-cond">'
+      +   Object.keys(CONDS).map(function(k){
+            return '<option value="' + k + '"' + (it.cond===k?" selected":"") + '>' + CONDS[k] + '</option>';
+          }).join("")
+      + '</select></div>'
+      + '<div class="field"><label for="f-file">Foto</label><div class="fotorow">'
+      +   '<div class="fotoprev" id="f-prev">' + (it.foto
+            ? '<img src="' + esc(it.foto) + '" alt="">' : 'SIN<br>FOTO') + '</div>'
+      +   '<div class="fotocol">'
+      +     '<input type="file" id="f-file" accept="image/*">'
+      +     '<p class="hint">Desde el celular te ofrece la cámara o el carrete. Se achica sola antes de guardarse.</p>'
+      +     '<button type="button" class="btn-sm" id="f-quitar"' + (it.foto ? '' : ' hidden') + '>Quitar foto</button>'
+      +   '</div></div></div>'
+      + field("Link del video","f-video",it.video,"url",
+          "Pegá el link de YouTube (no listado) o de Drive. Se abre en otra pestaña.","https://youtu.be/…")
+      + '<div class="field"><label for="f-nota">Nota corta</label>'
+      +   '<textarea id="f-nota" placeholder="' + (it.tipo==="juego"
+            ? "Manual incluido, caja con una esquina golpeada."
+            : "Portada con una arruga, hojas limpias.") + '">' + esc(it.nota||"") + '</textarea>'
+      +   '<p class="hint">Lo que vos dirías si te lo preguntaran por teléfono.</p></div>'
+      + '</div>'
+      + '<div class="dlg-foot">'
+      +   '<button class="btn-sm" value="cancel">Cancelar</button>'
+      +   '<button class="btn-sm solid" value="ok">' + (isNew ? "Agregar" : "Guardar") + '</button>'
+      + '</div></form>';
+    document.body.appendChild(d);
+
+    var foto = it.foto || "";
+    var prev = d.querySelector("#f-prev"), quitar = d.querySelector("#f-quitar");
+    d.querySelector("#f-file").addEventListener("change", function(e){
+      var f = e.target.files && e.target.files[0];
+      if(!f) return;
+      prev.innerHTML = "…";
+      shrink(f, function(dataUrl, err){
+        if(err || !dataUrl){ prev.innerHTML = "SIN<br>FOTO"; toast(err || "No se pudo procesar la foto."); return; }
+        foto = dataUrl;
+        prev.innerHTML = '<img src="' + foto + '" alt="">';
+        quitar.hidden = false;
+      });
+    });
+    quitar.addEventListener("click", function(){
+      foto = ""; prev.innerHTML = "SIN<br>FOTO"; quitar.hidden = true;
+      d.querySelector("#f-file").value = "";
+    });
+
+    var aiBtn = d.querySelector("#f-ai"), aiMsg = d.querySelector("#f-ai-msg");
+    if(sampleApi) aiBtn.hidden = false;
+    aiBtn.addEventListener("click", function(){
+      var titulo = d.querySelector("#f-titulo").value.trim();
+      var autor  = d.querySelector("#f-autor").value.trim();
+      if(!titulo){ aiMsg.textContent = "Escribí el título primero."; return; }
+      aiBtn.disabled = true; aiMsg.textContent = "Buscando…";
+      sampleApi.json(
+        "Sos bibliotecaria de un homeschool. Para el libro o juego siguiente devolvé SOLO un objeto JSON "
+        + 'con las claves "resumen", "pais", "edad", "idioma".\n'
+        + '- "resumen": 2 o 3 frases en español de Guatemala sobre de qué trata, sin arruinar el final.\n'
+        + '- "pais": el país o cultura de donde viene la historia, si es un living book con un origen claro. Si no aplica, "".\n'
+        + '- "edad": rango recomendado, por ejemplo "8-12 años".\n'
+        + '- "idioma": el idioma de la edición si lo podés deducir del título, si no "".\n'
+        + 'Si NO conocés esta obra con certeza, devolvé los cuatro campos como "" en vez de inventar.\n\n'
+        + "Título: " + titulo + (autor ? "\nAutor: " + autor : "")
+      ).then(function(r){
+        var got = 0;
+        function set(id, v){
+          var el = d.querySelector(id);
+          if(v && !el.value.trim()){ el.value = v; got++; }
+          else if(v) got++;
+        }
+        if(r && r.resumen){ if(!d.querySelector("#f-resumen").value.trim()){ d.querySelector("#f-resumen").value = r.resumen; } got++; }
+        set("#f-pais", r && r.pais);
+        set("#f-nivel", r && r.edad);
+        set("#f-idioma", r && r.idioma);
+        aiBtn.disabled = false;
+        aiMsg.textContent = got
+          ? "Listo — revisalo antes de guardar, a veces se equivoca."
+          : "No lo reconoció. Mejor escribilo vos.";
+      }).catch(function(err){
+        aiBtn.disabled = false;
+        aiMsg.textContent = (err && err.code === "rate_limited")
+          ? "Muchas seguidas. Esperá un momento." : "No se pudo consultar ahora.";
+      });
+    });
+
+    d.addEventListener("close", function(){
+      if(d.returnValue === "ok"){
+        var t = d.querySelector("#f-titulo").value.trim();
+        if(!t){ toast("Ponele un título antes de guardar."); d.remove(); return; }
+        var data = {
+          id: it.id || nextId(it.tipo),
+          tipo: it.tipo,
+          titulo: t,
+          autor: d.querySelector("#f-autor").value.trim(),
+          nivel: d.querySelector("#f-nivel").value.trim(),
+          idioma: d.querySelector("#f-idioma").value.trim(),
+          cond: d.querySelector("#f-cond").value,
+          precio: Number(d.querySelector("#f-precio").value) || 0,
+          video: d.querySelector("#f-video").value.trim(),
+          nota: d.querySelector("#f-nota").value.trim(),
+          resumen: d.querySelector("#f-resumen").value.trim(),
+          pais: d.querySelector("#f-pais").value.trim(),
+          jugadores: it.tipo === "juego" ? d.querySelector("#f-jugadores").value.trim() : (it.jugadores || ""),
+          duracion:  it.tipo === "juego" ? d.querySelector("#f-duracion").value.trim()  : (it.duracion || ""),
+          completo:  it.tipo === "juego" ? d.querySelector("#f-completo").value : (it.completo || ""),
+          foto: foto,
+          status: it.status || "disponible"
+        };
+        if(it.tipo === "coleccion"){
+          var libros = d.querySelector("#f-libros").value.split("\n")
+            .map(function(l){ return l.trim(); }).filter(Boolean)
+            .map(function(l){ return {t: l}; });
+          var unit = data.precio;
+          data.libros = libros;
+          data.cantidad = libros.length;
+          data.precioUnit = unit;
+          data.precio = unit * libros.length;
+        }
+        if(it.id){
+          state.items = state.items.map(function(x){ return x.id === it.id ? data : x; });
+        } else {
+          state.items.push(data);
+        }
+        touch();
+      }
+      d.remove();
+    });
+    d.showModal();
+    setTimeout(function(){ var f = d.querySelector("#f-titulo"); if(f) f.focus(); }, 30);
+  }
+
+  function openFicha(it){
+    var d = document.createElement("dialog");
+    d.className = "ficha";
+    var filas = "";
+    function fila(k,v){ if(v) filas += '<dt>' + k + '</dt><dd>' + esc(v) + '</dd>'; }
+    fila("Autor", it.autor);
+    fila("Edad", it.nivel);
+    fila("Idioma", it.idioma);
+    fila("Origen", it.pais);
+    fila("Jugadores", it.jugadores);
+    fila("Duración", it.duracion);
+    if(it.tipo === "juego") fila("Piezas", COMPLETO[it.completo] || "Sin revisar");
+    fila("Estado", CONDS[it.cond] || it.cond);
+    fila("Precio", it.precio
+      ? "Q" + it.precio + (it.tipo === "coleccion" && it.precioUnit
+          ? " — los " + it.cantidad + " juntos, a Q" + it.precioUnit + " cada uno" : "")
+      : "Por definir");
+    fila("Disponibilidad", STATUS[it.status] || it.status);
+
+    d.innerHTML = '<div class="dlg-head"><h2>Ficha</h2><span class="ref">' + esc(it.id) + '</span></div>'
+      + '<div class="dlg-body">'
+      + (it.foto ? '<img class="ficha-foto" src="' + esc(it.foto) + '" alt="Foto de ' + esc(it.titulo) + '">' : '')
+      + '<div><h3 class="t">' + esc(it.titulo) + '</h3>'
+      +   (it.autor ? '<p class="autor">' + esc(it.autor) + '</p>' : '') + '</div>'
+      + (it.resumen ? '<p class="cuerpo">' + esc(it.resumen) + '</p>' : '')
+      + (it.libros && it.libros.length
+          ? '<div><h3 class="t" style="font-size:16px;margin-bottom:8px">Los ' + it.libros.length + ' títulos</h3>'
+            + '<ol class="titulos">'
+            + it.libros.map(function(l){
+                return '<li>' + esc(l.t || l)
+                     + (l.i ? ' <span class="idm">· ' + esc(l.i) + '</span>' : '') + '</li>';
+              }).join("")
+            + '</ol></div>'
+          : '')
+      + '<dl>' + filas + '</dl>'
+      + (it.nota ? '<p class="nota">' + esc(it.nota) + '</p>' : '')
+      + '</div>'
+      + '<form method="dialog" class="dlg-foot">'
+      +   (it.video ? '<a class="btn-sm" href="' + esc(it.video) + '" target="_blank" rel="noopener" style="text-decoration:none">▶ Ver video del estado</a>' : '')
+      +   '<button class="btn-sm" value="cerrar">Cerrar</button>'
+      +   (it.status === "disponible" && it.precio
+            ? '<button class="btn-sm solid" value="apartar">'
+              + (enLista(it.id) ? "✓ Ya está en tu lista" : "Apartar") + '</button>'
+            : '')
+      + '</form>';
+    document.body.appendChild(d);
+    d.addEventListener("close", function(){
+      if(d.returnValue === "apartar" && !enLista(it.id)) cartToggle(it.id);
+      d.remove();
+    });
+    d.addEventListener("click", function(e){ if(e.target === d) d.close(); });
+    d.showModal();
+  }
+
+  function openAjustes(){
+    var c = state.config;
+    var d = document.createElement("dialog");
+    d.innerHTML =
+      '<form method="dialog">'
+      + '<div class="dlg-head"><h2>Ajustes del catálogo</h2></div>'
+      + '<div class="dlg-body">'
+      + field("Tu WhatsApp con código de país","f-wa",c.whatsapp,"text",
+          "Solo números. Guatemala es 502 — por ejemplo <span class=\'mono\'>50255551234</span>. Sin esto los botones no funcionan.","50255551234")
+      + field("Título del catálogo","f-titulo",c.titulo)
+      + '<div class="field"><label for="f-lede">Presentación</label><textarea id="f-lede">' + esc(c.lede||"") + '</textarea></div>'
+      + '<div class="field"><label for="f-apartado">Apartado</label><textarea id="f-apartado">' + esc(c.apartado||"") + '</textarea></div>'
+      + '<div class="field"><label for="f-pago">Pago</label><textarea id="f-pago">' + esc(c.pago||"") + '</textarea>'
+      +   '<p class="hint">No pongas aquí tu número de cuenta — este link se puede reenviar. Mejor pasalo por WhatsApp.</p></div>'
+      + '<div class="field"><label for="f-entrega">Entrega</label><textarea id="f-entrega">' + esc(c.entrega||"") + '</textarea></div>'
+      + '</div>'
+      + '<div class="dlg-foot">'
+      +   '<button class="btn-sm danger" value="ejemplos" type="submit">Borrar los ejemplos</button>'
+      +   '<button class="btn-sm" value="cancel">Cancelar</button>'
+      +   '<button class="btn-sm solid" value="ok">Guardar</button>'
+      + '</div></form>';
+    document.body.appendChild(d);
+
+    d.addEventListener("close", function(){
+      if(d.returnValue === "ok"){
+        state.config = {
+          whatsapp: d.querySelector("#f-wa").value.replace(/[^0-9]/g,""),
+          titulo: d.querySelector("#f-titulo").value.trim() || "La Repisa de Enfrente",
+          lede: d.querySelector("#f-lede").value.trim(),
+          apartado: d.querySelector("#f-apartado").value.trim(),
+          pago: d.querySelector("#f-pago").value.trim(),
+          entrega: d.querySelector("#f-entrega").value.trim()
+        };
+        touch();
+      } else if(d.returnValue === "ejemplos"){
+        var before = state.items.length;
+        state.items = state.items.filter(function(x){
+          return !(x.nota && x.nota.indexOf("Ejemplo —") === 0);
+        });
+        if(state.items.length !== before) touch(); else toast("Ya no quedaban ejemplos.");
+      }
+      d.remove();
+    });
+    d.showModal();
+  }
+
+  /* ---------- eventos ---------- */
+  document.addEventListener("click", function(e){
+    var t = e.target.closest("[data-act],[data-tipo],[data-secc],[data-edit],[data-del],[data-foto],[data-ficha],[data-add],[data-quitar],[data-enviar]");
+    if(!t) return;
+    var act = t.getAttribute("data-act");
+
+    if(t.hasAttribute("data-enviar")){
+      cartSent = true; cartOpen = false; cartSave();
+      setTimeout(render, 500);       // dejamos que WhatsApp abra primero
+      return;
+    }
+    if(t.hasAttribute("data-add")){ cartToggle(t.getAttribute("data-add")); return; }
+    if(t.hasAttribute("data-quitar")){ cartToggle(t.getAttribute("data-quitar")); return; }
+    if(t.hasAttribute("data-ficha")){
+      var qid = t.getAttribute("data-ficha");
+      var qit = state.items.filter(function(x){return x.id===qid;})[0];
+      if(qit) openFicha(qit);
+      return;
+    }
+    if(t.hasAttribute("data-foto")){
+      var fid = t.getAttribute("data-foto");
+      var fit = state.items.filter(function(x){return x.id===fid;})[0];
+      if(fit && fit.foto) openFoto(fit);
+      return;
+    }
+
+    if(t.hasAttribute("data-secc")){
+      filt.seccion = t.getAttribute("data-secc"); filt.tipo = "todos"; filt.q = "";
+      render(); window.scrollTo({top:0, behavior:"smooth"}); return;
+    }
+    if(t.hasAttribute("data-tipo")){ filt.tipo = t.getAttribute("data-tipo"); render(); return; }
+    if(t.hasAttribute("data-edit")){
+      var id = t.getAttribute("data-edit");
+      var it = state.items.filter(function(x){return x.id===id;})[0];
+      if(it) openItem(Object.assign({},it));
+      return;
+    }
+    if(t.hasAttribute("data-del")){
+      var did = t.getAttribute("data-del");
+      var item = state.items.filter(function(x){return x.id===did;})[0];
+      if(item && window.confirm('¿Borrar "' + item.titulo + '" del catálogo?')){
+        state.items = state.items.filter(function(x){return x.id!==did;});
+        touch();
+      }
+      return;
+    }
+
+    if(act === "ver-lista"){ cartOpen = !cartOpen; render(); }
+    else if(act === "vaciar"){
+      if(!cart.length || cartSent || window.confirm("¿Vaciar tu lista?")){
+        cart = []; cartOpen = false; cartSent = false; cartSave(); render();
+      }
+    }
+    else if(act === "entrar-admin"){ admin = true; render(); }
+    else if(act === "salir-admin"){ admin = false; render(); }
+    else if(act === "bajar-sitio"){ bajarSitio(); }
+    else if(act === "nuevo-libro"){ openItem({tipo:"libro"}); }
+    else if(act === "nueva-coleccion"){ openItem({tipo:"coleccion"}); }
+    else if(act === "nuevo-juego"){ openItem({tipo:"juego"}); }
+    else if(act === "ajustes"){ openAjustes(); }
+    else if(act === "publicar"){ publish(); }
+    else if(act === "descartar"){
+      if(window.confirm("¿Descartar todos los cambios sin guardar?")){
+        state = readState(); dirty = false; draftClear(); render();
+      }
+    }
+  });
+
+  document.addEventListener("keydown", function(e){
+    if((e.key === "Enter" || e.key === " ") && e.target.hasAttribute && e.target.hasAttribute("data-ficha")){
+      e.preventDefault(); e.target.click();
+    }
+  });
+
+  document.addEventListener("input", function(e){
+    if(e.target.id === "q"){ filt.q = e.target.value; render();
+      var f = document.getElementById("q"); if(f){ f.focus(); f.setSelectionRange(f.value.length,f.value.length); } }
+  });
+
+  document.addEventListener("change", function(e){
+    if(e.target.id === "solo"){ filt.soloDisp = e.target.checked; render(); return; }
+    var sid = e.target.getAttribute && e.target.getAttribute("data-status");
+    if(sid){
+      state.items = state.items.map(function(x){
+        return x.id === sid ? Object.assign({}, x, {status: e.target.value}) : x;
+      });
+      touch();
+    }
+  });
+
+  window.addEventListener("beforeunload", function(e){
+    if(dirty){ e.preventDefault(); e.returnValue = ""; }
+  });
+
+  /* ---------- arranque ---------- */
+  function boot(){
+    PRISTINE = document.documentElement.outerHTML;
+    state = readState();
+    try{
+      var raw = localStorage.getItem(DRAFT_KEY);
+      if(raw){
+        var d = JSON.parse(raw);
+        if(JSON.stringify(d) !== JSON.stringify(state)){
+          state = d; dirty = true;
+        } else { draftClear(); }
+      }
+    }catch(e){}
+    cartLoad();
+    var fuera = cartPodar();
+    render();
+    if(dirty) toast("Recuperamos cambios que no habías guardado.");
+    else if(fuera) toast(fuera === 1
+      ? "Un libro de tu lista ya no está disponible y lo quitamos."
+      : fuera + " libros de tu lista ya no están disponibles y los quitamos.");
+  }
+
+  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
+  else boot();
+})();
+</script>
 
 </body>
 </html>
