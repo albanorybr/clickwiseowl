@@ -1,0 +1,521 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Así funciona una agenda que cobra antes de confirmar: el papá o la mamá elige la cita, paga en línea y la cita queda confirmada sola. Sin citas fantasma y sin reportes que nunca se pagan.">
+<meta name="theme-color" content="#24302B">
+<link rel="canonical" href="https://clickwiseowl.com/demo/agenda/">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Click Wise Owl">
+<meta property="og:locale" content="es_GT">
+<meta property="og:url" content="https://clickwiseowl.com/demo/agenda/">
+<meta property="og:title" content="Agenda, paga y queda confirmada">
+<meta property="og:description" content="Así funciona una agenda que cobra antes de confirmar: el papá o la mamá elige la cita, paga en línea y la cita queda confirmada sola. Sin citas fantasma y sin reportes que nunca se pagan.">
+<meta property="og:image" content="https://clickwiseowl.com/demo/agenda/card.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Agenda con cobro de un consultorio de psicología ficticio — demostración de Click Wise Owl">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Agenda, paga y queda confirmada">
+<meta name="twitter:description" content="Así funciona una agenda que cobra antes de confirmar: el papá o la mamá elige la cita, paga en línea y la cita queda confirmada sola. Sin citas fantasma y sin reportes que nunca se pagan.">
+<meta name="twitter:image" content="https://clickwiseowl.com/demo/agenda/card.jpg">
+<title>Demo: agenda con cobro en línea | Click Wise Owl</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:wght@600;700&family=Nunito+Sans:wght@400;600;700;800&display=swap">
+<style>
+:root{
+  --papel:#F7F5EF; --tarjeta:#FFFFFF; --tarjeta-2:#EEF2EC;
+  --tinta:#24302B; --tinta-media:#5C6A63; --tinta-tenue:#8C9891;
+  --linea:#DFE4DC; --linea-fuerte:#C5CEC3;
+  --salvia:#3F7A62; --salvia-suave:#E3EFE8; --salvia-tinta:#FFFFFF;
+  --coral:#D2694B; --coral-suave:#FBE9E3;
+  --ambar:#B07A12; --ambar-suave:#FAF0D9;
+  --gris-suave:#ECEDEA;
+  --sombra:0 1px 2px rgba(36,48,43,.05), 0 12px 28px -18px rgba(36,48,43,.35);
+  --r:12px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --papel:#131816; --tarjeta:#1B2220; --tarjeta-2:#222B28;
+    --tinta:#E6ECE8; --tinta-media:#A7B4AD; --tinta-tenue:#76837C;
+    --linea:#2C3633; --linea-fuerte:#3B4844;
+    --salvia:#7CC3A2; --salvia-suave:#1E3029; --salvia-tinta:#0F1A15;
+    --coral:#EE9579; --coral-suave:#38231D;
+    --ambar:#E2B45A; --ambar-suave:#33290F;
+    --gris-suave:#252C2A;
+    --sombra:0 1px 2px rgba(0,0,0,.4), 0 12px 30px -18px rgba(0,0,0,.8);
+  }
+}
+:root[data-theme="dark"]{
+  --papel:#131816; --tarjeta:#1B2220; --tarjeta-2:#222B28;
+  --tinta:#E6ECE8; --tinta-media:#A7B4AD; --tinta-tenue:#76837C;
+  --linea:#2C3633; --linea-fuerte:#3B4844;
+  --salvia:#7CC3A2; --salvia-suave:#1E3029; --salvia-tinta:#0F1A15;
+  --coral:#EE9579; --coral-suave:#38231D;
+  --ambar:#E2B45A; --ambar-suave:#33290F;
+  --gris-suave:#252C2A;
+  --sombra:0 1px 2px rgba(0,0,0,.4), 0 12px 30px -18px rgba(0,0,0,.8);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--papel);color:var(--tinta);font-family:"Nunito Sans",-apple-system,Segoe UI,sans-serif;font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:"Lora",Georgia,serif;font-weight:700;margin:0;text-wrap:balance}
+p{margin:0}
+button{font:inherit;cursor:pointer;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--salvia);outline-offset:2px;border-radius:4px}
+[hidden]{display:none!important}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+.env{max-width:1060px;margin:0 auto;padding-left:16px;padding-right:16px}
+
+/* barra Click Wise Owl */
+.cwo{background:#1E2723;color:#E6ECE8;font-size:13px;position:sticky;top:0;z-index:80}
+.cwo .env{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;padding-top:10px;padding-bottom:10px}
+.cwo .lema{font-size:.79rem;color:#A7B4AD;flex:1;min-width:220px}
+.cwo .lema b{color:#E6ECE8;font-weight:700}
+.vistas{display:inline-flex;background:rgba(255,255,255,.08);border-radius:999px;padding:3px}
+.vistas button{border:0;background:transparent;color:#C9D3CE;border-radius:999px;padding:6px 14px;font-size:.8rem;font-weight:700}
+.vistas button[aria-pressed="true"]{background:#E6ECE8;color:#1E2723}
+.cwo a.volver{color:#A7B4AD;font-size:.76rem;text-decoration:none;white-space:nowrap}
+.cwo a.volver:hover{color:#fff}
+.argumento{background:var(--salvia-suave);border-bottom:1px solid var(--linea)}
+.argumento .env{padding-top:12px;padding-bottom:12px;font-size:.92rem;color:var(--tinta)}
+.argumento b{color:var(--salvia)}
+
+/* encabezado del consultorio */
+.cab{padding:34px 0 8px}
+.marca{display:flex;align-items:center;gap:12px;margin-bottom:22px}
+.marca .hoja{width:42px;height:42px;border-radius:50%;background:var(--salvia);color:var(--salvia-tinta);display:flex;align-items:center;justify-content:center;font-size:1.3rem}
+.marca b{font-family:Lora,serif;font-size:1.25rem;display:block;line-height:1.1}
+.marca span{font-size:.85rem;color:var(--tinta-media)}
+.cab h1{font-size:clamp(1.7rem,4.2vw,2.4rem);max-width:660px;margin-bottom:10px}
+.cab p.sub{color:var(--tinta-media);max-width:620px}
+
+/* pasos */
+.pasos{display:flex;gap:6px;margin:26px 0 18px;padding:0;list-style:none;flex-wrap:wrap}
+.pasos li{font-size:.8rem;font-weight:700;color:var(--tinta-tenue);display:flex;align-items:center;gap:6px;padding:6px 12px 6px 6px;border-radius:999px;background:var(--gris-suave)}
+.pasos li i{font-style:normal;width:22px;height:22px;border-radius:50%;background:var(--tarjeta);display:flex;align-items:center;justify-content:center;font-size:.75rem;border:1px solid var(--linea)}
+.pasos li.hecho{color:var(--salvia);background:var(--salvia-suave)}
+.pasos li.hecho i{background:var(--salvia);color:var(--salvia-tinta);border-color:var(--salvia)}
+.pasos li.actual{color:var(--tinta);background:var(--tarjeta);box-shadow:var(--sombra)}
+.pasos li.actual i{background:var(--tinta);color:var(--papel);border-color:var(--tinta)}
+
+.cuerpo{display:grid;grid-template-columns:1fr 300px;gap:22px;align-items:start;padding-bottom:56px}
+@media(max-width:820px){.cuerpo{grid-template-columns:1fr}}
+.panel{background:var(--tarjeta);border:1px solid var(--linea);border-radius:var(--r);padding:24px;box-shadow:var(--sombra)}
+.panel h2{font-size:1.25rem;margin-bottom:4px}
+.panel .ayuda{color:var(--tinta-media);font-size:.92rem;margin-bottom:18px}
+
+/* servicios */
+.serv{display:grid;gap:12px}
+.serv button{display:grid;grid-template-columns:1fr auto;gap:4px 16px;text-align:left;background:var(--tarjeta);border:1.5px solid var(--linea);border-radius:10px;padding:16px 18px;transition:border-color .15s,transform .15s}
+.serv button:hover{border-color:var(--salvia);transform:translateY(-1px)}
+.serv b{font-size:1.02rem}
+.serv .precio{font-weight:800;text-align:right;white-space:nowrap}
+.serv .det{grid-column:1/-1;color:var(--tinta-media);font-size:.9rem}
+.serv .pill{font-size:.72rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--ambar);background:var(--ambar-suave);padding:2px 8px;border-radius:999px;margin-left:6px;vertical-align:2px}
+
+/* calendario */
+.dias{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:16px}
+.dias button{border:1.5px solid var(--linea);background:var(--tarjeta);border-radius:10px;padding:10px 4px;text-align:center;line-height:1.2}
+.dias button small{display:block;font-size:.72rem;color:var(--tinta-media);text-transform:uppercase;letter-spacing:.06em;font-weight:700}
+.dias button b{font-size:1.2rem}
+.dias button[aria-pressed="true"]{border-color:var(--salvia);background:var(--salvia-suave)}
+.horas{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:8px}
+.horas button{border:1.5px solid var(--linea);background:var(--tarjeta);border-radius:8px;padding:10px 6px;font-weight:700}
+.horas button:hover:not(:disabled){border-color:var(--salvia)}
+.horas button:disabled{background:var(--gris-suave);color:var(--tinta-tenue);text-decoration:line-through;cursor:not-allowed;border-color:transparent}
+.horas button.liberado{border-color:var(--coral);color:var(--coral)}
+.leyenda{font-size:.82rem;color:var(--tinta-tenue);margin-top:12px}
+
+/* formulario */
+.campos{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:560px){.campos{grid-template-columns:1fr}}
+.campo label{display:block;font-size:.82rem;font-weight:700;margin-bottom:5px}
+.campo input{width:100%;border:1.5px solid var(--linea-fuerte);background:var(--tarjeta);color:var(--tinta);border-radius:8px;padding:10px 12px;font:inherit}
+.campo input:disabled{background:var(--gris-suave);color:var(--tinta-media)}
+.modal-elige{display:flex;gap:8px;margin:4px 0 2px}
+.modal-elige button{border:1.5px solid var(--linea);background:var(--tarjeta);border-radius:999px;padding:7px 16px;font-weight:700;font-size:.88rem}
+.modal-elige button[aria-pressed="true"]{border-color:var(--salvia);background:var(--salvia-suave);color:var(--salvia)}
+
+.acciones{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:22px}
+.bt{border:0;background:var(--salvia);color:var(--salvia-tinta);border-radius:999px;padding:12px 24px;font-weight:800}
+.bt:hover{filter:brightness(1.06)}
+.bt:disabled{opacity:.45;cursor:not-allowed}
+.bt.sec{background:transparent;color:var(--tinta-media);border:1.5px solid var(--linea-fuerte)}
+.bt.coral{background:var(--coral);color:#fff}
+.enlace{background:none;border:0;color:var(--tinta-media);text-decoration:underline;font-size:.88rem;padding:4px}
+
+/* pago */
+.reloj{display:flex;align-items:center;gap:12px;background:var(--ambar-suave);border-radius:10px;padding:12px 14px;margin-bottom:18px;font-size:.92rem}
+.reloj b.t{font-variant-numeric:tabular-nums;font-size:1.15rem;color:var(--ambar)}
+.metodos{display:flex;gap:8px;margin-bottom:14px}
+.metodos button{flex:1;border:1.5px solid var(--linea);background:var(--tarjeta);border-radius:10px;padding:11px;font-weight:700;font-size:.9rem}
+.metodos button[aria-pressed="true"]{border-color:var(--salvia);background:var(--salvia-suave);color:var(--salvia)}
+.prueba{font-size:.8rem;color:var(--coral);font-weight:700;margin-top:10px}
+.seguro{font-size:.8rem;color:var(--tinta-tenue);margin-top:14px}
+.expirado{background:var(--coral-suave);border-radius:10px;padding:16px;margin-top:4px}
+.expirado b{color:var(--coral)}
+
+/* confirmada */
+.ok{text-align:center;padding:12px 0 6px}
+.ok .check{width:64px;height:64px;border-radius:50%;background:var(--salvia);color:var(--salvia-tinta);font-size:2rem;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;animation:pop .4s ease-out}
+@keyframes pop{0%{transform:scale(.5);opacity:0}100%{transform:scale(1);opacity:1}}
+.llego{list-style:none;padding:0;margin:18px 0 0;text-align:left;display:grid;gap:10px}
+.llego li{display:flex;gap:12px;align-items:flex-start;background:var(--tarjeta-2);border-radius:10px;padding:12px 14px;font-size:.92rem}
+.llego li span.e{font-size:1.2rem;line-height:1.2}
+.llego li b{display:block}
+.llego li small{color:var(--tinta-media)}
+
+/* resumen lateral */
+.resumen h3{font-size:1.02rem;margin-bottom:12px}
+.resumen dl{margin:0;display:grid;gap:10px}
+.resumen dt{font-size:.74rem;text-transform:uppercase;letter-spacing:.08em;color:var(--tinta-tenue);font-weight:800}
+.resumen dd{margin:0;font-weight:700}
+.resumen dd.vacio{color:var(--tinta-tenue);font-weight:400}
+.resumen .total{border-top:1px dashed var(--linea-fuerte);margin-top:14px;padding-top:12px;display:flex;justify-content:space-between;font-weight:800;font-size:1.1rem}
+.regla{margin-top:16px;font-size:.84rem;color:var(--tinta-media);background:var(--tarjeta-2);border-radius:10px;padding:12px}
+.regla b{color:var(--tinta)}
+
+/* vista psicóloga */
+.cifras{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:22px 0}
+@media(max-width:760px){.cifras{grid-template-columns:repeat(2,1fr)}}
+.cifra{background:var(--tarjeta);border:1px solid var(--linea);border-radius:var(--r);padding:16px}
+.cifra small{display:block;font-size:.76rem;font-weight:700;color:var(--tinta-media);text-transform:uppercase;letter-spacing:.05em}
+.cifra b{font-family:Lora,serif;font-size:1.6rem;display:block;margin-top:4px;font-variant-numeric:tabular-nums}
+.cifra.buena b{color:var(--salvia)}
+.dos{display:grid;grid-template-columns:1.5fr 1fr;gap:22px;align-items:start;padding-bottom:56px}
+@media(max-width:860px){.dos{grid-template-columns:1fr}}
+.tabla{width:100%;border-collapse:collapse;font-size:.92rem}
+.tabla th{text-align:left;font-size:.74rem;text-transform:uppercase;letter-spacing:.06em;color:var(--tinta-tenue);font-weight:800;padding:0 8px 8px;border-bottom:1px solid var(--linea)}
+.tabla td{padding:11px 8px;border-bottom:1px solid var(--linea);vertical-align:middle}
+.tabla tr.nueva td{background:var(--salvia-suave)}
+.tabla tr.nueva td:first-child{border-radius:8px 0 0 8px}
+.tabla tr.nueva td:last-child{border-radius:0 8px 8px 0}
+.tabla td:first-child{white-space:nowrap}
+.tabla td small{display:block;color:var(--tinta-media);font-size:.8rem}
+.chip{display:inline-block;font-size:.75rem;font-weight:800;padding:3px 10px;border-radius:999px;white-space:nowrap}
+.chip.pagada{background:var(--salvia-suave);color:var(--salvia)}
+.chip.apartada{background:var(--ambar-suave);color:var(--ambar)}
+.chip.liberada{background:var(--gris-suave);color:var(--tinta-tenue);text-decoration:line-through}
+.tabla .mini{font-size:.76rem;margin-top:5px;display:block;background:none;border:0;padding:0;color:var(--coral);text-decoration:underline}
+.rep{display:grid;gap:12px}
+.rep .r{border:1px solid var(--linea);border-radius:10px;padding:14px}
+.rep .r b{display:block}
+.rep .r small{color:var(--tinta-media);font-size:.84rem;display:block;margin:2px 0 10px}
+.rep .candado{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:.86rem;font-weight:700}
+.rep .candado .bloq{color:var(--coral)}
+.rep .candado .lib{color:var(--salvia)}
+.btmini{border:1.5px solid var(--linea-fuerte);background:var(--tarjeta);border-radius:999px;padding:5px 12px;font-size:.8rem;font-weight:700}
+.auto{list-style:none;padding:0;margin:0;display:grid;gap:10px;font-size:.9rem}
+.auto li{display:flex;gap:10px}
+.auto li span{flex-shrink:0}
+
+footer{background:var(--tarjeta-2);border-top:1px solid var(--linea);padding:32px 0;font-size:.88rem;color:var(--tinta-media)}
+footer .env{display:flex;flex-wrap:wrap;gap:16px 28px;justify-content:space-between;align-items:center}
+footer a.cta{background:var(--tinta);color:var(--papel);text-decoration:none;font-weight:800;border-radius:999px;padding:11px 20px;white-space:nowrap}
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<script>
+/* ---------- datos del consultorio ficticio ---------- */
+var SERVICIOS = [
+  {id:"primera", n:"Primera consulta", min:60, p:450, det:"Solo con papás. Para entender qué les preocupa y decidir juntos los siguientes pasos."},
+  {id:"seguim", n:"Sesión de seguimiento", min:50, p:350, det:"Sesión con su hijo o hija. Para familias que ya están en proceso."},
+  {id:"eval", n:"Evaluación psicopedagógica", min:60, p:800, total:2400, det:"3 sesiones + reporte escrito para el colegio. Hoy se paga el anticipo de Q800; el reporte se entrega al completar el pago."}
+];
+var HORAS = ["8:00","9:00","10:00","11:00","14:00","15:00","16:00"];
+var NOMDIA = ["Dom","Lun","Mar","Mié","Jue","Vie","Sáb"];
+var NOMDIA_L = ["domingo","lunes","martes","miércoles","jueves","viernes","sábado"];
+var MES = ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"];
+
+/* próximos 5 días hábiles, empezando mañana */
+var DIAS = (function(){
+  var out = [], d = new Date(); d.setHours(0,0,0,0);
+  while(out.length < 5){ d.setDate(d.getDate()+1); var w = d.getDay(); if(w>0 && w<6) out.push(new Date(d)); }
+  return out;
+})();
+function etiquetaDia(i){ var d = DIAS[i]; return NOMDIA[d.getDay()] + " " + d.getDate() + " " + MES[d.getMonth()]; }
+function etiquetaDiaLarga(i){ var d = DIAS[i]; return NOMDIA_L[d.getDay()] + " " + d.getDate() + " de " + MES[d.getMonth()]; }
+
+/* citas que ya existen en la agenda (ficticias) */
+var CITAS = [
+  {d:0, h:"8:00",  quien:"Familia López",  serv:"primera", estado:"pagada"},
+  {d:0, h:"15:00", quien:"Mateo, 9 años",  serv:"seguim",  estado:"pagada"},
+  {d:1, h:"10:00", quien:"Sofía, 8 años",  serv:"eval",    estado:"pagada", nota:"Sesión 2 de 3"},
+  {d:1, h:"11:00", quien:"Lucía, 7 años",  serv:"seguim",  estado:"pagada"},
+  {d:2, h:"9:00",  quien:"Isabel, 6 años", serv:"seguim",  estado:"apartada", expira:12},
+  {d:2, h:"14:00", quien:"Familia Ruiz",   serv:"primera", estado:"pagada"},
+  {d:3, h:"16:00", quien:"Diego, 11 años", serv:"seguim",  estado:"pagada"},
+  {d:4, h:"8:00",  quien:"Ana, 10 años",   serv:"seguim",  estado:"pagada"}
+];
+/* viernes por la tarde: la psicóloga no atiende */
+var BLOQUEOS = [{d:4,h:"14:00"},{d:4,h:"15:00"},{d:4,h:"16:00"}];
+
+var REPORTES = [
+  {quien:"Sofía, 8 años", tipo:"Evaluación psicopedagógica", saldo:1600, libre:false},
+  {quien:"Andrés, 10 años", tipo:"Evaluación psicopedagógica", saldo:0, libre:true, nota:"Pagado completo · enviado al correo de la familia"}
+];
+
+/* ---------- estado ---------- */
+var S = {
+  vista:"familia", paso:1, serv:null, dia:0, hora:null,
+  papa:"María Fernanda Pérez", nino:"Camila", edad:"7", tel:"5555 0000", correo:"mafer@ejemplo.com", modalidad:"presencial",
+  metodo:"tarjeta", procesando:false, expiradoPago:false, segundos:30*60, liberados:{}, nueva:null
+};
+var timer = null;
+
+function servicio(){ for(var i=0;i<SERVICIOS.length;i++) if(SERVICIOS[i].id===S.serv) return SERVICIOS[i]; return null; }
+function servPorId(id){ for(var i=0;i<SERVICIOS.length;i++) if(SERVICIOS[i].id===id) return SERVICIOS[i]; }
+function q(n){ return "Q" + n.toLocaleString("en-US"); }
+function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];}); }
+
+function ocupado(d,h){
+  for(var i=0;i<BLOQUEOS.length;i++) if(BLOQUEOS[i].d===d && BLOQUEOS[i].h===h) return "bloqueo";
+  for(var j=0;j<CITAS.length;j++){ var c = CITAS[j]; if(c.d===d && c.h===h && c.estado!=="liberada") return "cita"; }
+  return null;
+}
+
+/* ---------- reloj de la retención ---------- */
+function arrancarReloj(){
+  pararReloj(); S.segundos = 30*60;
+  timer = setInterval(function(){
+    S.segundos--; var el = document.getElementById("t");
+    if(el) el.textContent = mmss(S.segundos);
+    if(S.segundos<=0){ expirar(); }
+  },1000);
+}
+function pararReloj(){ if(timer){ clearInterval(timer); timer=null; } }
+function mmss(s){ var m=Math.floor(s/60), r=s%60; return m + ":" + (r<10?"0":"") + r; }
+function expirar(){
+  pararReloj(); S.expiradoPago = true;
+  if(S.nueva){ S.nueva.estado = "liberada"; }
+  pintar();
+}
+
+/* ---------- pintar ---------- */
+function pintar(){
+  var h = "";
+  h += '<div class="cwo"><div class="env">'
+     + '<span class="lema"><b>Demostración de Click Wise Owl</b> · consultorio ficticio, aquí no se cobra nada de verdad</span>'
+     + '<div class="vistas" role="group" aria-label="Elegir vista">'
+     +   '<button type="button" data-a="vista" data-v="familia" aria-pressed="' + (S.vista==="familia") + '">Como papá o mamá</button>'
+     +   '<button type="button" data-a="vista" data-v="psico" aria-pressed="' + (S.vista==="psico") + '">Como psicóloga</button>'
+     + '</div>'
+     + '<a class="volver" href="/">← clickwiseowl.com</a>'
+     + '</div></div>';
+
+  h += '<div class="argumento"><div class="env">'
+     + (S.vista==="familia"
+        ? '<b>La regla que cambia todo:</b> el espacio se aparta 30 minutos y la cita solo se confirma cuando está pagada. Pruébelo: agende como si fuera un papá.'
+        : '<b>Lo que ve la psicóloga:</b> cada cita llega ya pagada. Lo que no se paga a tiempo vuelve solo a la agenda, y los reportes no salen sin saldo cero.')
+     + '</div></div>';
+
+  h += '<div class="env"><header class="cab"><div class="marca"><div class="hoja" aria-hidden="true">🌱</div><div><b>Consultorio Brote</b><span>Psicología infantil y educativa · Guatemala</span></div></div>';
+
+  if(S.vista==="familia"){
+    h += '<h1>Agende la cita de su hijo en dos minutos</h1>'
+       + '<p class="sub">Elija el servicio y el horario, pague en línea y reciba la confirmación al instante. Sin llamar, sin esperar respuesta por WhatsApp.</p>';
+    h += pasos() + '</header>';
+    h += '<div class="cuerpo"><div class="panel">' + pasoActual() + '</div>' + resumen() + '</div></div>';
+  } else {
+    h += '<h1>Su semana, ya cobrada</h1><p class="sub">Así ve la psicóloga su panel. Si acaba de agendar como papá, su cita aparece resaltada.</p></header>';
+    h += vistaPsico() + '</div>';
+  }
+
+  h += '<footer><div class="env"><p>Consultorio Brote es un negocio ficticio creado para esta demostración. Ningún pago es real.<br>En el sistema real los cobros pasan por una pasarela que funciona en Guatemala (tarjeta y transferencia, en quetzales).</p>'
+     + '<a class="cta" href="https://wa.me/50253771248?text=' + encodeURIComponent("Hola Nory, vi el demo de agenda con cobro y quiero algo así para mi negocio.") + '" target="_blank" rel="noopener">Quiero esto para mi negocio</a></div></footer>';
+
+  document.getElementById("app").innerHTML = h;
+}
+
+function pasos(){
+  var n = ["Servicio","Horario","Sus datos","Pago","Confirmada"], h = '<ol class="pasos" aria-label="Pasos">';
+  for(var i=0;i<n.length;i++){
+    var k = i+1, listo = k<S.paso || S.paso===5, cl = listo ? "hecho" : (k===S.paso ? "actual" : "");
+    h += '<li class="' + cl + '"' + (k===S.paso?' aria-current="step"':'') + '><i>' + (listo?"✓":k) + '</i>' + n[i] + '</li>';
+  }
+  return h + '</ol>';
+}
+
+function pasoActual(){
+  var h = "", s = servicio();
+  if(S.paso===1){
+    h += '<h2>¿Qué necesita?</h2><p class="ayuda">Precios de ejemplo. Cada consultorio pone los suyos.</p><div class="serv">';
+    SERVICIOS.forEach(function(x){
+      h += '<button type="button" data-a="serv" data-id="' + x.id + '"><b>' + x.n + (x.total?'<span class="pill">Anticipo</span>':'') + '</b>'
+         + '<span class="precio">' + q(x.p) + (x.total?'<small style="display:block;font-weight:600;color:var(--tinta-tenue);font-size:.76rem">de ' + q(x.total) + '</small>':'') + '</span>'
+         + '<span class="det">' + x.min + ' min · ' + x.det + '</span></button>';
+    });
+    h += '</div>';
+  }
+  if(S.paso===2){
+    h += '<h2>Elija día y hora</h2><p class="ayuda">Solo ve los espacios libres de verdad: la agenda está conectada al calendario de la psicóloga.</p><div class="dias">';
+    for(var i=0;i<DIAS.length;i++){
+      var d = DIAS[i];
+      h += '<button type="button" data-a="dia" data-i="' + i + '" aria-pressed="' + (S.dia===i) + '"><small>' + NOMDIA[d.getDay()] + '</small><b>' + d.getDate() + '</b><small>' + MES[d.getMonth()] + '</small></button>';
+    }
+    h += '</div><div class="horas">';
+    HORAS.forEach(function(hr){
+      var oc = ocupado(S.dia,hr), lib = S.liberados[S.dia+"|"+hr];
+      h += '<button type="button" data-a="hora" data-h="' + hr + '"' + (oc?' disabled aria-label="' + hr + ' ocupado"':'') + (lib && !oc?' class="liberado" title="Este espacio se liberó porque no se pagó a tiempo"':'') + '>' + hr + '</button>';
+    });
+    h += '</div><p class="leyenda">Tachado = ocupado o fuera de horario.' + (Object.keys(S.liberados).length?' <span style="color:var(--coral)">En coral: un espacio que se liberó porque nadie lo pagó a tiempo.</span>':'') + '</p>';
+    h += '<div class="acciones"><button class="bt sec" data-a="atras">← Atrás</button></div>';
+  }
+  if(S.paso===3){
+    h += '<h2>Sus datos</h2><p class="ayuda">Ya vienen llenos para la demostración. Los usa el sistema para la confirmación y el recordatorio.</p>'
+       + '<div class="campos">'
+       + campo("papa","Nombre de mamá o papá") + campo("tel","WhatsApp")
+       + campo("nino","Nombre del niño o niña") + campo("edad","Edad")
+       + '<div class="campo" style="grid-column:1/-1">' + '<label for="f-correo">Correo (aquí llega el recibo)</label><input id="f-correo" data-f="correo" value="' + esc(S.correo) + '"></div>'
+       + '<div class="campo" style="grid-column:1/-1"><label>Modalidad</label><div class="modal-elige">'
+       +   '<button type="button" data-a="modal" data-m="presencial" aria-pressed="' + (S.modalidad==="presencial") + '">Presencial</button>'
+       +   '<button type="button" data-a="modal" data-m="linea" aria-pressed="' + (S.modalidad==="linea") + '">En línea</button>'
+       + '</div></div></div>'
+       + '<div class="acciones"><button class="bt" data-a="apartar">Apartar y pasar a pagar →</button><button class="bt sec" data-a="atras">← Atrás</button></div>';
+  }
+  if(S.paso===4){
+    if(S.expiradoPago){
+      h += '<h2>El espacio se liberó</h2><div class="expirado"><p><b>Pasaron los 30 minutos sin pago.</b> El sistema soltó el espacio del ' + etiquetaDiaLarga(S.dia) + ' a las ' + S.hora + ' y ya está disponible para otra familia.</p>'
+         + '<p style="margin-top:8px;font-size:.92rem;color:var(--tinta-media)">Nadie tuvo que escribir "¿siempre viene?" ni cancelar a mano. Así se acaban las citas fantasma.</p></div>'
+         + '<div class="acciones"><button class="bt" data-a="reiniciar">Volver a agendar</button><button class="enlace" data-a="vista" data-v="psico">Ver cómo lo vio la psicóloga →</button></div>';
+    } else {
+      h += '<h2>Pague para confirmar</h2>'
+         + '<div class="reloj"><span aria-hidden="true">⏳</span><span>Su espacio está apartado por <b class="t" id="t">' + mmss(S.segundos) + '</b>. Si no se paga, vuelve a quedar libre.</span></div>'
+         + '<div class="metodos" role="group" aria-label="Método de pago">'
+         +   '<button type="button" data-a="metodo" data-m="tarjeta" aria-pressed="' + (S.metodo==="tarjeta") + '">💳 Tarjeta</button>'
+         +   '<button type="button" data-a="metodo" data-m="transf" aria-pressed="' + (S.metodo==="transf") + '">🏦 Transferencia</button>'
+         + '</div>';
+      if(S.metodo==="tarjeta"){
+        h += '<div class="campos">'
+           + '<div class="campo" style="grid-column:1/-1"><label>Número de tarjeta</label><input value="4242 4242 4242 4242" disabled></div>'
+           + '<div class="campo"><label>Vence</label><input value="12 / 29" disabled></div>'
+           + '<div class="campo"><label>CVV</label><input value="•••" disabled></div>'
+           + '</div><p class="prueba">Tarjeta de prueba. En esta demostración no se escribe ni se cobra nada.</p>';
+      } else {
+        h += '<p style="font-size:.95rem">La familia ve los datos de la cuenta y una referencia única. Cuando el banco reporta el depósito, la cita se confirma sola, sin que la psicóloga revise comprobantes por WhatsApp.</p>'
+           + '<p class="prueba">En esta demostración no se transfiere nada.</p>';
+      }
+      h += '<div class="acciones"><button class="bt" data-a="pagar"' + (S.procesando?' disabled':'') + '>' + (S.procesando?'Procesando…':'Pagar ' + q(s.p)) + '</button>'
+         + '<button class="bt sec" data-a="atras"' + (S.procesando?' disabled':'') + '>← Atrás</button></div>'
+         + '<p class="seguro">🔒 Pago procesado por la pasarela; el consultorio nunca ve los datos de la tarjeta.</p>'
+         + '<p style="margin-top:14px"><button class="enlace" data-a="expirar">¿Y si no paga? Adelantar los 30 minutos →</button></p>';
+    }
+  }
+  if(S.paso===5){
+    h += '<div class="ok"><div class="check" aria-hidden="true">✓</div><h2>Cita confirmada</h2>'
+       + '<p class="ayuda" style="margin-top:6px">' + esc(s.n) + ' para ' + esc(S.nino) + ' · ' + etiquetaDiaLarga(S.dia) + ', ' + S.hora + ' · ' + (S.modalidad==="linea"?"en línea":"presencial") + '</p></div>'
+       + '<ul class="llego">'
+       + '<li><span class="e">📧</span><span><b>Recibo y confirmación en su correo</b><small>Con la dirección' + (S.modalidad==="linea"?' y el enlace de la videollamada':' del consultorio') + ' y la invitación para su calendario.</small></span></li>'
+       + '<li><span class="e">⏰</span><span><b>Recordatorio un día antes</b><small>Automático. La psicóloga no tiene que acordarse de escribirle a nadie.</small></span></li>'
+       + '<li><span class="e">📅</span><span><b>La cita ya está en la agenda de la psicóloga</b><small>Marcada como pagada. Ese espacio desaparece para las demás familias.</small></span></li>'
+       + (s.total?'<li><span class="e">📄</span><span><b>El reporte se libera al completar el pago</b><small>Saldo pendiente: ' + q(s.total - s.p) + '. Cuando se pague, el reporte se envía solo.</small></span></li>':'')
+       + '</ul><div class="acciones" style="justify-content:center"><button class="bt" data-a="vista" data-v="psico">Ver cómo lo vio la psicóloga →</button><button class="bt sec" data-a="reiniciar">Agendar otra</button></div>';
+  }
+  return h;
+}
+
+function campo(k,l){ return '<div class="campo"><label for="f-' + k + '">' + l + '</label><input id="f-' + k + '" data-f="' + k + '" value="' + esc(S[k]) + '"></div>'; }
+
+function resumen(){
+  var s = servicio();
+  var h = '<aside class="panel resumen"><h3>Su cita</h3><dl>'
+        + '<div><dt>Servicio</dt><dd' + (s?'':' class="vacio"') + '>' + (s?esc(s.n):"Sin elegir") + '</dd></div>'
+        + '<div><dt>Día y hora</dt><dd' + (S.hora?'':' class="vacio"') + '>' + (S.hora?etiquetaDia(S.dia) + ', ' + S.hora:"Sin elegir") + '</dd></div>'
+        + (S.paso>=4?'<div><dt>Para</dt><dd>' + esc(S.nino) + ', ' + esc(S.edad) + ' años</dd></div>':'')
+        + '</dl>';
+  if(s) h += '<div class="total"><span>' + (s.total?"Anticipo hoy":"Total") + '</span><span>' + q(s.p) + '</span></div>';
+  h += '<div class="regla"><b>Política del consultorio:</b> la cita se confirma con el pago. Cancelación gratis hasta 24 horas antes; después el pago se toma como sesión realizada.</div></aside>';
+  return h;
+}
+
+function vistaPsico(){
+  var filas = CITAS.slice().sort(function(a,b){ return a.d-b.d || HORAS.indexOf(a.h)-HORAS.indexOf(b.h); });
+  var cobrado = 0, nPag = 0, nApart = 0, nLib = 0;
+  filas.forEach(function(c){
+    var s = servPorId(c.serv);
+    if(c.estado==="pagada"){ cobrado += s.p; nPag++; }
+    else if(c.estado==="apartada") nApart++;
+    else nLib++;
+  });
+  var h = '<div class="cifras">'
+        + '<div class="cifra buena"><small>Cobrado por adelantado</small><b>' + q(cobrado) + '</b></div>'
+        + '<div class="cifra"><small>Citas confirmadas</small><b>' + nPag + '</b></div>'
+        + '<div class="cifra"><small>Esperando pago</small><b>' + nApart + '</b></div>'
+        + '<div class="cifra buena"><small>Citas sin pagar</small><b>0</b></div>'
+        + '</div>';
+
+  h += '<div class="dos"><div class="panel"><h2>Agenda de la semana</h2><p class="ayuda">Nada se confirma sin pago. Lo apartado se vence solo.</p><div style="overflow-x:auto"><table class="tabla"><thead><tr><th>Cuándo</th><th>Quién</th><th>Servicio</th><th>Estado</th></tr></thead><tbody>';
+  filas.forEach(function(c){
+    var s = servPorId(c.serv), idx = CITAS.indexOf(c);
+    var chip = c.estado==="pagada" ? '<span class="chip pagada">✓ Pagada</span>'
+             : c.estado==="apartada" ? '<span class="chip apartada">⏳ Apartada · vence en ' + (c.expira||30) + ' min</span>' + (c===S.nueva?'':'<button class="mini" data-a="vencer" data-i="' + idx + '">Simular: no pagó</button>')
+             : '<span class="chip liberada">Liberada</span><small>No se pagó; el espacio volvió a la agenda.</small>';
+    h += '<tr' + (c===S.nueva?' class="nueva"':'') + '><td><b>' + etiquetaDia(c.d) + '</b><small>' + c.h + '</small></td><td>' + esc(c.quien) + (c===S.nueva?'<small>Recién agendada por usted</small>':'') + '</td><td>' + s.n + (c.nota?'<small>' + c.nota + '</small>':'') + '</td><td>' + chip + '</td></tr>';
+  });
+  h += '</tbody></table></div>';
+  if(!S.nueva) h += '<p class="leyenda" style="margin-top:14px">Cambie a "Como papá o mamá" y agende una cita: aparecerá aquí en cuanto la aparte, y cambiará a pagada en cuanto pague.</p>';
+  h += '</div>';
+
+  h += '<div style="display:grid;gap:22px"><div class="panel"><h2>Reportes</h2><p class="ayuda">El reporte no sale hasta que el saldo esté en cero.</p><div class="rep">';
+  REPORTES.forEach(function(r,i){
+    h += '<div class="r"><b>' + esc(r.quien) + '</b><small>' + r.tipo + '</small><div class="candado">'
+       + (r.libre ? '<span class="lib">✓ ' + (r.nota || 'Pagado · enviado a la familia') + '</span>'
+                  : '<span class="bloq">🔒 Bloqueado · saldo ' + q(r.saldo) + '</span><button class="btmini" data-a="saldo" data-i="' + i + '">Simular: pagaron el saldo</button>')
+       + '</div></div>';
+  });
+  h += '</div></div>';
+  h += '<div class="panel"><h2>Lo que hace solo</h2><ul class="auto" style="margin-top:12px">'
+     + '<li><span>⏳</span>Aparta el espacio 30 minutos y lo suelta si no se paga.</li>'
+     + '<li><span>💳</span>Cobra con tarjeta o transferencia, en quetzales.</li>'
+     + '<li><span>📧</span>Manda confirmación y recibo a la familia.</li>'
+     + '<li><span>⏰</span>Recuerda la cita un día antes.</li>'
+     + '<li><span>📄</span>Libera el reporte cuando el saldo llega a cero.</li>'
+     + '</ul></div></div></div>';
+  return h;
+}
+
+/* ---------- eventos ---------- */
+document.addEventListener("input", function(e){
+  var f = e.target.getAttribute("data-f"); if(f) S[f] = e.target.value;
+});
+document.addEventListener("click", function(e){
+  var b = e.target.closest("[data-a]"); if(!b) return;
+  var a = b.getAttribute("data-a");
+  if(a==="vista"){ S.vista = b.getAttribute("data-v"); pintar(); window.scrollTo(0,0); return; }
+  if(a==="serv"){ S.serv = b.getAttribute("data-id"); S.paso = 2; }
+  if(a==="dia"){ S.dia = +b.getAttribute("data-i"); }
+  if(a==="hora"){ S.hora = b.getAttribute("data-h"); S.paso = 3; }
+  if(a==="modal"){ S.modalidad = b.getAttribute("data-m"); }
+  if(a==="metodo"){ S.metodo = b.getAttribute("data-m"); }
+  if(a==="atras"){
+    if(S.paso===4){ pararReloj(); if(S.nueva){ CITAS.splice(CITAS.indexOf(S.nueva),1); S.nueva = null; } }
+    S.paso = Math.max(1, S.paso-1); if(S.paso<3) S.hora = (S.paso===2?null:S.hora);
+  }
+  if(a==="apartar"){
+    S.nueva = {d:S.dia, h:S.hora, quien:(S.nino||"Su hijo") + ", " + (S.edad||"?") + " años", serv:S.serv, estado:"apartada", expira:30};
+    CITAS.push(S.nueva); S.paso = 4; S.expiradoPago = false; arrancarReloj();
+  }
+  if(a==="pagar"){
+    S.procesando = true; pintar();
+    setTimeout(function(){ S.procesando = false; pararReloj(); if(S.nueva) S.nueva.estado = "pagada"; S.paso = 5; pintar(); window.scrollTo({top:0,behavior:"smooth"}); }, 1300);
+    return;
+  }
+  if(a==="expirar"){ if(S.nueva) S.liberados[S.nueva.d+"|"+S.nueva.h] = true; expirar(); return; }
+  if(a==="reiniciar"){ pararReloj(); S.paso = 1; S.serv = null; S.hora = null; S.nueva = null; S.expiradoPago = false; S.metodo = "tarjeta"; }
+  if(a==="vencer"){ var c = CITAS[+b.getAttribute("data-i")]; c.estado = "liberada"; S.liberados[c.d+"|"+c.h] = true; }
+  if(a==="saldo"){ var r = REPORTES[+b.getAttribute("data-i")]; r.libre = true; r.saldo = 0; r.nota = "Pagado · el reporte se envió solo a la familia"; }
+  pintar();
+});
+
+pintar();
+</script>
+</body>
+</html>
