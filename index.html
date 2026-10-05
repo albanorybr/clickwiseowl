@@ -84,6 +84,15 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .contact .btn.cal{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.55);margin-left:12px}
   .contact .btn.cal:hover{background:rgba(255,255,255,.08);border-color:#fff;box-shadow:none}
   @media(max-width:560px){.contact .btn.cal{margin-left:0;margin-top:12px}}
+  .card.wide{grid-column:1/-1;display:grid;grid-template-columns:1.1fr 1fr;gap:28px;align-items:start;background:linear-gradient(135deg,var(--card) 55%,var(--accent-soft))}
+  .card.wide .new{font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:var(--accent);padding:3px 10px;border-radius:999px;margin-left:8px;vertical-align:3px;font-family:Inter,sans-serif}
+  .card.wide ul{list-style:none;margin:0}
+  .card.wide li{padding:7px 0;border-top:1px solid var(--line);font-size:.93rem;color:var(--ink-soft)}
+  .card.wide li:first-child{border-top:0}
+  .card.wide li::before{content:"✓";color:var(--accent);font-weight:700;margin-right:10px}
+  .card.wide .acts{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;margin-top:16px}
+  .linkbtn{background:none;border:0;padding:0;font:inherit;font-weight:600;font-size:.9rem;color:var(--accent);cursor:pointer}
+  @media (max-width:760px){.card.wide{grid-template-columns:1fr;gap:16px}}
   footer{padding:36px 0;text-align:center;color:var(--ink-soft);font-size:.88rem}
   .socials{margin-bottom:10px}
   .socials a{margin:0 10px;font-weight:500}
@@ -115,7 +124,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </nav>
 
 <header class="hero wrap">
-  <span class="eyebrow"><span data-es>Sitios web · Apps con IA · Analítica · Latinoamérica</span><span data-en>Websites · AI apps · Analytics · Latin America</span></span>
+  <span class="eyebrow"><span data-es>Sitios web · Apps con IA · Implementación de IA · Latinoamérica</span><span data-en>Websites · AI apps · AI implementation · Latin America</span></span>
   <h1><span data-es>Tecnología <em>inteligente</em> para hacer crecer tu negocio</span><span data-en><em>Smart</em> technology to grow your business</span></h1>
   <p><span data-es>Creo sitios web y apps con inteligencia artificial para pymes: sitios que convierten visitas en clientes, asistentes que atienden 24/7, herramientas que automatizan tareas repetitivas y tableros que convierten datos en decisiones.</span><span data-en>I build AI-powered websites and web apps for small and medium businesses: sites that turn visitors into customers, assistants that serve clients 24/7, tools that automate repetitive tasks, and dashboards that turn data into decisions.</span></p>
   <a class="btn" href="#contacto"><span data-es>Hablemos de tu proyecto</span><span data-en>Let's talk about your project</span></a>
@@ -153,6 +162,25 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <h3><span data-es>Datos y analítica</span><span data-en>Data &amp; Analytics</span></h3>
         <p style="margin-bottom:12px"><span data-es>Tableros claros con Google Analytics y tus datos de ventas, para que tomes decisiones con confianza.</span><span data-en>Clear dashboards with Google Analytics and your sales data, so you can decide with confidence.</span></p>
         <a href="/demo/panel/" style="font-weight:600;font-size:.9rem"><span data-es>Ver demo en vivo →</span><span data-en>See live demo →</span></a>
+      </div>
+      <div class="card wide" id="implementacion-ia">
+        <div>
+          <div class="icon">🧭</div>
+          <h3><span data-es>Implementación de IA en tu empresa</span><span data-en>AI Implementation for Your Company</span><span class="new"><span data-es>Nuevo</span><span data-en>New</span></span></h3>
+          <p style="margin-bottom:10px"><span data-es>Tu equipo ya usa IA — la pregunta es si con orden o a escondidas. Te ayudo a llevarla a tu empresa de forma segura: dónde sí ahorra tiempo, qué herramientas usar, quién tiene acceso y qué información nunca debe salir.</span><span data-en>Your team is already using AI — the question is whether in an orderly way or behind your back. I help you bring it into your company safely: where it really saves time, which tools to use, who gets access, and what information must never leave.</span></p>
+          <p style="font-size:.88rem"><span data-es>Precio a la medida, según el tamaño de tu equipo.</span><span data-en>Custom pricing, based on your team's size.</span></p>
+          <div class="acts">
+            <button class="linkbtn" data-cal-namespace="cafe" data-cal-link="clickwiseowl/15min" data-cal-config='{"layout":"month_view"}'><span data-es>Agenda un diagnóstico gratis →</span><span data-en>Book a free assessment →</span></button>
+            <a href="https://wa.me/50253771248?text=Hola%20Nory%2C%20me%20interesa%20la%20implementaci%C3%B3n%20de%20IA%20en%20mi%20empresa." target="_blank" rel="noopener" style="font-size:.9rem;font-weight:600"><span data-es>o escríbeme por WhatsApp</span><span data-en>or message me on WhatsApp</span></a>
+          </div>
+        </div>
+        <ul>
+          <li><span data-es>Diagnóstico: qué tareas de tu equipo conviene apoyar con IA</span><span data-en>Assessment: which of your team's tasks AI should support</span></li>
+          <li><span data-es>Elección de herramientas y cuentas de empresa para tu personal</span><span data-en>Choosing tools and setting up business accounts for your staff</span></li>
+          <li><span data-es>Política de uso: qué datos sí y cuáles nunca se comparten</span><span data-en>Usage policy: which data can and can never be shared</span></li>
+          <li><span data-es>Capacitación práctica con casos de tu propio negocio</span><span data-en>Hands-on training using cases from your own business</span></li>
+          <li><span data-es>Acompañamiento mientras el equipo agarra ritmo</span><span data-en>Follow-up support while your team gets up to speed</span></li>
+        </ul>
       </div>
     </div>
   </div>
@@ -295,6 +323,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <p style="font-size:.85rem;color:var(--ink-soft);margin-bottom:14px"><span data-es>Catálogo · Pedidos por WhatsApp · Precios que el dueño actualiza</span><span data-en>Catalog · WhatsApp orders · Owner-updated prices</span></p>
         <a href="/demo/catalogo/" style="font-weight:600"><span data-es>Ver el catálogo →</span><span data-en>See the catalog →</span></a>
       </div>
+      <div class="card" style="border-color:var(--accent)">
+        <div class="icon">💳</div>
+        <h3><span data-es>Agenda con cobro en línea</span><span data-en>Booking with Online Payment</span><span style="font-size:.7rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--gold)"><span data-es>· Demo en vivo</span><span data-en>· Live demo</span></span></h3>
+        <p style="margin-bottom:14px"><span data-es>Conecta con tu cliente: elige su cita, paga en línea y la cita se confirma sola. Lo que no se paga en 30 minutos vuelve a la agenda, y los reportes no salen sin saldo cero. Se acabaron las citas fantasma y los "le pago la otra semana". Pruébalo como cliente y luego cambia a la vista de la psicóloga.</span><span data-en>Connect with your client: they pick a slot, pay online, and the appointment confirms itself. Anything unpaid after 30 minutes goes back on the calendar, and reports aren't released until the balance is zero. No more ghost bookings or "I'll pay you next week." Try it as a client, then switch to the psychologist's view.</span></p>
+        <p style="font-size:.85rem;color:var(--ink-soft);margin-bottom:14px"><span data-es>Agenda · Pago con tarjeta o transferencia · Confirmación automática</span><span data-en>Booking · Card or bank transfer · Automatic confirmation</span></p>
+        <a href="/demo/agenda/" style="font-weight:600"><span data-es>Probar la agenda →</span><span data-en>Try the booking →</span></a>
+      </div>
       <div class="card">
         <div class="icon">💡</div>
         <h3><span data-es>¿Qué agente necesita tu negocio?</span><span data-en>What agent does your business need?</span></h3>
@@ -370,7 +405,7 @@ Cal.ns.cafe("ui", {"cssVarsPerTheme":{"light":{"cal-brand":"#7d2e8e"},"dark":{"c
   window.dataLayer = window.dataLayer || [];
   function push(o) { window.dataLayer.push(o); }
 
-  var DEMOS = { "/demo/": "bot_citas", "/demo/salon/": "sitio_salon", "/demo/cotizador/": "cotizador", "/demo/panel/": "panel_datos", "/demo/catalogo/": "catalogo" };
+  var DEMOS = { "/demo/": "bot_citas", "/demo/salon/": "sitio_salon", "/demo/cotizador/": "cotizador", "/demo/panel/": "panel_datos", "/demo/catalogo/": "catalogo", "/demo/agenda/": "agenda_cobro" };
 
   document.addEventListener("click", function (e) {
     var a = e.target.closest("a, button");
