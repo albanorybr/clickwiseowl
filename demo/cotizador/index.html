@@ -251,7 +251,7 @@ input:focus { border-color:var(--red);background:#fff; }
 
 
 <header>
-  <div class="logo-circle">DC</div>
+  <div class="logo-circle">AR</div>
   <div>
     <div class="header-title">Academia Ritmo</div>
     <div class="header-sub">Cotizador de Competencias 2026</div>
@@ -266,8 +266,8 @@ input:focus { border-color:var(--red);background:#fff; }
     <h1>Cotiza tu participación<br><span>en competencias 2026</span></h1>
     <p>Completa el formulario paso a paso y obtén el desglose completo de costos, fechas de pago y un PDF listo para compartir.</p>
     <div class="comp-badges">
-      <span class="badge">🏆 Dance Challenge · 16-17 Mayo · Nacional</span>
-      <span class="badge">🌟 Stage Championship · 12-14 Junio · Internacional</span>
+      <span class="badge">🏆 Copa Colibrí · 16-17 Mayo · Nacional</span>
+      <span class="badge">🌟 Gran Escena Internacional · 12-14 Junio · Internacional</span>
     </div>
   </div>
 
@@ -305,26 +305,26 @@ input:focus { border-color:var(--red);background:#fff; }
 
     <!-- PASO 2: TALLERES OBLIGATORIOS -->
     <div class="card">
-      <div class="card-title"><div class="step-num">2</div>Talleres Técnicos — ELECTI (obligatorio)</div>
-      <p style="font-size:13px;color:#555;margin-bottom:16px">Todas las alumnas que compiten deben tomar los talleres ELECTI con Valeria Teissier y Karen González (15–20 de abril 2026).</p>
+      <div class="card-title"><div class="step-num">2</div>Talleres Técnicos — IMPULSO (obligatorio)</div>
+      <p style="font-size:13px;color:#555;margin-bottom:16px">Todas las alumnas que compiten deben tomar los talleres IMPULSO con Lucía Ferrer y Andrea Molina (15–20 de abril 2026).</p>
       <div class="taller-grid">
-        <label class="taller-card" id="card-electi-pre" onclick="seleccionarElecti('pre')">
-          <input type="radio" name="electi" value="pre">
-          <div class="taller-check" id="check-electi-pre"></div>
+        <label class="taller-card" id="card-impulso-pre" onclick="seleccionarImpulso('pre')">
+          <input type="radio" name="impulso" value="pre">
+          <div class="taller-check" id="check-impulso-pre"></div>
           <div class="taller-name">Pre-registro</div>
           <div class="taller-precio">Q1,495</div>
           <div class="taller-sub">Pago antes del 15 de marzo<br>Depósito Q500 · Resto antes del 10 de abril</div>
         </label>
-        <label class="taller-card" id="card-electi-reg" onclick="seleccionarElecti('reg')">
-          <input type="radio" name="electi" value="reg">
-          <div class="taller-check" id="check-electi-reg"></div>
+        <label class="taller-card" id="card-impulso-reg" onclick="seleccionarImpulso('reg')">
+          <input type="radio" name="impulso" value="reg">
+          <div class="taller-check" id="check-impulso-reg"></div>
           <div class="taller-name">Registro normal</div>
           <div class="taller-precio">Q1,550</div>
           <div class="taller-sub">Pago después del 16 de marzo<br>Todo antes del 10 de abril</div>
         </label>
       </div>
       <div class="info-box" style="margin-top:14px">
-        <strong>Coreografía grupal ELECTI — Q1,000</strong> (incluida automáticamente, es obligatoria)<br>
+        <strong>Coreografía grupal IMPULSO — Q1,000</strong> (incluida automáticamente, es obligatoria)<br>
         Reserva Q300 antes del 10 de marzo · Resto antes del 10 de abril.
       </div>
     </div>
@@ -377,17 +377,17 @@ input:focus { border-color:var(--red);background:#fff; }
       <div class="comp-selector">
         <label class="comp-option" id="opt-dc" onclick="toggleComp('dc')">
           <input type="checkbox" id="chk-dc">
-          <div class="comp-name">Dance Challenge</div>
+          <div class="comp-name">Copa Colibrí</div>
           <div class="comp-date">16 y 17 de Mayo 2026</div>
           <div class="comp-tipo">🏆 Competencia Nacional · Westin Camino Real</div>
           <div class="comp-check" id="check-dc"></div>
         </label>
-        <label class="comp-option" id="opt-stage" onclick="toggleComp('stage')">
-          <input type="checkbox" id="chk-stage">
-          <div class="comp-name">Stage Championship</div>
+        <label class="comp-option" id="opt-escena" onclick="toggleComp('escena')">
+          <input type="checkbox" id="chk-escena">
+          <div class="comp-name">Gran Escena Internacional</div>
           <div class="comp-date">12 – 14 de Junio 2026</div>
           <div class="comp-tipo">🌟 Competencia Internacional · Costos en USD</div>
-          <div class="comp-check" id="check-stage"></div>
+          <div class="comp-check" id="check-escena"></div>
         </label>
       </div>
       <div class="info-box" style="margin-top:14px">
@@ -441,13 +441,13 @@ input:focus { border-color:var(--red);background:#fff; }
       <div class="card-title"><div class="step-num">6</div>Talleres en competencia</div>
 
       <div id="talleres-dc-section" style="display:none">
-        <div class="section-divider">Dance Challenge — 2 talleres gratis + 1 con costo</div>
+        <div class="section-divider">Copa Colibrí — 2 talleres gratis + 1 con costo</div>
         <div class="taller-comp-list" id="talleres-dc-list"></div>
       </div>
 
-      <div id="talleres-stage-section" style="display:none;margin-top:16px">
-        <div class="section-divider">Stage Championship — Todos los talleres incluidos</div>
-        <div class="info-box">✅ Los 3 talleres de Stage están incluidos sin costo adicional al participar en la competencia.</div>
+      <div id="talleres-escena-section" style="display:none;margin-top:16px">
+        <div class="section-divider">Gran Escena Internacional — Todos los talleres incluidos</div>
+        <div class="info-box">✅ Los 3 talleres de Gran Escena están incluidos sin costo adicional al participar en la competencia.</div>
       </div>
     </div>
 
@@ -513,12 +513,12 @@ input:focus { border-color:var(--red);background:#fff; }
       <h3>💡 Entradas para el público (referencia — horarios 1 semana antes)</h3>
       <div class="entrada-grid">
         <div class="entrada-item">
-          <div class="ei-comp">Dance Challenge</div>
+          <div class="ei-comp">Copa Colibrí</div>
           <div class="ei-precio">Q175 por espectador</div>
           <div class="ei-nota">Precio por entrada · Detalles según horarios</div>
         </div>
         <div class="entrada-item">
-          <div class="ei-comp">Stage Championship</div>
+          <div class="ei-comp">Gran Escena Internacional</div>
           <div class="ei-precio">$40 full pass</div>
           <div class="ei-nota">Acceso a toda la competencia<br>$12 pase por bloque (medio día)</div>
         </div>
@@ -528,10 +528,10 @@ input:focus { border-color:var(--red);background:#fff; }
     <!-- NOTAS -->
     <div style="background:var(--card-bg);border-radius:13px;padding:16px 18px;box-shadow:var(--shadow);font-size:12px;color:#666;line-height:1.8;margin-bottom:18px">
       <strong style="color:var(--black);display:block;margin-bottom:6px">📋 Información de pagos</strong>
-      <strong>Inscripciones a competencias:</strong> Efectivo o transferencia · Cta. Monetaria BI 783 000 237-9 (no generan factura de la academia).<br>
+      <strong>Inscripciones a competencias:</strong> Efectivo o transferencia · Cta. Monetaria 000-000000-0 (ejemplo) (no generan factura de la academia).<br>
       <strong>Talleres y ensayos:</strong> Tarjeta, transferencia o efectivo — sí generan factura.<br>
-      <strong>Stage Championship:</strong> Se puede pagar en Quetzales o Dólares según el tipo de cambio del día.<br>
-      <strong>Trajes Weissman:</strong> $88 promedio por traje + Q180 envío a Guatemala. El costo exacto de envío se confirma cuando el paquete llega a Guatemala.
+      <strong>Gran Escena Internacional:</strong> Se puede pagar en Quetzales o Dólares según el tipo de cambio del día.<br>
+      <strong>Trajes de competencia:</strong> $88 promedio por traje + Q180 envío a Guatemala. El costo exacto de envío se confirma cuando el paquete llega a Guatemala.
     </div>
 
     <div class="result-actions">
@@ -562,25 +562,25 @@ input:focus { border-color:var(--red);background:#fff; }
 // PRECIOS
 // ═══════════════════════════════════════════
 const P = {
-  electi_pre: 1495,
-  electi_reg: 1550,
-  electi_coreo: 1000,
+  impulso_pre: 1495,
+  impulso_reg: 1550,
+  impulso_coreo: 1000,
   ballroom_pre: 800,
   ballroom_reg: 1000,
   ballroom_coreo: 1000,
   fee_academia: 200,         // por competencia
-  // Dance Challenge (Q)
+  // Copa Colibrí (Q)
   dc_solo: 400,
   dc_duo: 600,
   dc_trio: 750,
   dc_grupal_1: 300,
   dc_grupal_extra: 100,
   dc_taller_extra: 150,      // 2 gratis, 1 paga
-  // Stage (USD)
-  stage_solo_usd: 60,
-  stage_duo_usd: 50,
-  stage_trio_usd: 50,
-  stage_grupal_usd: 40,
+  // Gran Escena (USD)
+  escena_solo_usd: 60,
+  escena_duo_usd: 50,
+  escena_trio_usd: 50,
+  escena_grupal_usd: 40,
   // Montaje / Limpieza
   montaje_extran_usd: 475,   // solo, maestras extranjeras
   limpieza_hora: 250,        // Q por hora
@@ -597,7 +597,7 @@ const P = {
 
 const SOLOS = ["Jazz","Lírico","Contemporáneo","Hip Hop","Tap","Acro"];
 const DUOS_TRIOS = ["Jazz","Lírico","Contemporáneo","Hip Hop","Tap","Acro"];
-const GRUPALES_ELECTI = ["Grupal ELECTI (coreografía del taller)"];
+const GRUPALES_IMPULSO = ["Grupal IMPULSO (coreografía del taller)"];
 const GRUPALES_NAC = [
   "Jazz — Mini — Nombre del Baile",
   "Jazz — Junior — Nombre del Baile",
@@ -623,7 +623,7 @@ const GRUPALES_NAC = [
 // ESTADO
 // ═══════════════════════════════════════════
 let tcHoy = null;   // tipo de cambio Q/USD
-let electiSel = null;     // 'pre' o 'reg'
+let impulsoSel = null;     // 'pre' o 'reg'
 let ballroomSel = 'no';
 let historial = JSON.parse(localStorage.getItem('dc_historial_v2') || '[]');
 let ultimaCotizacion = null;
@@ -642,7 +642,7 @@ async function obtenerTipoCambio() {
   const dot = document.getElementById('tc-dot');
   const txt = document.getElementById('tc-text');
   dot.style.background = '#22c55e';
-  txt.innerHTML = `Tipo de cambio hoy: <strong>Q${tcHoy.toFixed(2)} por USD$1</strong> · Referencia Banco de Guatemala · Los pagos en Stage pueden hacerse en Q o USD`;
+  txt.innerHTML = `Tipo de cambio hoy: <strong>Q${tcHoy.toFixed(2)} por USD$1</strong> · Referencia Banco de Guatemala · Los pagos en Gran Escena pueden hacerse en Q o USD`;
 }
 
 // ═══════════════════════════════════════════
@@ -693,8 +693,8 @@ function construirListaDuos() {
       <div class="baile-info">
         <label for="${id}" class="baile-label">${b} <span style="font-size:10px;color:var(--red);font-weight:600">· Se requiere comprar traje</span></label>
         <div class="montaje-opts" id="${id}_tipo">
-          <label class="montaje-opt-row"><input type="radio" name="${id}_cat" value="duo" checked> Dúo <em style="color:#888">(Q600 c/alumna DC · $50 c/alumna Stage)</em></label>
-          <label class="montaje-opt-row"><input type="radio" name="${id}_cat" value="trio"> Trío <em style="color:#888">(Q750 c/alumna DC · $50 c/alumna Stage)</em></label>
+          <label class="montaje-opt-row"><input type="radio" name="${id}_cat" value="duo" checked> Dúo <em style="color:#888">(Q600 c/alumna Colibrí · $50 c/alumna Gran Escena)</em></label>
+          <label class="montaje-opt-row"><input type="radio" name="${id}_cat" value="trio"> Trío <em style="color:#888">(Q750 c/alumna Colibrí · $50 c/alumna Gran Escena)</em></label>
         </div>
       </div>
       <span class="baile-type">Dúo / Trío</span>
@@ -705,13 +705,13 @@ function construirListaDuos() {
 function construirListaGrupales() {
   const c = document.getElementById('grupales-list');
   c.innerHTML += '<div class="baile-section-title" style="margin-top:0">Coreografías de Talleres</div>';
-  GRUPALES_ELECTI.forEach(b => {
+  GRUPALES_IMPULSO.forEach(b => {
     const id = 'grp_'+b.replace(/[\s()]/g,'_');
     c.innerHTML += `
     <div class="baile-row">
       <input type="checkbox" class="baile-check" id="${id}" onchange="validarFormulario()">
       <div class="baile-info"><label for="${id}" class="baile-label">${b} <span style="font-size:10px;color:var(--red);font-weight:600">· Se requiere comprar traje</span></label></div>
-      <span class="baile-type" style="background:#fef3c7;color:#92400e">ELECTI</span>
+      <span class="baile-type" style="background:#fef3c7;color:#92400e">IMPULSO</span>
     </div>`;
   });
   // Grupal Ballroom — solo visible si se seleccionó Ballroom
@@ -741,7 +741,7 @@ function toggleTallerDC(i) {
 
 function construirTalleresComp() {
   const c = document.getElementById('talleres-dc-list');
-  const talleres = ['Taller DC 1 (incluido)','Taller DC 2 (incluido)','Taller DC 3 (Q150)'];
+  const talleres = ['Taller Colibrí 1 (incluido)','Taller Colibrí 2 (incluido)','Taller Colibrí 3 (Q150)'];
   const precios = [0,0,150];
   talleres.forEach((t,i) => {
     const id = 'tdc_'+i;
@@ -757,10 +757,10 @@ function construirTalleresComp() {
 // ═══════════════════════════════════════════
 // UI HANDLERS
 // ═══════════════════════════════════════════
-function seleccionarElecti(val) {
-  electiSel = val;
+function seleccionarImpulso(val) {
+  impulsoSel = val;
   ['pre','reg'].forEach(v => {
-    document.getElementById('card-electi-'+v).classList.toggle('selected', v===val);
+    document.getElementById('card-impulso-'+v).classList.toggle('selected', v===val);
   });
   validarFormulario();
 }
@@ -793,11 +793,11 @@ function toggleComp(comp) {
   document.getElementById('opt-'+comp).classList.toggle('selected', chk.checked);
 
   const hasDC = document.getElementById('chk-dc').checked;
-  const hasSt = document.getElementById('chk-stage').checked;
+  const hasSt = document.getElementById('chk-escena').checked;
   document.getElementById('card-bailes').style.display = (hasDC||hasSt) ? 'block' : 'none';
   document.getElementById('card-talleres-comp').style.display = (hasDC||hasSt) ? 'block' : 'none';
   document.getElementById('talleres-dc-section').style.display = hasDC ? 'block' : 'none';
-  document.getElementById('talleres-stage-section').style.display = hasSt ? 'block' : 'none';
+  document.getElementById('talleres-escena-section').style.display = hasSt ? 'block' : 'none';
   validarFormulario();
 }
 
@@ -825,8 +825,8 @@ function showTab(tab, btn) {
 function validarFormulario() {
   const nombre = document.getElementById('nombre-alumno').value.trim();
   const hasDC = document.getElementById('chk-dc').checked;
-  const hasSt = document.getElementById('chk-stage').checked;
-  const ok = nombre && electiSel && (hasDC || hasSt);
+  const hasSt = document.getElementById('chk-escena').checked;
+  const ok = nombre && impulsoSel && (hasDC || hasSt);
   document.getElementById('btn-calcular').disabled = !ok;
 }
 
@@ -835,8 +835,8 @@ function validarFormulario() {
 // ═══════════════════════════════════════════
 function recopilar() {
   const hasDC = document.getElementById('chk-dc').checked;
-  const hasSt = document.getElementById('chk-stage').checked;
-  const solos=[], duos=[], trios=[], grpElecti=[], grpNac=[];
+  const hasSt = document.getElementById('chk-escena').checked;
+  const solos=[], duos=[], trios=[], grpImpulso=[], grpNac=[];
 
   SOLOS.forEach(b => {
     const id='solo_'+b.replace(/\s/g,'_');
@@ -852,13 +852,13 @@ function recopilar() {
       (cat==='trio' ? trios : duos).push({nombre:b});
     }
   });
-  GRUPALES_ELECTI.forEach(b => {
+  GRUPALES_IMPULSO.forEach(b => {
     const id='grp_'+b.replace(/[\s()]/g,'_');
-    if(document.getElementById(id)?.checked) grpElecti.push(b);
+    if(document.getElementById(id)?.checked) grpImpulso.push(b);
   });
   // Grupal Ballroom (solo si se seleccionó Ballroom)
   if(ballroomSel !== 'no' && document.getElementById('grp_ballroom')?.checked) {
-    grpElecti.push('Grupal Ballroom');
+    grpImpulso.push('Grupal Ballroom');
   }
   GRUPALES_NAC.forEach(b => {
     const id='grp_'+b.replace(/[\s—]/g,'_');
@@ -868,7 +868,7 @@ function recopilar() {
   const talleresDC = [0,1,2].filter(i => document.getElementById('tdc_'+i)?.checked);
   const ballroomCoreo = document.getElementById('chk-ballroom-coreo')?.checked || false;
 
-  return { hasDC, hasSt, solos, duos, trios, grpElecti, grpNac, talleresDC, ballroomCoreo };
+  return { hasDC, hasSt, solos, duos, trios, grpImpulso, grpNac, talleresDC, ballroomCoreo };
 }
 
 // ═══════════════════════════════════════════
@@ -876,30 +876,30 @@ function recopilar() {
 // ═══════════════════════════════════════════
 function calcularCostos(sel) {
   const tc = tcHoy || 7.75;
-  const {hasDC, hasSt, solos, duos, trios, grpElecti, grpNac, talleresDC, ballroomCoreo} = sel;
-  const totalGrupales = grpElecti.length + grpNac.length;
+  const {hasDC, hasSt, solos, duos, trios, grpImpulso, grpNac, talleresDC, ballroomCoreo} = sel;
+  const totalGrupales = grpImpulso.length + grpNac.length;
 
   let lineasTalleres=[], lineasInsc=[], lineasEnsayos=[], lineasTrajes=[];
   let subTalleres=0, subInscQ=0, subInscUSD=0, subEnsayos=0, subTrajesQ=0, subTrajesUSD=0;
   const fechas=[];
 
   // ── TALLERES ──
-  // ELECTI taller
-  const electiCosto = electiSel==='pre' ? P.electi_pre : P.electi_reg;
-  lineasTalleres.push({desc:`Taller ELECTI (${electiSel==='pre'?'pre-registro':'registro normal'})`, monto:electiCosto, moneda:'Q'});
-  subTalleres += electiCosto;
-  if(electiSel==='pre') {
-    fechas.push({desc:'ELECTI — Depósito pre-registro',date:'Antes 15 mar',montoQ:500,moneda:'Q'});
-    fechas.push({desc:'ELECTI — Resto del taller',date:'Antes 10 abr',montoQ:electiCosto-500,moneda:'Q'});
+  // IMPULSO taller
+  const impulsoCosto = impulsoSel==='pre' ? P.impulso_pre : P.impulso_reg;
+  lineasTalleres.push({desc:`Taller IMPULSO (${impulsoSel==='pre'?'pre-registro':'registro normal'})`, monto:impulsoCosto, moneda:'Q'});
+  subTalleres += impulsoCosto;
+  if(impulsoSel==='pre') {
+    fechas.push({desc:'IMPULSO — Depósito pre-registro',date:'Antes 15 mar',montoQ:500,moneda:'Q'});
+    fechas.push({desc:'IMPULSO — Resto del taller',date:'Antes 10 abr',montoQ:impulsoCosto-500,moneda:'Q'});
   } else {
-    fechas.push({desc:'ELECTI — Pago completo',date:'Antes 10 abr',montoQ:electiCosto,moneda:'Q'});
+    fechas.push({desc:'IMPULSO — Pago completo',date:'Antes 10 abr',montoQ:impulsoCosto,moneda:'Q'});
   }
 
-  // ELECTI coreo grupal (obligatoria)
-  lineasTalleres.push({desc:'Coreografía grupal ELECTI (obligatoria)', monto:P.electi_coreo, moneda:'Q'});
-  subTalleres += P.electi_coreo;
-  fechas.push({desc:'ELECTI Coreo grupal — Reserva',date:'Antes 10 mar',montoQ:300,moneda:'Q'});
-  fechas.push({desc:'ELECTI Coreo grupal — Resto',date:'Antes 10 abr',montoQ:P.electi_coreo-300,moneda:'Q'});
+  // IMPULSO coreo grupal (obligatoria)
+  lineasTalleres.push({desc:'Coreografía grupal IMPULSO (obligatoria)', monto:P.impulso_coreo, moneda:'Q'});
+  subTalleres += P.impulso_coreo;
+  fechas.push({desc:'IMPULSO Coreo grupal — Reserva',date:'Antes 10 mar',montoQ:300,moneda:'Q'});
+  fechas.push({desc:'IMPULSO Coreo grupal — Resto',date:'Antes 10 abr',montoQ:P.impulso_coreo-300,moneda:'Q'});
 
   // BALLROOM
   if(ballroomSel!=='no') {
@@ -920,74 +920,74 @@ function calcularCostos(sel) {
     }
   }
 
-  // Taller extra Dance Challenge (Q150)
+  // Taller extra Copa Colibrí (Q150)
   if(hasDC && talleresDC.includes(2)) {
-    lineasTalleres.push({desc:'Taller extra Dance Challenge (3er taller)',monto:P.dc_taller_extra,moneda:'Q'});
+    lineasTalleres.push({desc:'Taller extra Copa Colibrí (3er taller)',monto:P.dc_taller_extra,moneda:'Q'});
     subTalleres += P.dc_taller_extra;
   }
 
   // ── FEES ACADEMIA ──
   if(hasDC) {
-    lineasEnsayos.push({desc:'Fee academia — Dance Challenge',monto:P.fee_academia,moneda:'Q'});
+    lineasEnsayos.push({desc:'Fee academia — Copa Colibrí',monto:P.fee_academia,moneda:'Q'});
     subEnsayos += P.fee_academia;
   }
   if(hasSt) {
-    lineasEnsayos.push({desc:'Fee academia — Stage Championship',monto:P.fee_academia,moneda:'Q'});
+    lineasEnsayos.push({desc:'Fee academia — Gran Escena Internacional',monto:P.fee_academia,moneda:'Q'});
     subEnsayos += P.fee_academia;
   }
 
-  // ── INSCRIPCIONES DANCE CHALLENGE ──
+  // ── INSCRIPCIONES COPA COLIBRÍ ──
   if(hasDC) {
     solos.forEach(s => {
-      lineasInsc.push({desc:`Solo "${s.nombre}" — Dance Challenge`,monto:P.dc_solo,moneda:'Q'});
+      lineasInsc.push({desc:`Solo "${s.nombre}" — Copa Colibrí`,monto:P.dc_solo,moneda:'Q'});
       subInscQ += P.dc_solo;
     });
     duos.forEach(d => {
-      lineasInsc.push({desc:`Dúo "${d.nombre}" — Dance Challenge`,monto:P.dc_duo,moneda:'Q',nota:'por alumna'});
+      lineasInsc.push({desc:`Dúo "${d.nombre}" — Copa Colibrí`,monto:P.dc_duo,moneda:'Q',nota:'por alumna'});
       subInscQ += P.dc_duo;
     });
     trios.forEach(t => {
-      lineasInsc.push({desc:`Trío "${t.nombre}" — Dance Challenge`,monto:P.dc_trio,moneda:'Q',nota:'por alumna'});
+      lineasInsc.push({desc:`Trío "${t.nombre}" — Copa Colibrí`,monto:P.dc_trio,moneda:'Q',nota:'por alumna'});
       subInscQ += P.dc_trio;
     });
-    const gtot = grpElecti.length + grpNac.length;
+    const gtot = grpImpulso.length + grpNac.length;
     if(gtot>0) {
-      lineasInsc.push({desc:`1er grupal — Dance Challenge`,monto:P.dc_grupal_1,moneda:'Q',nota:'por alumna'});
+      lineasInsc.push({desc:`1er grupal — Copa Colibrí`,monto:P.dc_grupal_1,moneda:'Q',nota:'por alumna'});
       subInscQ += P.dc_grupal_1;
       if(gtot>1) {
         const extras = gtot-1;
         const m = extras*P.dc_grupal_extra;
-        lineasInsc.push({desc:`${extras} grupal(es) adicional(es) — Dance Challenge`,monto:m,moneda:'Q',nota:`Q${P.dc_grupal_extra} c/u por alumna`});
+        lineasInsc.push({desc:`${extras} grupal(es) adicional(es) — Copa Colibrí`,monto:m,moneda:'Q',nota:`Q${P.dc_grupal_extra} c/u por alumna`});
         subInscQ += m;
       }
     }
-    if(lineasInsc.length) fechas.push({desc:'Inscripciones Dance Challenge',date:'15 de marzo',montoQ:subInscQ,moneda:'Q'});
+    if(lineasInsc.length) fechas.push({desc:'Inscripciones Copa Colibrí',date:'15 de marzo',montoQ:subInscQ,moneda:'Q'});
   }
 
-  // ── INSCRIPCIONES STAGE ──
-  let stageUSDtotal = 0;
+  // ── INSCRIPCIONES GRAN ESCENA ──
+  let escenaUSDtotal = 0;
   if(hasSt) {
     solos.forEach(s => {
-      lineasInsc.push({desc:`Solo "${s.nombre}" — Stage`,monto:P.stage_solo_usd,moneda:'USD'});
-      stageUSDtotal += P.stage_solo_usd;
+      lineasInsc.push({desc:`Solo "${s.nombre}" — Gran Escena`,monto:P.escena_solo_usd,moneda:'USD'});
+      escenaUSDtotal += P.escena_solo_usd;
     });
     duos.forEach(d => {
-      lineasInsc.push({desc:`Dúo "${d.nombre}" — Stage`,monto:P.stage_duo_usd,moneda:'USD',nota:'por alumna'});
-      stageUSDtotal += P.stage_duo_usd;
+      lineasInsc.push({desc:`Dúo "${d.nombre}" — Gran Escena`,monto:P.escena_duo_usd,moneda:'USD',nota:'por alumna'});
+      escenaUSDtotal += P.escena_duo_usd;
     });
     trios.forEach(t => {
-      lineasInsc.push({desc:`Trío "${t.nombre}" — Stage`,monto:P.stage_trio_usd,moneda:'USD',nota:'por alumna'});
-      stageUSDtotal += P.stage_trio_usd;
+      lineasInsc.push({desc:`Trío "${t.nombre}" — Gran Escena`,monto:P.escena_trio_usd,moneda:'USD',nota:'por alumna'});
+      escenaUSDtotal += P.escena_trio_usd;
     });
-    const gtot2 = grpElecti.length + grpNac.length;
+    const gtot2 = grpImpulso.length + grpNac.length;
     if(gtot2>0) {
-      const m = gtot2*P.stage_grupal_usd;
-      lineasInsc.push({desc:`${gtot2} grupal(es) — Stage`,monto:m,moneda:'USD',nota:'$40 por grupal por alumna'});
-      stageUSDtotal += m;
+      const m = gtot2*P.escena_grupal_usd;
+      lineasInsc.push({desc:`${gtot2} grupal(es) — Gran Escena`,monto:m,moneda:'USD',nota:'$40 por grupal por alumna'});
+      escenaUSDtotal += m;
     }
-    subInscUSD = stageUSDtotal;
-    if(stageUSDtotal>0) {
-      fechas.push({desc:'Inscripciones Stage Championship',date:'30 de marzo',montoQ:Math.round(stageUSDtotal*tc),monedaAlter:`$${stageUSDtotal} USD`,moneda:'USD'});
+    subInscUSD = escenaUSDtotal;
+    if(escenaUSDtotal>0) {
+      fechas.push({desc:'Inscripciones Gran Escena Internacional',date:'30 de marzo',montoQ:Math.round(escenaUSDtotal*tc),monedaAlter:`$${escenaUSDtotal} USD`,moneda:'USD'});
     }
   }
 
@@ -1018,7 +1018,7 @@ function calcularCostos(sel) {
   }
 
   // ── TRAJES ──
-  const trajeItems = [...solos.map(s=>s.nombre), ...duos.map(d=>d.nombre), ...trios.map(t=>t.nombre), ...grpElecti];
+  const trajeItems = [...solos.map(s=>s.nombre), ...duos.map(d=>d.nombre), ...trios.map(t=>t.nombre), ...grpImpulso];
   trajeItems.forEach(b => {
     lineasTrajes.push({desc:`Traje: ${b}`,monto:P.traje_usd,moneda:'USD',nota:`+ Q${P.envio_traje_q} envío (se confirma al llegar a Guatemala)`});
     subTrajesUSD += P.traje_usd;
@@ -1046,7 +1046,7 @@ function calcular() {
     const sel = recopilar();
     const res = calcularCostos(sel);
     const alumno = document.getElementById('nombre-alumno').value.trim();
-    const comps = [sel.hasDC?'Dance Challenge':'',sel.hasSt?'Stage':''].filter(Boolean).join(' + ');
+    const comps = [sel.hasDC?'Copa Colibrí':'',sel.hasSt?'Gran Escena':''].filter(Boolean).join(' + ');
     ultimaCotizacion = {
       alumno,
       mama: document.getElementById('nombre-mama').value.trim(),
@@ -1221,16 +1221,16 @@ function generarPDF() {
   doc.setFont('helvetica','bold'); doc.setFontSize(7.5); doc.setTextColor(80,80,80);
   doc.text('INFORMACIÓN DE PAGOS',M+3,y+6);
   doc.setFont('helvetica','normal'); doc.setFontSize(7); doc.setTextColor(100,100,100);
-  doc.text('Inscripciones a competencia: Efectivo/transferencia · Cta. Monetaria BI 783 000 237-9 (no generan factura de academia)',M+3,y+12);
+  doc.text('Inscripciones a competencia: Efectivo/transferencia · Cta. Monetaria 000-000000-0 (ejemplo) (no generan factura de academia)',M+3,y+12);
   doc.text('Talleres y ensayos: Tarjeta, transferencia o efectivo a la Academia (sí generan factura)',M+3,y+18);
-  doc.text('Stage: Se puede pagar en Q o USD · Trajes Weissman: $88 promedio + Q180 envío (se confirma al llegar a Guatemala)',M+3,y+24);
+  doc.text('Gran Escena: Se puede pagar en Q o USD · Trajes de competencia: $88 promedio + Q180 envío (se confirma al llegar a Guatemala)',M+3,y+24);
 
   // Footer
   doc.setFillColor(10,10,10); doc.rect(0,284,W,13,'F');
   doc.setFont('helvetica','normal'); doc.setFontSize(6.5); doc.setTextColor(120,120,120);
   doc.text('Academia Ritmo · Cotización generada '+ts+' · Sujeta a confirmación final',W/2,292,{align:'center'});
 
-  doc.save('cotizacion-dancecomplex-'+alumno.replace(/\s+/g,'_')+'.pdf');
+  doc.save('cotizacion-academia-ritmo-'+alumno.replace(/\s+/g,'_')+'.pdf');
   showToast('📄 PDF descargado correctamente');
 }
 
@@ -1257,7 +1257,7 @@ async function confirmarInscripcion() {
     mama:        ultimaCotizacion.mama,
     email:       ultimaCotizacion.email,
     tel:         ultimaCotizacion.tel,
-    electiSel:   electiSel,
+    impulsoSel:   impulsoSel,
     ballroomSel: ballroomSel,
     sel:         ultimaCotizacion.sel,
     res:         ultimaCotizacion.res,
@@ -1303,10 +1303,10 @@ function resetAll(){
   document.getElementById('card-talleres-comp').style.display='none';
   document.getElementById('ballroom-coreo-section').style.display='none';
   document.getElementById('talleres-dc-section').style.display='none';
-  document.getElementById('talleres-stage-section').style.display='none';
+  document.getElementById('talleres-escena-section').style.display='none';
   document.getElementById('resultado').style.display='none';
   document.getElementById('seccion-formulario').style.display='block';
-  electiSel=null; ballroomSel='no';
+  impulsoSel=null; ballroomSel='no';
   seleccionarBallroom('no');
   document.getElementById('btn-calcular').disabled=true;
   ultimaCotizacion=null;
