@@ -331,8 +331,8 @@ input:focus { border-color:var(--red);background:#fff; }
 
     <!-- PASO 3: BALLROOM (OPCIONAL) -->
     <div class="card">
-      <div class="card-title"><div class="step-num">3</div>Taller de Ballroom — Camila Cordero (opcional)</div>
-      <p style="font-size:13px;color:#555;margin-bottom:16px">Taller con Camila Cordero, bailarina costarricense. 29–31 de mayo 2026. Selecciona si deseas participar.</p>
+      <div class="card-title"><div class="step-num">3</div>Taller de Ballroom (opcional)</div>
+      <p style="font-size:13px;color:#555;margin-bottom:16px">Taller impartido por una experta invitada. 29–31 de mayo 2026. Selecciona si deseas participar.</p>
       <div class="taller-grid">
         <label class="taller-card" id="card-ballroom-no" onclick="seleccionarBallroom('no')">
           <input type="radio" name="ballroom" value="no">
@@ -379,7 +379,7 @@ input:focus { border-color:var(--red);background:#fff; }
           <input type="checkbox" id="chk-dc">
           <div class="comp-name">Copa Colibrí</div>
           <div class="comp-date">16 y 17 de Mayo 2026</div>
-          <div class="comp-tipo">🏆 Competencia Nacional · Westin Camino Real</div>
+          <div class="comp-tipo">🏆 Competencia Nacional · Hotel</div>
           <div class="comp-check" id="check-dc"></div>
         </label>
         <label class="comp-option" id="opt-escena" onclick="toggleComp('escena')">
@@ -904,7 +904,7 @@ function calcularCostos(sel) {
   // BALLROOM
   if(ballroomSel!=='no') {
     const bc = ballroomSel==='pre' ? P.ballroom_pre : P.ballroom_reg;
-    lineasTalleres.push({desc:`Taller Ballroom Camila Cordero (${ballroomSel==='pre'?'pre-registro':'registro normal'})`,monto:bc,moneda:'Q'});
+    lineasTalleres.push({desc:`Taller Ballroom (${ballroomSel==='pre'?'pre-registro':'registro normal'})`,monto:bc,moneda:'Q'});
     subTalleres += bc;
     if(ballroomSel==='pre') {
       fechas.push({desc:'Ballroom — Depósito',date:'Antes 15 mar',montoQ:200,moneda:'Q'});
